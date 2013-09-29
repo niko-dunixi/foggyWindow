@@ -1,7 +1,7 @@
 Welcome to the repository for Raging Dipsticks!
 .
 
-*Chrome RSA/AES Extension*
+*Chrome RSA/AES Extension* - Paul Baker (I vote for my own, and for my second vote I vote for Tag Forum-Burst)
 
 Here is a quick rundown of the structure of the Chrome extension. Basically chrome has a very simple execution for extensions. All chome extensions are are little more than a collection of JS and HTML files. For processing things like communicating with the browser's local storage we will implement what is called an "event page" (http://developer.chrome.com/extensions/event_pages.html). This is where the magic of encryption and decription will happen, our algorithms will be stored here and executed when needed. For managine our list of public keys, we will implement an "options page" (http://developer.chrome.com/extensions/options.html).
 
