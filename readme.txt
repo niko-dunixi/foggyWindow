@@ -17,3 +17,5 @@ What we will do to keep the private key safe, is to encrypt it via AES. This all
 When the user wishes to encrypt their message they will be prompted with a message telling them to enter their pwd if they have stored their RSA private key locally, or allow them to enter it if they have taken on the responsiblity themselves.
 
 Verification - When we encrypt our message with the recipient's RSA public key, we digitally sign the message with our RSA public key. This allows the recipient to ensure that only we are sending the actual message and not someone else.
+
+TestLine, you can ignore this.
