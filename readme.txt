@@ -35,4 +35,6 @@ What we would need - the specifics:
 
 *Edit again*
     
-    * Some addtional information on networking, jMonkey has a built in network framework called SpiderMonkey (http://jmonkeyengine.org/features/utilities/ half way down the page) It has great tutorials that are easy to follow.
+    * Some additional information on networking, jMonkey has a built in network framework called SpiderMonkey (http://jmonkeyengine.org/features/utilities/ half way down the page) It has great tutorials that are easy to follow.
+
+Also, I vote for the Encryption chrome extension and also my own idea
