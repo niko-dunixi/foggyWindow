@@ -1,4 +1,5 @@
 Welcome to the repository for Raging Dipsticks!
+<<<<<<< HEAD
 .
 
 
@@ -38,3 +39,31 @@ What we would need - the specifics:
     * Some additional information on networking, jMonkey has a built in network framework called SpiderMonkey (http://jmonkeyengine.org/features/utilities/ half way down the page) It has great tutorials that are easy to follow.
 
 Also, I vote for the Encryption chrome extension and also my own idea
+=======
+
+=======
+Online golf game
+
+Basic Features: Multi-players interface, the user will be able to manipulate a golf ball (solid-filled circle) on an image background using a physics engine commensurate with Dipsticks’ resources. Once the center pixel of the ball passes over a designated area of pixels representing the hole, the user completes the course. 
+
+At minimum, the user will be able to control the ball’s direction and trigger its release. Magnitude may be fixed, along with the ball’s angle of ricochet and rate of deceleration. A set of boundaries will be defined against which the ball will “bounce” following a collision. Dipsticks may use the same frame of boundaries with an alternating background image for multiple fairways. 
+
+the user will be able to control the magnitude of the ball’s motion, and its collisions will follow some basic trigonometric rules for Newtonian mechanics for greater realism. Different boundary frames may be set for different courses. A score card may be implemented.
+
+*Chrome RSA/AES Extension* - Paul Baker
+
+Here is a quick rundown of the structure of the Chrome extension. Basically chrome has a very simple execution for extensions. All chome extensions are are little more than a collection of JS and HTML files. For processing things like communicating with the browser's local storage we will implement what is called an "event page" (http://developer.chrome.com/extensions/event_pages.html). This is where the magic of encryption and decription will happen, our algorithms will be stored here and executed when needed. For managine our list of public keys, we will implement an "options page" (http://developer.chrome.com/extensions/options.html).
+
+The part where we actually type the message can be implemented in a couple ways and we can decide on some of the following options.
+	-Context Script. This is what I believe would be the most desireable option. We would specify every page that we did want to have the script enabled on, and when we came across the page Chrome would examen the URL compared to the the list of our pre-given Urls and then inject script accordingly. Essentially we could automatically inject an additional button into any page we wanted and allow the user to use that button to toggle the form for encryption/decryption.
+	-Inject code directly into the page and manage via Chrome API. Personally I find this to be the least desireable of the options. If we implement it this way we can insert this form onto any page we desire at any given time, however accessing chrome API's and communicating with our event page will be a much more involved process.
+	-No script injection. This would be the easiest, but least dynamic. Chrome would stick our extensions button along side the other buttons in the toolbar and then when the user clicked it, it would open a new page/tab where we had our form all by itself. We can ensure that it would only one instance at a time by specifying a "name" parameter. (It would just make a javascript call to the method window.open(url, name)) This can be used in tandem with either of the previous two methods.
+
+I'm going to describe a little more in depth what the process of running this extension would entail. Basically the gist of it. We would store all the public keys we have in local storage (in google chrome this is given to every website and chrome extension, so it is very easy to implement) the private key however has to have additional procautions to prevent leakage. We give the user two options, they can either store it themselves and be responsible for keeping it secure (using a program such as truecrypt or KeePass) or they can save it in local storage as well. When they save it in local storage we will have to encrypt the private key itself (I thought of this next part during our class dissucssion).
+
+What we will do to keep the private key safe, is to encrypt it via AES. This allows the user to encrypt their private key (which will be a very large prime number) with a password that they can easily remember. We take the password they provide to us, and we hash it into a number. This number is then given to a random object as a random seed. From there we provide this random object to our AES algorithm to generate another AES key to encrypt our RSA private key. Executing in this method will ensure that the private key is *more secure. (I say this because it is always possible to brute force an AES key, however it is still not practical: http://www.theinquirer.net/inquirer/news/2102435/aes-encryption-cracked)
+
+When the user wishes to encrypt their message they will be prompted with a message telling them to enter their pwd if they have stored their RSA private key locally, or allow them to enter it if they have taken on the responsiblity themselves.
+
+Verification - When we encrypt our message with the recipient's RSA public key, we digitally sign the message with our RSA public key. This allows the recipient to ensure that only we are sending the actual message and not someone else.
+>>>>>>> upstream/master

@@ -1,0 +1,25 @@
+Instructions for remerging forks back into the modified-origin.
+
+
+#in your git project directory
+git remote add upstream https://github.com/PigBoT/ragingDipsticks.git
+
+#now confirm that the original branch has been linked by running
+git remote -v
+
+#your output should appear similar to this, reflecting your original url and the upstream url
+#> origin  https://github.com/SonOfLysander/ragingDipsticks.git (fetch)
+#> origin  https://github.com/SonOfLysander/ragingDipsticks.git (push)
+#> upstream        https://github.com/PigBoT/ragingDipsticks.git (fetch)
+#> upstream        https://github.com/PigBoT/ragingDipsticks.git (push)
+
+git fetch upstream
+git add .\readme.txt #you may have to type it as just readme.txt without the .\
+git commit -m "We are adding the changes from the original"
+git merge upstream/master
+git push #at this point you will see a warning indicating that the default push action will change when they release git 2.0. I don't know what the difference is yet, but for now just let it go along with the default old behavior and don't change it to the new one.
+#You will be prompted for github login credentials.
+#>Username
+#>Password
+
+#check online to make sure that github pushed your updates to your repo. Let us know and as long as someone else doesn't get merged into the original branch first we should be good to go.
