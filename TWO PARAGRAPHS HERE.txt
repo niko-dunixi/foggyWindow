@@ -1,0 +1,7 @@
+Online Tank Wars Areana
+
+This game is built around one main, large level allowing a lot of people to join with several different tanks with different strengths and weaknesses. Upon picking your tank, the clinet will log you into the server via a java based client, and then placed on a team (depending on the game play). From there, have fun, shoot other tanks and see them go flying/blow up, obtain points, etc. (add special effects such as fire, fireballs shooting out of tank, etc..). It will be built in a 3D environment.
+
+RSA Encryption
+
+Essentially this will be a chrome extension that will utilize the ability to insert "content scripts" into pages almost aribtrarily. We will be able to setup forms to work with algorithms that run behind the scenes to ecrypt/decrypt and digitally sign messages that people want to send to others. Obviously this is not a fool-proof solution. People can still look over your shoulder, and Microsoft may have a deal with the NSA, Apple may as well, which would render this whole progject useless. However for those who need it and can verify they are on secure systems but do not necessarily know if their recipient is on a secure connection we have this extension.
