@@ -1,4 +1,5 @@
 Instructions for remerging forks back into the modified-origin.
+#UPDATE! Here is a stackoverflow post that goes over this process in depth: http://stackoverflow.com/questions/7244321/how-to-update-github-forked-repository
 
 
 #in your git project directory
