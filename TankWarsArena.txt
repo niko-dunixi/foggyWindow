@@ -1,0 +1,3 @@
+Online Tank Wars Areana
+
+This game is built around one main, large level allowing a lot of people to join with several different tanks with different strengths and weaknesses. Upon picking your tank, the clinet will log you into the server via a java based client, and then placed on a team (depending on the game play). From there, have fun, shoot other tanks and see them go flying/blow up, obtain points, etc. (add special effects such as fire, fireballs shooting out of tank, etc..). It will be built in a 3D environment.
