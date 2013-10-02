@@ -1,0 +1,37 @@
+My Idea- Joshua Loyens
+
+
+*Note: There's kind of a lot to muddle through I realize. I apologize in advance but I did my best at digging into what really would be actually necessary to create my idea. Also, some of the idea's may come across as confusing but note that I've thought it through, somewhat ha ha, and --though things may be a little complicated on the developer end-- the final goal would be to have a simple and low learning curve product for the user. Also, I’m just trying to get my ideas out on paper. It’s probably messy.
+
+Idea: Tag Forum (I nicknamed it "Burst" behind the idea of linked tagged posts)
+
+Description: Personally I've always disliked ever having to participate in large forum settings on websites and have avoided them like the plague when possible. There was always something I didn't like about them whether it was the endlessly repeated information, absolutely random things and extras people added to forum posts to make them "cool", or how you would have to "bump" your post to the top to get read.
+
+My idea would solve all those things, or at least it would attempt it. It would be keeping the layout as simple and basic as possible, like a forum should be, through elements of "tagging."
+
+3 Core Elements:
+
+Tags instead of titles: Ultimately this is what the whole design revolves around.
+Instead of titles you would have a GeneralKey/PrimaryKey. Now examples-- because this is more of general website to create the idea instead of one for like a specific game-- would be News, Entertainment, Politics, Sports, and Lifestyle as general keys and possibly a persons Username as a primary key (This would be automated into the post).
+
+Then you would simply tag your post without whatever correct, or random, tags you like.
+
+The Search Engine: Obviously incorporating tags into something would have to also be followed by incorporating a search engine, though I'm not thinking terribly advanced. This one took me sometime to think of how I would generally like it to work. First and foremost it would have to be able to sift through tags and pull them up for the user searching. For the sake of saving myself time I'm just going to list off other possible features: giving a list of popular tags, giving a history of past used tags, the search engine would categorize posts into a couple different easy categories--like most popular, most relevant to the search and most liked-- making it easier to navigate and giving you nice clean simple options(vaguely like Netflix if you've ever been on it, not the actual layout of it but the idea), and lastly, this ones a stretch, reading someone's post before they post it and before posting it check for other similar "Bursts" (conversations) that they could instead check out.
+"UX" user experience or whatever the heck our professor keeps talking about: Simple, simple, simple, simple, simple, simple.... simple. I can't emphasize it enough. The whole idea of a forum was a easy way to communicate between people and answer questions, under a usually common idea (at least that's what i got out of it). This Tag Forum ( or Burst Forum, I like the name okay) is meant to mirror that aspect of forums: the simplicity. Graphically, there wouldn't be much that would draw your eye or attention away from the actual content of the posts. This would mean that base colors would pretty much take up all the empty space and not random or diversion-esk designs as well as uncluttered posts without those weird, sometimes incomprehensible, extra's. For instance if you go to google and search something there is barely anything there to take your attention off of what you're looking for and everything is correctly emphasized so you know what it what without actually having read anything yet. Trying to keep that same goal in mind.
+Other Elements:
+
+-Database:
+
+Store User Profiles
+Store Posts
+-HouseKeeping
+
+Automated Website email (Password recovery, Newsletter etc)
+Website Customer support (Tickets, “Known problems”)
+-Login
+
+Encryption
+captcha
+ 
+
+I'll add and or delete anything from this as I think about it more. Feel free to post any other ideas or concerns below
