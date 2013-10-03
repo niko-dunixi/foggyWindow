@@ -1,0 +1,7 @@
+Web-based OS
+
+A web based application that relies on the use of web applications to create an OS-like webpage.
+
+Flash Cards
+
+A web based applications for continuing education through customizable "flash-cards". Deliever of "quiz" content could include SMS based messaging through customizable date and time deliveries.
