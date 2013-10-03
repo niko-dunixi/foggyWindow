@@ -5,6 +5,6 @@ Contributors:
 PigBot "More than Concerned"
 Supernut "The Best Contributor"
 sohild
-SonOfLysander "The Sexiest Legs"
+SonOfLysander "Sexiest Legs"
 new4931
 kidaki
