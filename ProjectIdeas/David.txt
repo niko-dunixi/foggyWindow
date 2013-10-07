@@ -1,0 +1,15 @@
+Basic Idea
+
+Press space to apply upward velocity, let go to slowly start to fall.  Move across a level, bad guys come, you shoot them
+
+Objective
+
+Reach the end of the map and kill a boss.  You will have power ups to help you
+
+Requirements
+
+We would need some assets (music, background images, player image, power up effects, etc.), and the rest would be code.  We could use Cocos2d to simplify this.  Some of the things we would have to code would be levels, player, enemy, and basic game stuff.  
+
+Why Would You Play
+
+Audio/visual appeal, challenging, nostalgic, fun.  
