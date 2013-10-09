@@ -1,0 +1,6 @@
+Idea:
+
+Some sort of bolt/screw recognition system. For situations where you might need more of a specific type of screw, but you don't know what type they are. 
+
+
+You could place the screw in a box surronded with cameras, and each camera would capture a different part of the object. From there, a single 3-d image would be created from the cameras' combined capture. This image would then be modified--rotated, flipped, zoomed-in/out--and compared to images in a database. Once a fit was found, it would tell you the type, as well as pricing, and locations available.
