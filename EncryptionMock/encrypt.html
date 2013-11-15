@@ -6,7 +6,6 @@
 	
       body {
         min-width: 357px;
-        overflow-x: hidden;
 		background-color:gray;
       }
 
@@ -22,16 +21,25 @@
 	  {
 		background-color:black;
 	  }
+	  
+	  .encryptMessage
+	  {
+		background-color:gray;
+	  }
+	  .encryptMessage:hover
+	  {
+		background-color:white;
+	  }
+	  
     </style>
-    <script type='text/javascript' src="encryptFunctions.js"></script>
   </head>
   <body>
-  <div>
-  
-  </div>
 	<textarea id="encryptMessage" rows="4" cols="50">Encrypt message</textarea>
-	<button id="encryptBtn" >Encrypt</button> 
-	<button type="button" >Decrypt</button> 
+	<div>
+		<button id="encryptBtn" >Encrypt</button> 
+		<button id="decryptBtn" >Decrypt</button> 
+	</div>
+	<script type='text/javascript' src="encryptFunctions.js"></script>
   </body>
 </html>
 
