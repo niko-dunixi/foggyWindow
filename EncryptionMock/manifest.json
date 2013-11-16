@@ -8,9 +8,17 @@
   "permissions": [
     "https://secure.flickr.com/"
   ],
-  
+
+  "content_scripts":[
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery-2.0.3.min.js", "jquery-ui.js", "rgdpstks.js"],
+      "run_at": "document_end"
+    }
+  ],
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "encrypt.html"
-  }
+  },
+  "web_accessible_resources" : ["jquery-2.0.3.min.map"]
 }
