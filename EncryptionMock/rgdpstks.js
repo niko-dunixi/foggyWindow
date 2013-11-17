@@ -47,24 +47,13 @@ function createPanel(){
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 
 	ecChk.click(function(){
-		ecChk.attr("checked",true).checkboxradio("refresh");
-		dcChk.removeAttr('checked').checkboxradio('refresh');
+		dcChk[0].checked = false;
+		ecChk[0].checked = true;
 	});
 	dcChk.click(function(){
-		dcChk.attr("checked",true).checkboxradio("refresh");
-		ecChk.removeAttr('checked').checkboxradio('refresh');
+		ecChk[0].checked = false;
+		dcChk[0].checked = true;
 	});
-	/*
-	var rOne = $('<div />').appendTo(tbl).css('height', '55%');
-	var rTwo = $('<div />').appendTo(tbl).css('height', '35%');
-	//var rThree = $('<div />').appendTo(tbl).css('height', '0%');
-	//var rFour = $('<div />').appendTo(tbl).css('height', '0%');
-	$('<textarea />').appendTo(rOne).css('width', '100%').css('height', '100%');
-	$('<textarea />').appendTo(rTwo).css('width', '100%').css('height', '100%');
-	//$('<select />').appendTo(rThree).css('width', '100%').css('height', '10%');
-	//$('<button type="button"/>').text("Encrypt").appendTo($('<div />').appendTo(rFour).css('width', '50%')).css('height', '100%');
-	//$('<button type="button"/>').text("Decrypt").appendTo($('<div />').appendTo(rFour).css('width', '50%')).css('height', '100%');
-	*/
 	panelCreated = true;
 	panel.show();
 }
