@@ -39,8 +39,8 @@ function createPanel(){
 	var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 	var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 
-	var ecChk = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
-	ecChk[0].checked = true;
+	var ecChkBx = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
+	ecChkBx[0].checked = true;
 	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
 	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
 	var ecTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(ecTabContent);
@@ -50,12 +50,12 @@ function createPanel(){
 		ecTxtTwo.val(encodeURI(ecTxtOne.val()));
 	});
 
-	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
+	var dcChkBx = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(dcTabContent);
 	var dcTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(dcTabContent);
-	dcTxtTwo[0].disabled = true;
+	dcTxtTwo	[0].disabled = true;
 	dcTxtOne.bind('input propertychange', function(){
 		dcTxtTwo.val(encodeURI(dcTxtOne.val()));
 	});
