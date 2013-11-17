@@ -15,8 +15,17 @@ var panelCreated = false;
 var panel = $();
 
 $(document).ready(function(){
-	createPanel();
+	togglePanel();
 });
+
+function togglePanel(){
+	if (panelCreated == true){
+		destroyPanel();
+	} else {
+		createPanel();
+	}
+	console.log("Panel toggled.");
+}
 
 function createPanel(){
 	panel = $('<div />', {id: 'dpstx_pnl'}).appendTo('body').hide().css('z-index', 9001); //It is over nine thousand.
@@ -46,22 +55,8 @@ function createPanel(){
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent)[0].disabled = true;
 
-	/*
-	ecChk.click(function(){
-		dcChk[0].checked = false;
-		ecChk[0].checked = true;
-		dcChk.checkboxradio('refresh');
-		ecChk.checkboxradio('refresh');
-	});
-	dcChk.click(function(){
-		ecChk[0].checked = false;
-		dcChk[0].checked = true;
-		ecChk.checkboxradio('refresh');
-		dcChk.checkboxradio('refresh');
-	});
-	*/
-	panelCreated = true;
 	panel.show();
+	panelCreated = true;
 }
 
 function destroyPanel(){
