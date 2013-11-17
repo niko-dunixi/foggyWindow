@@ -14,17 +14,14 @@ if (/^https:\/\/mail\.google\.com\/.*/i.test(window.location)){
 var panelCreated = false;
 var panel = $();
 
-$(document).ready(function(){
-	togglePanel();
-});
-
 function togglePanel(){
+	console.log("Toggling Panel");
 	if (panelCreated == true){
 		destroyPanel();
 	} else {
 		createPanel();
 	}
-	console.log("Panel toggled.");
+	console.log("Status: " + panelCreated);
 }
 
 function createPanel(){
@@ -42,8 +39,8 @@ function createPanel(){
 	var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 	var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 
-	//$('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
-	var ecChk = $('<input type="radio" id="tab-1" name="tab-group-1" checked>').appendTo(ecTab);
+	var ecChk = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab)[0].checked = true;
+	//var ecChk = $('<input type="radio" id="tab-1" name="tab-group-1" checked>').appendTo(ecTab);
 	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
 	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
@@ -71,3 +68,13 @@ function sendEmail(){
 function sendGmail(){
 
 }
+
+$(document).ready(function(){
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if (request.name == "toggle"){
+			togglePanel();
+		}
+		sendResponse({result: "confirmed"});
+	});
+	console.log("Listener Initiated.");
+});
