@@ -14,9 +14,15 @@ if (/^https:\/\/mail\.google\.com\/.*/i.test(window.location)){
 var panelCreated = false;
 var panel = $();
 
-$(document).ready(function(){
-	createPanel();
-});
+function togglePanel(){
+	console.log("Toggling Panel");
+	if (panelCreated == true){
+		destroyPanel();
+	} else {
+		createPanel();
+	}
+	console.log("Status: " + panelCreated);
+}
 
 function createPanel(){
 	panel = $('<div />', {id: 'dpstx_pnl'}).appendTo('body').hide().css('z-index', 9001); //It is over nine thousand.
@@ -33,35 +39,21 @@ function createPanel(){
 	var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 	var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 
-	//$('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
-	var ecChk = $('<input type="radio" id="tab-1" name="tab-group-1" checked>').appendTo(ecTab);
+	var ecChk = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab)[0].checked = true;
+	//var ecChk = $('<input type="radio" id="tab-1" name="tab-group-1" checked>').appendTo(ecTab);
 	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
 	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
-	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
+	$('<textarea />').css('width', '100%').appendTo(ecTabContent)[0].disabled = true;
 
 	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
-	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
+	$('<textarea />').css('width', '100%').appendTo(dcTabContent)[0].disabled = true;
 
-	/*
-	ecChk.click(function(){
-		dcChk[0].checked = false;
-		ecChk[0].checked = true;
-		dcChk.checkboxradio('refresh');
-		ecChk.checkboxradio('refresh');
-	});
-	dcChk.click(function(){
-		ecChk[0].checked = false;
-		dcChk[0].checked = true;
-		ecChk.checkboxradio('refresh');
-		dcChk.checkboxradio('refresh');
-	});
-	*/
-	panelCreated = true;
 	panel.show();
+	panelCreated = true;
 }
 
 function destroyPanel(){
@@ -76,3 +68,13 @@ function sendEmail(){
 function sendGmail(){
 
 }
+
+$(document).ready(function(){
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if (request.name == "toggle"){
+			togglePanel();
+		}
+		sendResponse({result: "confirmed"});
+	});
+	console.log("Listener Initiated.");
+});

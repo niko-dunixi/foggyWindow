@@ -3,14 +3,14 @@
 
   "name": "Encryption Mock",
   "description": "This extension is a Encryption mockup",
-  "version": "0.1.7",
+  "version": "0.1.3",
 
   "background": {
     "scripts": ["background.js"]
     },
 
   "permissions": [
-    "https://secure.flickr.com/"
+    "activeTab"
   ],
 
   "content_scripts":[
