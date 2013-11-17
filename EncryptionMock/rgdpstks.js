@@ -38,13 +38,13 @@ function createPanel(){
 	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
 	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
-	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
+	$('<textarea />').css('width', '100%').appendTo(ecTabContent)[0].disabled = true;
 
 	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
-	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
+	$('<textarea />').css('width', '100%').appendTo(dcTabContent)[0].disabled = true;
 
 	/*
 	ecChk.click(function(){
