@@ -25,7 +25,7 @@ function togglePanel(){
 }
 
 function createPanel(){
-	panel = $('<div />', {id: 'dpstx_pnl'}).appendTo('body').hide().css('z-index', 9001); //It is over nine thousand.
+	panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('body'); //It is over nine thousand.
 	console.log("Panel appended to document body.");
 	panel.css({
 		position: 'fixed',
@@ -38,6 +38,7 @@ function createPanel(){
 	var tbl = $('<div />').addClass('rgdpstxTabs').css('position', 'relative').css('width', '100%').css('height', '100%').appendTo(panel);
 	var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
 	var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
+	var xTab = $('<div />').addClass('rgdpstxTab').css('float', 'right').appendTo(tbl);
 
 	var ecChkBx = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
 	ecChkBx[0].checked = true;
@@ -55,11 +56,18 @@ function createPanel(){
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(dcTabContent);
 	var dcTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(dcTabContent);
-	dcTxtTwo	[0].disabled = true;
+	dcTxtTwo[0].disabled = true;
 	dcTxtOne.bind('input propertychange', function(){
 		dcTxtTwo.val(encodeURI(dcTxtOne.val()));
 	});
 
+	/*
+	var xChkBx = $('<input />', {type: 'radio', id: 'tab-3', name:'tab-group-1'}).appendTo(xTab);
+	$('<label />', {for: 'tab-3'}).text('X').appendTo(dcTab);
+	var xTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(xTab);
+	$('<span />').text("you are not supposed to see this.").appendTo(xTabContent)
+	*/
+	
 	panel.show();
 	panelCreated = true;
 }
