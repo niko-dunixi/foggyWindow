@@ -3,8 +3,12 @@
 
   "name": "Encryption Mock",
   "description": "This extension is a Encryption mockup",
-  
-  "version": "0.1",
+  "version": "0.1.4",
+
+  "background": {
+    "scripts": ["background.js"]
+    },
+
   "permissions": [
     "https://secure.flickr.com/"
   ],
@@ -12,13 +16,14 @@
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
+      "css": ["rgdpstks.css"],
       "js": ["jquery-2.0.3.min.js", "jquery-ui.js", "rgdpstks.js"],
       "run_at": "document_end"
     }
   ],
   "browser_action": {
     "default_icon": "icon.png",
-    "default_popup": "encrypt.html"
+    "default_popup": "popup.html"
   },
   "web_accessible_resources" : ["jquery-2.0.3.min.map"]
 }
