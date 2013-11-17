@@ -40,30 +40,25 @@ function createPanel(){
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
 
-	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-2'}).appendTo(dcTab);
+	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 
+	/*
 	ecChk.click(function(){
-		ecChk.attr("checked",true).checkboxradio("refresh");
-		dcChk.removeAttr('checked').checkboxradio('refresh');
+		dcChk[0].checked = false;
+		ecChk[0].checked = true;
+		dcChk.checkboxradio('refresh');
+		ecChk.checkboxradio('refresh');
 	});
 	dcChk.click(function(){
-		dcChk.attr("checked",true).checkboxradio("refresh");
-		ecChk.removeAttr('checked').checkboxradio('refresh');
+		ecChk[0].checked = false;
+		dcChk[0].checked = true;
+		ecChk.checkboxradio('refresh');
+		dcChk.checkboxradio('refresh');
 	});
-	/*
-	var rOne = $('<div />').appendTo(tbl).css('height', '55%');
-	var rTwo = $('<div />').appendTo(tbl).css('height', '35%');
-	//var rThree = $('<div />').appendTo(tbl).css('height', '0%');
-	//var rFour = $('<div />').appendTo(tbl).css('height', '0%');
-	$('<textarea />').appendTo(rOne).css('width', '100%').css('height', '100%');
-	$('<textarea />').appendTo(rTwo).css('width', '100%').css('height', '100%');
-	//$('<select />').appendTo(rThree).css('width', '100%').css('height', '10%');
-	//$('<button type="button"/>').text("Encrypt").appendTo($('<div />').appendTo(rFour).css('width', '50%')).css('height', '100%');
-	//$('<button type="button"/>').text("Decrypt").appendTo($('<div />').appendTo(rFour).css('width', '50%')).css('height', '100%');
 	*/
 	panelCreated = true;
 	panel.show();

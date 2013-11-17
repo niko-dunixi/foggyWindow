@@ -3,7 +3,7 @@
 
   "name": "Encryption Mock",
   "description": "This extension is a Encryption mockup",
-  "version": "0.1.4",
+  "version": "0.1.7",
 
   "background": {
     "scripts": ["background.js"]
