@@ -40,20 +40,26 @@ function createPanel(){
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
 	$('<textarea />').css('width', '100%').appendTo(ecTabContent);
 
-	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-2'}).appendTo(dcTab);
+	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 	$('<textarea />').css('width', '100%').appendTo(dcTabContent);
 
+	/*
 	ecChk.click(function(){
 		dcChk[0].checked = false;
 		ecChk[0].checked = true;
+		dcChk.checkboxradio('refresh');
+		ecChk.checkboxradio('refresh');
 	});
 	dcChk.click(function(){
 		ecChk[0].checked = false;
 		dcChk[0].checked = true;
+		ecChk.checkboxradio('refresh');
+		dcChk.checkboxradio('refresh');
 	});
+	*/
 	panelCreated = true;
 	panel.show();
 }

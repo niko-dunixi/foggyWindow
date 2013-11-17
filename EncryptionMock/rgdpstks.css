@@ -33,6 +33,6 @@
   border-bottom: 1px solid white;
   z-index: 2;
 }
-[type=radio]:checked ~ label ~ .content {
+[type=radio]:checked ~ label ~ .rgdpstxContent {
   z-index: 1;
 }
