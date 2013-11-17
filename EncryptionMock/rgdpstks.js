@@ -11,10 +11,28 @@ if (/^https:\/\/mail\.google\.com\/.*/i.test(window.location)){
 	inGmail = true;
 }
 
+<<<<<<< HEAD
 $(document).ready(function(){
 	//may need to check for lpt
 	//console.log("We are in Gmail and need to give it special treatment?: " + inGmail);
 	var panel = $('<div />', {id: 'dpstx_pnl'}).appendTo('body').hide().css('z-index', 9001);
+=======
+var panelCreated = false;
+var panel = $();
+
+function togglePanel(){
+	console.log("Toggling Panel");
+	if (panelCreated == true){
+		destroyPanel();
+	} else {
+		createPanel();
+	}
+	console.log("Status: " + panelCreated);
+}
+
+function createPanel(){
+	panel = $('<div />', {id: 'dpstx_pnl'}).appendTo('body').hide().css('z-index', 9001); //It is over nine thousand.
+>>>>>>> upstream/master
 	console.log("Panel appended to document body.");
 	panel.css({
 		position: 'fixed',
@@ -24,6 +42,7 @@ $(document).ready(function(){
 		right: '0px'
 	});
 
+<<<<<<< HEAD
 	var tbl = $('<div />').appendTo(panel).css('position', 'relative').css('width', '100%').css('height', '100%');;
 	var rOne = $('<div />').appendTo(tbl).css('height', '55%');
 	var rTwo = $('<div />').appendTo(tbl).css('height', '35%'); //d2
@@ -51,6 +70,41 @@ $(document).ready(function(){
 
 	panel.show();
 });
+=======
+	var tbl = $('<div />').addClass('rgdpstxTabs').css('position', 'relative').css('width', '100%').css('height', '100%').appendTo(panel);
+	var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
+	var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
+
+	var ecChk = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
+	ecChk[0].checked = true;
+	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
+	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
+	var ecTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(ecTabContent);
+	var ecTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(ecTabContent);
+	ecTxtTwo[0].disabled = true;
+	ecTxtOne.bind('input propertychange', function(){
+		ecTxtTwo.val(encodeURI(ecTxtOne.val()));
+	});
+
+	var dcChk = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
+	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
+	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
+	var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(dcTabContent);
+	var dcTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(dcTabContent);
+	dcTxtTwo[0].disabled = true;
+	dcTxtOne.bind('input propertychange', function(){
+		dcTxtTwo.val(encodeURI(dcTxtOne.val()));
+	});
+
+	panel.show();
+	panelCreated = true;
+}
+
+function destroyPanel(){
+	panel.remove();
+	panelCreated = false;
+}
+>>>>>>> upstream/master
 
 function sendEmail(){
 
@@ -58,4 +112,18 @@ function sendEmail(){
 
 function sendGmail(){
 
+<<<<<<< HEAD
 }
+=======
+}
+
+$(document).ready(function(){
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+		if (request.name == "toggle"){
+			togglePanel();
+		}
+		sendResponse({result: "confirmed"});
+	});
+	console.log("Listener Initiated.");
+});
+>>>>>>> upstream/master
