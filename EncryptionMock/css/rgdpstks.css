@@ -1,6 +1,6 @@
 .rgdpstxTabs {
   position: relative;   
-  min-height: 200px; /* This part sucks */
+  min-height: 200px;
   clear: both;
   margin: 25px 0;
 }
