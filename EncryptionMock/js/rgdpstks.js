@@ -45,7 +45,8 @@ function createPanel(){
 	$('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
 	var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
 	var ecTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(ecTabContent);
-	var ecTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(ecTabContent);
+	var ecSelect = $('<select />').css('width', '100%').appendTo(ecTabContent);
+	var ecTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').appendTo(ecTabContent);
 	ecTxtTwo[0].disabled = true;
 	ecTxtOne.bind('input propertychange', function(){
 		ecTxtTwo.val(encodeURI(ecTxtOne.val()));
@@ -55,7 +56,8 @@ function createPanel(){
 	$('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
 	var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
 	var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(dcTabContent);
-	var dcTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(dcTabContent);
+	var dcSelect = $('<select />').css('width', '100%').appendTo(dcTabContent);
+	var dcTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').appendTo(dcTabContent);
 	dcTxtTwo[0].disabled = true;
 	dcTxtOne.bind('input propertychange', function(){
 		dcTxtTwo.val(encodeURI(dcTxtOne.val()));
