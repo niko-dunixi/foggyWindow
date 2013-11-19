@@ -12,8 +12,8 @@
     {
       "matches": ["<all_urls>"],
       "css": ["css/rgdpstks.css"],
-      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/rgdpstks.js",
-            "forge/debug.js", "forge/forge.js", "forge/jsbn.js" ],
+      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/copyPasteData.js", "js/rgdpstks.js",
+            "forge/debug.js", "forge/forge.js", "forge/jsbn.js"],
       "run_at": "document_end"
     }
   ],
