@@ -45,7 +45,7 @@ function createPanel(){
         $('<label />', {for: 'tab-1'}).text('Encrypt').appendTo(ecTab);
         var ecTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(ecTab);
         var ecTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(ecTabContent);
-        var ecTxtTwo = $('<textarea />').css('height', '25%').css('width', '100%').appendTo(ecTabContent);
+        var ecTxtTwo = $('<textarea />').addClass('ecTxtTwo').css('height', '25%').css('width', '100%').appendTo(ecTabContent);
         ecTxtTwo[0].disabled = true;
         ecTxtOne.bind('input propertychange', function(){
                 ecTxtTwo.val(encodeURI(ecTxtOne.val()));
@@ -60,6 +60,15 @@ function createPanel(){
         dcTxtOne.bind('input propertychange', function(){
                 dcTxtTwo.val(encodeURI(dcTxtOne.val()));
         });
+		
+		var copyPasteBtn = $('<button />').text('Copy to field').attr('id', 'copyToField').appendTo(ecTabContent);
+		$('#copyToField').click(function() {
+		  var ecTxtTwoContent = $('.ecTxtTwo').val()
+		  console.log('clicked button: ' + ecTxtTwoContent);
+		  addBodyListener();
+		});
+
+		
 
         /*
         var xChkBx = $('<input />', {type: 'radio', id: 'tab-3', name:'tab-group-1'}).appendTo(xTab);
