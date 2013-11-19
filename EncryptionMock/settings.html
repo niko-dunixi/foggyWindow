@@ -3,6 +3,7 @@
 		<title>Encryption Mock - Settings</title>
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/settings.js"></script>
+		<script src="js/sjcl_full.js"></script>
 		<link rel="stylesheet" type="test/css" href="css/settings.css" />
 	</head>
 	<body>
@@ -23,6 +24,15 @@
 					<div style="clear: both;"/>
 					<div style="text-align: center;"><button type="button" style="margin: 15px auto;" id="agree">I Agree</button></div>
 				</div>
+				<!--
+				After literally two days of work, FINALLY we make some gd progress!!
+				Usage example so I don't forget later.
+
+				btoa(sjcl.encrypt("Pants", "These are my pants"));
+				"eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="
+				sjcl.decrypt("Pants", atob("eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="));
+				"These are my pants"
+				!-->
 			</div>
 		</div>
 	</body>
