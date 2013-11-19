@@ -3,7 +3,27 @@
 		<title>Encryption Mock - Settings</title>
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/settings.js"></script>
+		
+		<!-- Concatinated these into a single library !-->
 		<script src="js/sjcl_full.js"></script>
+
+		<!-- Yes these are, in fact, all necessary. We may need to link more actually (hopefully not though)-->
+		<script src="forge/util.js"></script>
+		<script src="forge/debug.js"></script>
+		<script src="forge/jsbn.js"></script>
+		<script src="forge/oids.js"></script>
+		<script src="forge/asn1.js"></script>
+		<script src="forge/sha1.js"></script>
+		<script src="forge/sha256.js"></script>
+		<script src="forge/md5.js"></script>
+		<script src="forge/md.js"></script> 
+		<script src="forge/aes.js"></script>
+		<script src="forge/prng.js"></script>
+		<script src="forge/random.js"></script>
+		<script src="forge/jsbn.js"></script> 
+		<script src="forge/pkcs1.js"></script>
+		<script src="forge/rsa.js"></script>
+
 		<link rel="stylesheet" type="test/css" href="css/settings.css" />
 	</head>
 	<body>
@@ -28,12 +48,19 @@
 				After literally two days of work, FINALLY we make some gd progress!!
 				Usage example so I don't forget later.
 
+				AES example:
 				btoa(sjcl.encrypt("Pants", "These are my pants"));
 				"eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="
 				sjcl.decrypt("Pants", atob("eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="));
 				"These are my pants"
 
-				
+				RSA example:
+				var rsa = forge.pki.rsa;
+				var keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+				var ct = btoa(keypair.publicKey.encrypt("Pants"));
+				ct;
+				keypair.privateKey.decrypt(atob(ct));
+
 				!-->
 			</div>
 		</div>
