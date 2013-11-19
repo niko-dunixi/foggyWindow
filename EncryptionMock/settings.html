@@ -3,6 +3,51 @@
 		<title>Encryption Mock - Settings</title>
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/settings.js"></script>
+		
+		<!-- Concatinated these into a single library !-->
+		<script src="js/sjcl_full.js"></script>
+
+		<!-- Yes these are, in fact, all necessary. We may need to link more actually (hopefully not though)-->
+		<!--
+		This library seems to be stuck. I've spent atleast three days with it and I can't seem to get it to work correctly.
+		Please see issue if none of you believe me:
+		https://github.com/digitalbazaar/forge/issues/87
+		http://stackoverflow.com/questions/20067182/javascript-forge-crypto-library-recreating-public-and-private-keys-for-later-re
+
+
+		<script src="forge/util.js"></script>
+		<script src="forge/debug.js"></script>
+		<script src="forge/jsbn.js"></script>
+		<script src="forge/oids.js"></script>
+		<script src="forge/asn1.js"></script>
+		<script src="forge/sha1.js"></script>
+		<script src="forge/sha256.js"></script>
+		<script src="forge/md5.js"></script>
+		<script src="forge/md.js"></script> 
+		<script src="forge/aes.js"></script>
+		<script src="forge/prng.js"></script>
+		<script src="forge/random.js"></script>
+		<script src="forge/jsbn.js"></script> 
+		<script src="forge/pkcs1.js"></script>
+		<script src="forge/rsa.js"></script>
+
+		<script src="forge/aes.js"></script>
+		<script src="forge/des.js"></script>
+		<script src="forge/rc2.js"></script>
+		<script src="forge/aes.js"></script>
+		<script src="forge/pbe.js"></script>
+		<script src="forge/pem.js"></script>
+		<script src="forge/hmac.js"></script>
+		<script src="forge/pbkdf2.js"></script>
+		<script src="forge/pkcs7asn1.js"></script>
+		<script src="forge/pkcs12.js"></script>
+		<script src="forge/pss.js"></script>
+		<script src="forge/mgf1.js"></script>
+		<script src="forge/mgf.js"></script>
+		<script src="forge/x509.js"></script>
+		<script src="forge/pki.js"></script>
+		!-->
+
 		<link rel="stylesheet" type="test/css" href="css/settings.css" />
 	</head>
 	<body>
@@ -23,6 +68,24 @@
 					<div style="clear: both;"/>
 					<div style="text-align: center;"><button type="button" style="margin: 15px auto;" id="agree">I Agree</button></div>
 				</div>
+				<!--
+				After literally two days of work, FINALLY we make some gd progress!!
+				Usage example so I don't forget later.
+
+				AES example:
+				btoa(sjcl.encrypt("Pants", "These are my pants"));
+				"eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="
+				sjcl.decrypt("Pants", atob("eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="));
+				"These are my pants"
+
+				RSA example:
+				var rsa = forge.pki.rsa;
+				var keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+				var ct = btoa(keypair.publicKey.encrypt("Pants"));
+				ct;
+				keypair.privateKey.decrypt(atob(ct));
+
+				!-->
 			</div>
 		</div>
 	</body>
