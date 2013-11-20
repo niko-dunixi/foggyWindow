@@ -98,7 +98,7 @@ function verifyUser(){
 			$.each(personalKeys, function(key, value){
 				console.log(key);
 				console.log(value);
-				$('<option />').data('name', value.name).data('privateKey', value.privateKey).data('public', value.publicKey).text(value.name).appendTo($('#priv'));
+				$('<option />').data('name', value.name).data('privateKey', value.privateKey).data('publicKey', value.publicKey).text(value.name).appendTo($('#priv'));
 			});
 			$.each(publicKeys, function(key, value){
 				console.log(key);
