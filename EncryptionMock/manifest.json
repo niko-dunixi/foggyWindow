@@ -12,7 +12,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["css/rgdpstks.css"],
-      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/copyPasteData.js", "js/sjcl_full.js", "js/rgdpstks.js",
+      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/copyPasteData.js", "js/sjcl_full.js", "js/forge_full.js", "js/rgdpstks.js",
             "cryptico/cryptico.js"],
       "run_at": "document_end"
     }
