@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Encryption Mock",
   "description": "This extension is a Encryption mockup",
-  "version": "0.1.5",
+  "version": "0.1.2",
   "background": {
     "scripts": ["js/background.js"]
     },
@@ -13,7 +13,7 @@
       "matches": ["<all_urls>"],
       "css": ["css/rgdpstks.css"],
       "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/copyPasteData.js", "js/rgdpstks.js",
-            "forge/debug.js", "forge/forge.js", "forge/jsbn.js"],
+            "cryptico/cryptico.js"],
       "run_at": "document_end"
     }
   ],
