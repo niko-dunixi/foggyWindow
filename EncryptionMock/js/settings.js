@@ -121,8 +121,6 @@ function encryptObject(pwd, obj){
 	return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
 }
 function decryptObject(pwd, obj){
-	console.log(obj);
-	console.log(atob)
 	return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
 }
 

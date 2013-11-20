@@ -25,11 +25,11 @@ function togglePanel(){
 }
 
 function encryptObject(pwd, obj){
+  console.log(obj);
   return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
 }
 function decryptObject(pwd, obj){
   console.log(obj);
-  console.log(atob)
   return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
 }
 
@@ -55,17 +55,21 @@ function createPanel(){
   $('<div />').css('height', '115px').appendTo(passarea);
   var pass = $('<input type="password">').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
   var butt = $('<button type="button">Verify</button>').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
-  butt.bind('click', function(){
-
-    var valid = false;
-    privKeys = decryptObject(pass.val(), response.publKeys);
-    publKeys = JSON.parse(response.privKeys);
-    userpwrd = pass.val();
-    passarea.remove();
-    genTabs();
-
+  butt.bind('click', function(){ //oh la la.
+    try{
+      //var valid = false;
+      var x = decryptObject(pass.val(), privKeys);
+      var y = JSON.parse(publKeys);
+      var z = pass.val();
+      passarea.remove();
+      genTabs();
+    } catch(error){ //if the user entered the wrong password.
+      console.log(error);
+      console.log("Wrong Password (probably)");
+      passarea.remove();
+      destroyPanel();
+    }
   });
-
   panel.show();
   panelCreated = true;
 }
@@ -136,6 +140,8 @@ $(document).ready(function(){
     console.log(sender);
     if (request.name == "toggle"){
       togglePanel();
+      publKeys = request.publKeys;
+      privKeys = request.privKeys;
     }
     sendResponse({result: "confirmed"});
   });
