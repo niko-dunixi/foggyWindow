@@ -109,7 +109,7 @@ function genTabs(){
   ecTxtTwo[0].disabled = true;
   ecTxtOne.bind('input propertychange', function(){
     //ecTxtTwo.val(encodeURI(ecTxtOne.val()));
-    ecTxtTwo.val(btoa(ecBinder.encrypt(ecTxtOne.val())));
+    ecTxtTwo.val(btoa(ecBinder.encrypt(ecTxtOne.val()))); //live encryption.
   });
 
   var dcChkBx = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
@@ -124,7 +124,8 @@ function genTabs(){
   var dcTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').appendTo(dcTabContent);
   dcTxtTwo[0].disabled = true;
   dcTxtOne.bind('input propertychange', function(){
-    dcTxtTwo.val(encodeURI(dcTxtOne.val()));
+    //dcTxtTwo.val(encodeURI(dcTxtOne.val()));
+    dcTxtTwo.val(dcBinder.decrypt(atob(dcTxtOne.val())));
   });
   
   var copyPasteBtn = $('<button />').text('Copy to field').attr('id', 'copyToField').appendTo(ecTabContent);
