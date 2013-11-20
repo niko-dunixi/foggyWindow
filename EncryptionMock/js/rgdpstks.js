@@ -24,6 +24,19 @@ function togglePanel(){
   console.log("Status: " + panelCreated);
 }
 
+function encryptObject(pwd, obj){
+  return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
+}
+function decryptObject(pwd, obj){
+  console.log(obj);
+  console.log(atob)
+  return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
+}
+
+var userpwrd = "";
+var privKeys = "";
+var publKeys = "";
+
 function createPanel(){
   panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('body'); //It is over nine thousand.
   console.log("Panel appended to document body.");
@@ -35,10 +48,33 @@ function createPanel(){
     right: '0px'
   });
 
+  //I moved all the tab items to the "genTabs", to add content go to that method.
+
+  //this now does password validation
+  var passarea = $('<div />').css('background-color', '#FFFFFF').css('position', 'relative').css('width', '100%').css('height', '100%').appendTo(panel);
+  $('<div />').css('height', '115px').appendTo(passarea);
+  var pass = $('<input type="password">').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
+  var butt = $('<button type="button">Verify</button>').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
+  butt.bind('click', function(){
+
+    var valid = false;
+    privKeys = decryptObject(pass.val(), response.publKeys);
+    publKeys = JSON.parse(response.privKeys);
+    userpwrd = pass.val();
+    passarea.remove();
+    genTabs();
+
+  });
+
+  panel.show();
+  panelCreated = true;
+}
+
+function genTabs(){
   var tbl = $('<div />').addClass('rgdpstxTabs').css('position', 'relative').css('width', '100%').css('height', '100%').appendTo(panel);
   var ecTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
   var dcTab = $('<div />').addClass('rgdpstxTab').appendTo(tbl);
-  var xTab = $('<div />').addClass('rgdpstxTab').css('float', 'right').appendTo(tbl);
+  //var xTab = $('<div />').addClass('rgdpstxTab').css('float', 'right').appendTo(tbl);
 
   var ecChkBx = $('<input/>', {type: 'radio', id: 'tab-1', name:'tab-group-1'}).appendTo(ecTab);
   ecChkBx[0].checked = true;
@@ -76,9 +112,6 @@ function createPanel(){
   var xTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(xTab);
   $('<span />').text("you are not supposed to see this.").appendTo(xTabContent)
   */
-  
-  panel.show();
-  panelCreated = true;
 }
 
 function destroyPanel(){
@@ -96,10 +129,15 @@ function sendGmail(){
 
 $(document).ready(function(){
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-  if (request.name == "toggle"){
-    togglePanel();
-  }
-  sendResponse({result: "confirmed"});
+    console.log(request);
+    console.log(request.name);
+    console.log(request.publKeys);
+    console.log(request.privKeys);
+    console.log(sender);
+    if (request.name == "toggle"){
+      togglePanel();
+    }
+    sendResponse({result: "confirmed"});
   });
   console.log("Listener Initiated.");
 });

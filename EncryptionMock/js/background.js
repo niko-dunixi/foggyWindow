@@ -5,7 +5,8 @@ chrome.runtime.onConnect.addListener(function(port) {
 				console.log("Toggle Called.");
 				try{
 					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-						chrome.tabs.sendMessage(tabs[0].id, {name: "toggle"}, function(response) {
+						console.log({'name': 'toggle', 'good': localStorage['agreedToGood'], 'publKeys': localStorage['publicKeys'], 'privKeys': localStorage['personalKeys']});
+						chrome.tabs.sendMessage(tabs[0].id, {'name': 'toggle', 'publKeys': localStorage['publicKeys'], 'privKeys': localStorage['personalKeys']}, function(response) {
 							console.log(response.result);
 						});
 					});
