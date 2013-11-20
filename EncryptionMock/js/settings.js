@@ -3,6 +3,12 @@ if (window.localStorage["agreedToGood"] == "true"){
 	agreed = true;
 }
 
+function manualReset(){ //never called, but can be typed in the console.
+	localStorage.removeItem("agreedToGood");
+}
+
+var usrpswrd = ""; //I'll admit this isn't the best place for this to be.
+
 function notAgreed(){
 	$('#user').bind('input propertychange', function(){
 		if ($(this).val().length == 0){
@@ -64,7 +70,7 @@ function notAgreed(){
 			console.log("We good");
 			/* Here goes nothing guys. Wish us all luck. */
 			window.localStorage["agreedToGood"] = true;
-
+			$(this)[0].disabled = true;
 			var pki = forge.pki;
 			var rsa = pki.rsa;
 			var usePair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
@@ -82,10 +88,35 @@ function notAgreed(){
 	$('#agreement').show();
 }
 
+function verifyUser(){
+	$('#vfyNow').bind('click', function(){
+		try{
+			console.log("stargin");
+			var personalKeys = decryptObject($('#pwdNow').val(), window.localStorage['personalKeys']);
+			var publickeys = JSON.parse(window.localStorage['publickeys']);
+			$('#pwdNow').addClass('valid');
+			$.each(personalKeys, function(key, value){
+				console.log(key);
+				console.log(value);
+			});
+			$.each(publickeys, function(key, value){
+				console.log(key);
+				console.log(value);
+			});
+		}catch(error){
+			$('#pwdNow').addClass('error');
+			console.log(error);
+		}
+	});
+	$('#verify').show();
+}
+
 function encryptObject(pwd, obj){
 	return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
 }
 function decryptObject(pwd, obj){
+	console.log(obj);
+	console.log(atob)
 	return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
 }
 
@@ -93,6 +124,31 @@ $(document).ready(function(){
 	if (agreed == false){
 		notAgreed();
 	} else {
-		
+		verifyUser();
 	}
 });
+
+
+
+/*
+Moved this from the other page, it made more sense to keep the practical example of working code in an actual code file. Plus something weird is happening with the page formatting. Need to investigate.
+
+<!--
+After literally two days of work, FINALLY we make some gd progress!!
+Usage example so I don't forget later.
+
+AES example:
+btoa(sjcl.encrypt("Pants", "These are my pants"));
+"eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="
+sjcl.decrypt("Pants", atob("eyJpdiI6IjZmeE5SMUVPdTFscldlY2xjQkNRM2c9PSIsInYiOjEsIml0ZXIiOjEwMDAsImtzIjoxMjgsInRzIjo2NCwibW9kZSI6ImNjbSIsImFkYXRhIjoiIiwiY2lwaGVyIjoiYWVzIiwic2FsdCI6IkpEaWFBT0hESXFJPSIsImN0IjoiSlRZNXg4UktCOHhORmMzanc2c1ZnZUd0MTA4d3pSdThteHM9In0="));
+"These are my pants"
+
+RSA example:
+var rsa = forge.pki.rsa;
+var keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+var ct = btoa(keypair.publicKey.encrypt("Pants"));
+ct;
+keypair.privateKey.decrypt(atob(ct));
+
+!-->
+*/
