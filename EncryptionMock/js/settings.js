@@ -1,5 +1,5 @@
 var agreed = false;
-if (window.localStorage["agreedToGood"] === "true"){
+if (window.localStorage["agreedToGood"] == "true"){
 	agreed = true;
 }
 
@@ -62,6 +62,12 @@ function notAgreed(){
 		}
 		if (stop == false){
 			console.log("We good");
+			/* Here goes nothing guys. Wish us all luck. */
+			window.localStorage["agreedToGood"] = true;
+			var ourRsa =  cryptico.generateRSAKey($('#pwdOne').val(), 2048);
+			window.localStorage["masterKey"] = cryptico.publicKeyString(ourRsa);
+			window.localStorage["personalKeys"] = cryptico.encrypt(JSON.stringify({'name': $('#user').val()}), ourRsa);
+			window.localStorage["friendsKeys"] = 
 		}
 	});
 	$('#agreement').show();

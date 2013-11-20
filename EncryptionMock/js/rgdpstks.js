@@ -70,8 +70,6 @@ function createPanel(){
     addBodyListener();
   });
 
-  
-
   /*
   var xChkBx = $('<input />', {type: 'radio', id: 'tab-3', name:'tab-group-1'}).appendTo(xTab);
   $('<label />', {for: 'tab-3'}).text('X').appendTo(dcTab);
