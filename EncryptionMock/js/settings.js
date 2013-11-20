@@ -74,8 +74,8 @@ function notAgreed(){
 			var pki = forge.pki;
 			var rsa = pki.rsa;
 			var usePair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
-			window.localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'public': pki.publicKeyToPem(usePair.publicKey), 'private': pki.privateKeyToPem(usePair.privateKey)}]);
-			window.localStorage['publickeys'] = JSON.stringify([{'name': $('#user').val() + " [Default]", 'public': pki.publicKeyToPem(usePair.publicKey)}]);
+			window.localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
+			window.localStorage['publicKeys'] = JSON.stringify([{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey)}]);
 			location.reload();
 			/* // got the better library to work. Commenting out in case I need this later.
 			var ourRsa =  cryptico.generateRSAKey($('#pwdOne').val(), 2048);
@@ -93,16 +93,22 @@ function verifyUser(){
 		try{
 			console.log("stargin");
 			var personalKeys = decryptObject($('#pwdNow').val(), window.localStorage['personalKeys']);
-			var publickeys = JSON.parse(window.localStorage['publickeys']);
-			$('#pwdNow').addClass('valid');
+			var publicKeys = JSON.parse(window.localStorage['publicKeys']);
+			$('#pwdNow').removeClass('error').addClass('valid');
 			$.each(personalKeys, function(key, value){
 				console.log(key);
 				console.log(value);
+				$('<option />').data('name', value.name).data('privateKey', value.privateKey).data('public', value.publicKey).text(value.name).appendTo($('#priv'));
 			});
-			$.each(publickeys, function(key, value){
+			$.each(publicKeys, function(key, value){
 				console.log(key);
 				console.log(value);
+				$('<option />').data('name', value.name).data('publicKey', value.publicKey).text(value.name).appendTo($('#publ'));
 			});
+			usrpswrd = $('#pwdNow').val();
+			$('#pwdNow').remove();
+			$('#verify').hide();
+			$('#control').show();
 		}catch(error){
 			$('#pwdNow').addClass('error');
 			console.log(error);
