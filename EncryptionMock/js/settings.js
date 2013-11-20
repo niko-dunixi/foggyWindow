@@ -1,5 +1,5 @@
 var agreed = false;
-if (window.localStorage["agreedToGood"] == "true"){
+if (localStorage["agreedToGood"] == "true"){
 	agreed = true;
 }
 
@@ -69,13 +69,13 @@ function notAgreed(){
 		if (stop == false){
 			console.log("We good");
 			/* Here goes nothing guys. Wish us all luck. */
-			window.localStorage["agreedToGood"] = true;
+			localStorage["agreedToGood"] = true;
 			$(this)[0].disabled = true;
 			var pki = forge.pki;
 			var rsa = pki.rsa;
 			var usePair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
-			window.localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
-			window.localStorage['publicKeys'] = JSON.stringify([{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey)}]);
+			localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
+			localStorage['publicKeys'] = JSON.stringify([{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey)}]);
 			location.reload();
 			/* // got the better library to work. Commenting out in case I need this later.
 			var ourRsa =  cryptico.generateRSAKey($('#pwdOne').val(), 2048);
@@ -121,8 +121,6 @@ function encryptObject(pwd, obj){
 	return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
 }
 function decryptObject(pwd, obj){
-	console.log(obj);
-	console.log(atob)
 	return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
 }
 
