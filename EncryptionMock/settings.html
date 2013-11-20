@@ -8,6 +8,41 @@
 		<script src="js/sjcl_full.js"></script>
 
 		<!-- Yes these are, in fact, all necessary. We may need to link more actually (hopefully not though)-->
+		<script src="forge/util.js"></script>
+		<script src="forge/debug.js"></script>
+		<script src="forge/jsbn.js"></script>
+		<script src="forge/oids.js"></script>
+		<script src="forge/asn1.js"></script>
+		<script src="forge/sha1.js"></script>
+		<script src="forge/sha256.js"></script>
+		<script src="forge/md5.js"></script>
+		<script src="forge/md.js"></script> 
+		<script src="forge/aes.js"></script>
+		<script src="forge/prng.js"></script>
+		<script src="forge/random.js"></script>
+		<script src="forge/jsbn.js"></script> 
+		<script src="forge/pkcs1.js"></script>
+		<script src="forge/rsa.js"></script>
+
+		<script src="forge/aes.js"></script>
+		<script src="forge/des.js"></script>
+		<script src="forge/rc2.js"></script>
+		<script src="forge/aes.js"></script>
+		<script src="forge/pbe.js"></script>
+		<script src="forge/pem.js"></script>
+		<script src="forge/hmac.js"></script>
+		<script src="forge/pbkdf2.js"></script>
+		<script src="forge/pkcs7asn1.js"></script>
+		<script src="forge/pkcs12.js"></script>
+		<script src="forge/pss.js"></script>
+		<script src="forge/mgf1.js"></script>
+		<script src="forge/mgf.js"></script>
+		<script src="forge/x509.js"></script>
+		<script src="forge/pki.js"></script>
+
+
+		<!-- Mother Heifer, here we go again! !-->
+		
 		<!--
 		This library seems to be stuck. I've spent atleast three days with it and I can't seem to get it to work correctly.
 		Please see issue if none of you believe me:
@@ -77,6 +112,10 @@
 					<div style="float: left;">Re-enter:</div>
 					<div style="float: right;"><input type="password" id="pwdTwo"></div>
 					<div style="clear: both;"/>
+					<div style="text-align: center;">
+						<p>You cannot change this password. It is permanent.</p><!-- We can make it changeable later, but for now that is a TON of work.-->
+						<p>Choose wisely.</p>
+					</div>
 					<div style="text-align: center;"><button type="button" style="margin: 15px auto;" id="agree">I Agree</button></div>
 				</div>
 				<!--
@@ -97,6 +136,22 @@
 				keypair.privateKey.decrypt(atob(ct));
 
 				!-->
+			</div>
+		</div>
+		<div id="verify" style="margine: 3% 30%; display: none;">
+			<div>Verify Identity</div>
+			<div style="margin-top: 15px; margin-bottom: 15px;">Please confirm yourself.</div>
+			<div style="align:center; width: 60%; margin: auto;">
+				<div>
+					<input type="password" id="pwdNow">
+				</div>
+			</div>
+		</div>
+		<div id="control" style="margin: 3% 20%; display: none;">
+			<div style="float: left; text-align: center;">
+				Control Panel
+				<div style="align:center; width: 60%; margin: auto;">
+				</div>
 			</div>
 		</div>
 	</body>
