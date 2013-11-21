@@ -70,7 +70,11 @@ function notAgreed(){
 			console.log("We good");
 			/* Here goes nothing guys. Wish us all luck. */
 			localStorage["agreedToGood"] = true;
+			$('#pwdOne')[0].disabled = true;
+			$('#pwdTwo')[0].disabled = true;
+			$('#user')[0].disabled = true;
 			$(this)[0].disabled = true;
+			$(this).text('Processing...');
 			var pki = forge.pki;
 			var rsa = pki.rsa;
 			var usePair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
@@ -108,6 +112,42 @@ function verifyUser(){
 			usrpswrd = $('#pwdNow').val();
 			$('#pwdNow').remove();
 			$('#verify').hide();
+
+
+
+
+
+			$('#genKey').bind('click', function(){
+
+				var pki = forge.pki;
+				var rsa = pki.rsa;
+				var pair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
+				//localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
+				var a = pki.privateKeyToPem(pair.privateKey);
+				var b = pki.publicKeyToPem(pair.publicKey);
+
+				//appending new key to the options list.
+				$('<option />').data('name', "Surplus Key " + String($('#priv option').length)).data('privateKey', a).data('publicKey', b).text("Surplus Key " + String($('#priv option').length)).appendTo($('#priv'));
+
+				//saving keys.
+				var newStore = new Array();
+				$('#priv option').each(function(index, value){
+					newStore.push({'name': $(this).data('name'), 'privateKey': $(this).data('privateKey'), 'publicKey': $(this).data('publicKey')});
+				});
+
+				//$( "#myselect option:selected" )
+
+				//comming those keys.
+				localStorage['personalKeys'] = encryptObject(usrpswrd, newStore);
+			});
+
+			$('#shareKey').bind('click', function(){
+				var sel = $('#priv option:selected');
+				if (sel.length){
+					$('#pubKeyText').text(sel.data('publicKey'));
+				}
+			})
+
 			$('#control').show();
 		}catch(error){
 			$('#pwdNow').addClass('error');
