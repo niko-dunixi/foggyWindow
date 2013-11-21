@@ -113,29 +113,22 @@ function verifyUser(){
 			$('#pwdNow').remove();
 			$('#verify').hide();
 
-
-
-
-
+			//generate a new private and corisponding key (Gen New Key Button)
 			$('#genKey').bind('click', function(){
-
 				var pki = forge.pki;
 				var rsa = pki.rsa;
 				var pair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
-				//localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
 				var a = pki.privateKeyToPem(pair.privateKey);
 				var b = pki.publicKeyToPem(pair.publicKey);
 
 				//appending new key to the options list.
 				$('<option />').data('name', "Surplus Key " + String($('#priv option').length)).data('privateKey', a).data('publicKey', b).text("Surplus Key " + String($('#priv option').length)).appendTo($('#priv'));
 
-				//saving keys.
+				//re-parsing keys.
 				var newStore = new Array();
 				$('#priv option').each(function(index, value){
 					newStore.push({'name': $(this).data('name'), 'privateKey': $(this).data('privateKey'), 'publicKey': $(this).data('publicKey')});
 				});
-
-				//$( "#myselect option:selected" )
 
 				//comming those keys.
 				localStorage['personalKeys'] = encryptObject(usrpswrd, newStore);
