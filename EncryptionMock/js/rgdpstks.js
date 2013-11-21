@@ -49,7 +49,7 @@ function createPanel(){
   panel.css({
     position: 'fixed',
     width: '550',
-    height: '350',
+    height: '355',
     bottom: '0px',
     right: '0px'
   });
@@ -105,7 +105,10 @@ function genTabs(){
     ecBinder = forge.pki.publicKeyFromPem($(this).data('publicKey'));
     console.log(ecBinder);
   });
-  var ecTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').appendTo(ecTabContent);
+  
+  
+  //added id ecTxtTwo to capture data from this field
+  var ecTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').attr('id', 'ecTxtTwo').appendTo(ecTabContent);
   ecTxtTwo[0].disabled = true;
   ecTxtOne.bind('input propertychange', function(){
     //ecTxtTwo.val(encodeURI(ecTxtOne.val()));
@@ -115,12 +118,15 @@ function genTabs(){
   var dcChkBx = $('<input />', {type: 'radio', id: 'tab-2', name:'tab-group-1'}).appendTo(dcTab);
   $('<label />', {for: 'tab-2'}).text('Decrypt').appendTo(dcTab);
   var dcTabContent = $('<div/>').addClass('rgdpstxContent').appendTo(dcTab);
-  var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(dcTabContent);
+  
+  //added id dcTxtOne to send data to this field
+  var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').attr('id', 'dcTxtOne').appendTo(dcTabContent);
   dcSelect = $('<select />').css('width', '100%').appendTo(dcTabContent);
   dcSelect.on('change', function(){ //when the selection changes, shifts to a new key.
     dcBinder = forge.pki.privateKeyFromPem($(this).data('privateKey'));
     console.log(ecBinder);
   });
+  
   var dcTxtTwo = $('<textarea />').css('height', '35%').css('width', '100%').appendTo(dcTabContent);
   dcTxtTwo[0].disabled = true;
   dcTxtOne.bind('input propertychange', function(){
@@ -128,11 +134,20 @@ function genTabs(){
     dcTxtTwo.val(dcBinder.decrypt(atob(dcTxtOne.val())));
   });
   
-  var copyPasteBtn = $('<button />').text('Copy to field').attr('id', 'copyToField').appendTo(ecTabContent);
+  //encrypt button
+  var encryptCopyBtn = $('<button />').text('Copy to field').attr('id', 'copyToField').appendTo(ecTabContent);
   $('#copyToField').click(function() {
-    var ecTxtTwoContent = $('.ecTxtTwo').val()
-    console.log('clicked button: ' + ecTxtTwoContent);
-    addBodyListener();
+    console.log('clicked copyToField');
+    //did encrypt button get clicked?
+    addBodyListener(true);
+  });
+  
+  //decrypt button
+  var decryptCopyBtn = $('<button />').text('Decrypt field').attr('id', 'decryptField').appendTo(dcTabContent);
+  $('#decryptField').click(function() {
+    console.log('clicked decryptField');
+    //did encrypt button get clicked?
+    addBodyListener(false);
   });
 
   /*
