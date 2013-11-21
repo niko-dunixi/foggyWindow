@@ -141,6 +141,14 @@ function genTabs(){
     //did encrypt button get clicked?
     addBodyListener(true);
   });
+  var sendMessageBtn = $('<button />').text('Send via Email Client').appendTo(ecTabContent);
+  sendMessageBtn.bind('click', function(){
+    sendEmail(ecTxtTwo.val());
+  });
+  var sendMessageBtn = $('<button />').text('Send via Gmail').appendTo(ecTabContent);
+  sendMessageBtn.bind('click', function(){
+    sendGmail(ecTxtTwo.val());
+  });
   
   //decrypt button
   var decryptCopyBtn = $('<button />').text('Decrypt field').attr('id', 'decryptField').appendTo(dcTabContent);
@@ -163,12 +171,13 @@ function destroyPanel(){
   panelCreated = false;
 }
 
-function sendEmail(){
-
+function sendEmail(body){
+  var w = window.open("mailto:?&body="+encodeURIComponent(body));
+  setTimeout(function(){w.close()}, 150);
 }
 
-function sendGmail(){
-
+function sendGmail(body){
+  var w = window.open("https://mail.google.com/mail/?view=cm&fs=1&body="+encodeURIComponent(body));
 }
 
 $(document).ready(function(){
