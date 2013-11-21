@@ -5,6 +5,9 @@ if (localStorage["agreedToGood"] == "true"){
 
 function manualReset(){ //never called, but can be typed in the console.
 	localStorage.removeItem("agreedToGood");
+	localStorage.removeItem("personalKeys");
+	localStorage.removeItem("publicKeys");
+	location.reload();
 }
 
 var usrpswrd = ""; 
@@ -87,9 +90,16 @@ function notAgreed(){
 }
 
 function verifyUser(){
+	$('.scortch').each(function(){
+		console.log("Adding SE Handlers.");
+		$(this).bind('click', function(){
+			console.log("Killing Chunks.");
+			manualReset();
+		});
+	});
 	$('#vfyNow').bind('click', function(){
 		try{
-			console.log("stargin");
+			console.log("starting");
 			var personalKeys = decryptObject($('#pwdNow').val(), window.localStorage['personalKeys']);
 			var publicKeys = JSON.parse(window.localStorage['publicKeys']);
 			$('#pwdNow').removeClass('error').addClass('valid');
