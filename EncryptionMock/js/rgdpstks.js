@@ -102,7 +102,7 @@ function genTabs(){
   var ecTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').appendTo(ecTabContent);
   ecSelect = $('<select />').css('width', '100%').appendTo(ecTabContent);
   ecSelect.on('change', function(){ //when the selection changes, shifts to a new key.
-    ecBinder = forge.pki.publicKeyFromPem($(this).data('publicKey'));
+    ecBinder = forge.pki.publicKeyFromPem(ecSelect.find(':selected').data('publicKey'));
     console.log(ecBinder);
   });
   
@@ -123,7 +123,7 @@ function genTabs(){
   var dcTxtOne = $('<textarea />').css('height', '40%').css('width', '100%').attr('id', 'dcTxtOne').appendTo(dcTabContent);
   dcSelect = $('<select />').css('width', '100%').appendTo(dcTabContent);
   dcSelect.on('change', function(){ //when the selection changes, shifts to a new key.
-    dcBinder = forge.pki.privateKeyFromPem($(this).data('privateKey'));
+    dcBinder = forge.pki.privateKeyFromPem(dcSelect.find(':selected').data('privateKey'));
     console.log(ecBinder);
   });
   
