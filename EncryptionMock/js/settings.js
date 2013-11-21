@@ -81,12 +81,6 @@ function notAgreed(){
 			localStorage['personalKeys'] = encryptObject($('#pwdOne').val(), [{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey), 'privateKey': pki.privateKeyToPem(usePair.privateKey)}]);
 			localStorage['publicKeys'] = JSON.stringify([{'name': $('#user').val() + " [Default]", 'publicKey': pki.publicKeyToPem(usePair.publicKey)}]);
 			location.reload();
-			/* // got the better library to work. Commenting out in case I need this later.
-			var ourRsa =  cryptico.generateRSAKey($('#pwdOne').val(), 2048);
-			window.localStorage["masterKey"] = cryptico.publicKeyString(ourRsa);
-			window.localStorage["personalKeys"] = cryptico.encrypt(JSON.stringify([{'name': $('#user').val(), 'private': cryptico]), ourRsa);
-			window.localStorage["friendsKeys"] = JSON.stringify([{'name': $('#user').val()}]);
-			*/
 		}
 	});
 	$('#agreement').show();
@@ -130,16 +124,40 @@ function verifyUser(){
 					newStore.push({'name': $(this).data('name'), 'privateKey': $(this).data('privateKey'), 'publicKey': $(this).data('publicKey')});
 				});
 
-				//comming those keys.
+				//commiting those keys.
 				localStorage['personalKeys'] = encryptObject(usrpswrd, newStore);
 			});
 
+			//gets currently selected public key from personal keys.
 			$('#shareKey').bind('click', function(){
 				var sel = $('#priv option:selected');
 				if (sel.length){
-					$('#pubKeyText').text(sel.data('publicKey'));
+					$('#pubKeyText').text(btoa(sel.data('publicKey')));
 				}
 			})
+
+			//Saving a friend's public key.
+			$('#saveKey').bind('click', function(){
+				var pki = forge.pki;
+				var pubKey;
+				try{
+					//check to make sure that the public key is actually valid.
+					pubKey = atob($('#keyEntry').text());
+					console.log(pubKey);
+					pki.publicKeyFromPem(pubKey);
+				} catch(error){
+					console.log(error);
+					console.log("Probably an invalid public key.");
+					return false;
+				}
+				$('<option />').data('name', $('nameEntry').text()).data('publicKey', pubKey).text($('nameEntry').text()).appendTo($('#publ'));
+				//re-parsing keys.
+				var newStore = new Array();
+				$('#publ option').each(function(index, value){
+					newStore.push({'name': $(this).data('name'), 'publicKey': $(this).data('publicKey')});
+				});
+				localStorage['publicKeys'] = JSON.stringify(newStore);
+			});
 
 			$('#control').show();
 		}catch(error){
