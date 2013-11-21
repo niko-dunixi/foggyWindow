@@ -80,15 +80,20 @@
 				<div style="float: left; text-align: center;">
 					Control Panel
 				</div>
+				<div style="clear: both; height: 15px;"></div>
 				<div style="align:center; width: 60%; margin: auto; display: inline-block;">
 					<div style="float: left;">
 						<div>Personal Keys:</div>
-						<div><select id="priv" size='10'></select>
-						</div>
+						<div><select id="priv" size='10'></select></div>
+						<div><button id="genKey" style="width: 100%;">Gen New Key</button></div>
+						<div><button id="shareKey" style="width: 100%;">Share Selected Public Key</button></div>
+						<div><textarea id="pubKeyText" style="width: 100%;"></textarea></div>
 					</div>
 					<div style="float: right;">
 						<div>Friend's Keys:</div>
-						<div><select id="publ" size='10'></select>
+						<div><select id="publ" size='10'></select></div>
+						<div><textarea id="keyEntry" style="width: 100%;"></textarea></div>
+						<div><button id="saveKey" style="width: 100%;">Save Friend's Key</button></div>
 					</div>
 				</div>
 			</div>
