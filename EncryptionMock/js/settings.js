@@ -138,25 +138,28 @@ function verifyUser(){
 
 			//Saving a friend's public key.
 			$('#saveKey').bind('click', function(){
-				var pki = forge.pki;
-				var pubKey;
+				//var pki = forge.pki;
+				var pemKey;
+				var failed = false;
 				try{
 					//check to make sure that the public key is actually valid.
-					pubKey = atob($('#keyEntry').text());
-					console.log(pubKey);
-					pki.publicKeyFromPem(pubKey);
+					pemKey = atob($('#keyEntry').val());
+					console.log(pemKey);
+					forge.pki.publicKeyFromPem(pemKey);
 				} catch(error){
+					failed = true;
 					console.log(error);
 					console.log("Probably an invalid public key.");
-					return false;
 				}
-				$('<option />').data('name', $('nameEntry').text()).data('publicKey', pubKey).text($('nameEntry').text()).appendTo($('#publ'));
-				//re-parsing keys.
-				var newStore = new Array();
-				$('#publ option').each(function(index, value){
-					newStore.push({'name': $(this).data('name'), 'publicKey': $(this).data('publicKey')});
-				});
-				localStorage['publicKeys'] = JSON.stringify(newStore);
+				if (failed == false){
+					$('<option />').data('name', $('#nameEntry').val()).data('publicKey', pemKey).text($('#nameEntry').val()).appendTo($('#publ'));
+					//re-parsing keys.
+					var newStore = new Array();
+					$('#publ option').each(function(index, value){
+						newStore.push({'name': $(this).data('name'), 'publicKey': $(this).data('publicKey')});
+					});
+					localStorage['publicKeys'] = JSON.stringify(newStore);
+				}
 			});
 
 			$('#control').show();
