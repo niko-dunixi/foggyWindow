@@ -7,7 +7,7 @@ function manualReset(){ //never called, but can be typed in the console.
 	localStorage.removeItem("agreedToGood");
 }
 
-var usrpswrd = ""; //I'll admit this isn't the best place for this to be.
+var usrpswrd = ""; 
 
 function notAgreed(){
 	$('#user').bind('input propertychange', function(){
@@ -109,59 +109,71 @@ function verifyUser(){
 
 			//generate a new private and corisponding key (Gen New Key Button)
 			$('#genKey').bind('click', function(){
-				var pki = forge.pki;
-				var rsa = pki.rsa;
-				var pair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
-				var a = pki.privateKeyToPem(pair.privateKey);
-				var b = pki.publicKeyToPem(pair.publicKey);
+				try{
+					var pki = forge.pki;
+					var rsa = pki.rsa;
+					var pair = rsa.generateKeyPair({bits: 2048, e: 0x10001}); //this pair will be for our inital key-pair
+					var a = pki.privateKeyToPem(pair.privateKey);
+					var b = pki.publicKeyToPem(pair.publicKey);
 
-				//appending new key to the options list.
-				$('<option />').data('name', "Surplus Key " + String($('#priv option').length)).data('privateKey', a).data('publicKey', b).text("Surplus Key " + String($('#priv option').length)).appendTo($('#priv'));
+					//appending new key to the options list.
+					$('<option />').data('name', "Surplus Key " + String($('#priv option').length)).data('privateKey', a).data('publicKey', b).text("Surplus Key " + String($('#priv option').length)).appendTo($('#priv'));
 
-				//re-parsing keys.
-				var newStore = new Array();
-				$('#priv option').each(function(index, value){
-					newStore.push({'name': $(this).data('name'), 'privateKey': $(this).data('privateKey'), 'publicKey': $(this).data('publicKey')});
-				});
+					//re-parsing keys.
+					var newStore = new Array();
+					$('#priv option').each(function(index, value){
+						newStore.push({'name': $(this).data('name'), 'privateKey': $(this).data('privateKey'), 'publicKey': $(this).data('publicKey')});
+					});
 
-				//commiting those keys.
-				localStorage['personalKeys'] = encryptObject(usrpswrd, newStore);
+					//commiting those keys.
+					localStorage['personalKeys'] = encryptObject(usrpswrd, newStore);
+				}catch(error){
+				}
 			});
 
 			//gets currently selected public key from personal keys.
-			$('#shareKey').bind('click', function(){
-				var sel = $('#priv option:selected');
-				if (sel.length){
-					$('#pubKeyText').text(btoa(sel.data('publicKey')));
-				}
-			})
-
-			//Saving a friend's public key.
-			$('#saveKey').bind('click', function(){
-				//var pki = forge.pki;
-				var pemKey;
-				var failed = false;
+			$('#shareKey').bind('click', function() {
+				console.log("attempting to get public key.");
 				try{
-					//check to make sure that the public key is actually valid.
-					pemKey = atob($('#keyEntry').val());
-					console.log(pemKey);
-					forge.pki.publicKeyFromPem(pemKey);
-				} catch(error){
-					failed = true;
+					var sel = $('#priv').find(':selected');
+					console.log(sel);
+					console.log(sel.data('publicKey'));
+					if (sel.length > 0){
+						$('#pubKeyText').text(sel.data('publicKey'));
+					}
+				} catch (error){
 					console.log(error);
-					console.log("Probably an invalid public key.");
-				}
-				if (failed == false){
-					$('<option />').data('name', $('#nameEntry').val()).data('publicKey', pemKey).text($('#nameEntry').val()).appendTo($('#publ'));
-					//re-parsing keys.
-					var newStore = new Array();
-					$('#publ option').each(function(index, value){
-						newStore.push({'name': $(this).data('name'), 'publicKey': $(this).data('publicKey')});
-					});
-					localStorage['publicKeys'] = JSON.stringify(newStore);
 				}
 			});
 
+			//Saving a friend's public key.
+			$('#saveKey').bind('click', function(){
+				try{
+					//var pki = forge.pki;
+					var pemKey;
+					var failed = false;
+					try{
+						//check to make sure that the public key is actually valid.
+						pemKey = $('#keyEntry').val();
+						console.log(pemKey);
+						forge.pki.publicKeyFromPem(pemKey);
+					} catch(error){
+						failed = true;
+						console.log(error);
+						console.log("Probably an invalid public key.");
+					}
+					if (failed == false){
+						$('<option />').data('name', $('#nameEntry').val()).data('publicKey', pemKey).text($('#nameEntry').val()).appendTo($('#publ'));
+						//re-parsing keys.
+						var newStore = new Array();
+						$('#publ option').each(function(index, value){
+							newStore.push({'name': $(this).data('name'), 'publicKey': $(this).data('publicKey')});
+						});
+						localStorage['publicKeys'] = JSON.stringify(newStore);
+					}
+				} catch (error){
+				}
+			});
 			$('#control').show();
 		}catch(error){
 			$('#pwdNow').addClass('error');
