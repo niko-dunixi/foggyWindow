@@ -132,13 +132,14 @@ function verifyUser(){
 			});
 
 			//gets currently selected public key from personal keys.
-			$('#shareKey').bind('click', function(){
+			$('#shareKey').bind('click', function() {
 				console.log("attempting to get public key.");
 				try{
 					var sel = $('#priv').find(':selected');
 					console.log(sel);
+					console.log(sel.data('publicKey'));
 					if (sel.length > 0){
-						$('#pubKeyText').text(btoa(sel.data('publicKey')));
+						$('#pubKeyText').text(sel.data('publicKey'));
 					}
 				} catch (error){
 					console.log(error);
@@ -153,7 +154,7 @@ function verifyUser(){
 					var failed = false;
 					try{
 						//check to make sure that the public key is actually valid.
-						pemKey = atob($('#keyEntry').val());
+						pemKey = $('#keyEntry').val();
 						console.log(pemKey);
 						forge.pki.publicKeyFromPem(pemKey);
 					} catch(error){
