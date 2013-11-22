@@ -176,11 +176,49 @@ function sendEmail(body){
   setTimeout(function(){w.close()}, 150);
 }
 
+function slidePanel()
+{
+  console.log("panel listen");
+  //not sure if this is what we are looking for.. but it is something!
+  //tutorial found here:
+  //http://www.ultramegatech.com/2009/06/create-a-slide-in-panel-jquery/
+  var panelPos = 0;
+
+  console.log("init panel");
+  $("#panel-drop-rgdpstks").click(function(e) {
+    console.log("panel clicked");
+    //e.preventDefault();
+    $("#panel-rgdpstks").animate({ top: panelPos }, 400, 'linear', function() {
+      console.log("animate panel");
+      if(panelPos == 0) { panelPos = -300; }
+      else { panelPos = 0; }
+    });
+  });
+  console.log("panel listen done");
+}
+
+function slidePanelMarkup()
+{
+  console.log("slide markup init");
+  
+  var slidePanel = $('<div />', {id: 'content-rgdpstks'}).css('z-index', 90001).appendTo('body');
+  panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo(slidePanel);
+  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Clicker").appendTo(panelContent);
+  panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
+  
+  console.log("slide markup done");
+
+}
+
 function sendGmail(body){
   var w = window.open("https://mail.google.com/mail/?view=cm&fs=1&body="+encodeURIComponent(body));
 }
 
 $(document).ready(function(){
+  slidePanelMarkup();
+  slidePanel();
+  
+  
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);/*
     console.log(request.name);
