@@ -1,12 +1,5 @@
 /* Append everything with rgdpstks to not interfere with page content */
 
-#content-rgdpstks {
-	height: 0px;
-	position: top;
-	overflow: hidden;
-	background-color: #FAFAFA;
-	border: 5px solid #000000;
-}
 #panel-rgdpstks {
 	width: 97.5%;
   padding-left: 1%;
@@ -23,7 +16,7 @@
   z-index: 9001; 
 }
 #panel-drop-rgdpstks {
-	width: 20;
+	width: 40px;
 	height: 20px;
 	position: absolute;
 	bottom: -20px;
@@ -39,4 +32,21 @@
 
 p#p-rgdpstks {
   text-align: center;
+}
+
+#panel-snap-top-rgdpstks
+{
+	width: 20px;
+	height: 20px;
+  top: 20px;
+  
+  position: absolute;
+}
+
+#panel-snap-bottom-rgdpstks
+{
+	width: 20px;
+	height: 20px;
+  top: 230px;
+  position: absolute;
 }

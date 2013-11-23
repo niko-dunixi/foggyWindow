@@ -185,26 +185,49 @@ function slidePanel()
   var panelPos = 0;
 
   console.log("init panel");
+  var panel = $("#panel-rgdpstks");
+  
+  
   $("#panel-drop-rgdpstks").click(function(e) {
     console.log("panel clicked");
     //e.preventDefault();
-    $("#panel-rgdpstks").animate({ top: panelPos }, 400, 'linear', function() {
+    
+    
+    $(panel).animate({ top: panelPos }, 400, 'linear', function() {
       console.log("animate panel");
       if(panelPos == 0) { panelPos = -300; }
       else { panelPos = 0; }
+      console.log('offset' + $(this).offset().top);
     });
   });
   console.log("panel listen done");
+  
+  $(panel).draggable({ 
+    axis: "y",
+    revert: 'invalid', 
+    snap: "#panel-snap-top-rgdpstks",
+    snap: "#panel-snap-bottom-rgdpstks",
+    drag: function( event, ui ) {
+      console.log('offset' + $(this).offset().top + ' ui ' + ui.position.top);
+      console.log('offset' + $(this).offset().top);
+    }
+  });
+  
+  var position = $(panel).position()
+  
 }
 
 function slidePanelMarkup()
 {
   console.log("slide markup init");
   
-  //var slidePanel = $('<div />', {id: 'content-rgdpstks'}).css('z-index', 90001).appendTo('body');
   panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo('body');
   panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Clicker").appendTo(panelContent);
   panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
+  
+  panelTop = $('<div />', {id: 'panel-snap-top-rgdpstks'}).text("top").appendTo('body');
+  panelBottom = $('<div />', {id: 'panel-snap-bottom-rgdpstks'}).text("bottom").appendTo('body');
+  
   
   console.log("slide markup done");
 
