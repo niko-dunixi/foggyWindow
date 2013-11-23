@@ -187,7 +187,7 @@ function slidePanel()
   console.log("init panel");
   var panel = $("#panel-rgdpstks");
   
-  
+  /* 
   $("#panel-drop-rgdpstks").click(function(e) {
     console.log("panel clicked");
     //e.preventDefault();
@@ -199,18 +199,49 @@ function slidePanel()
       else { panelPos = 0; }
       console.log('offset' + $(this).offset().top);
     });
-  });
+  }); */
   console.log("panel listen done");
+  
+  var dragCount = 0;
   
   $(panel).draggable({ 
     axis: "y",
-    revert: 'invalid', 
+    /*
     snap: "#panel-snap-top-rgdpstks",
     snap: "#panel-snap-bottom-rgdpstks",
+    */
     drag: function( event, ui ) {
-      console.log('offset' + $(this).offset().top + ' ui ' + ui.position.top);
+      console.log('pos ' + ui.position.top);
+    },
+    
+    //when the panel has stopped being dragged
+    stop: function( event, ui ) 
+    {
+      var panelPos = ui.position.top;
+      console.log('stopped dragging at ' + panelPos);
+      
+      //set where to transition the panel from open/close/open again
+      if (panelPos < -150) 
+      { 
+        panelPos = -300; 
+      }
+      else
+      {
+        panelPos = 0;
+      }
+      $(this).offset().top;
+      
+      $(panel).animate({ top: panelPos }, 200, 'linear', function() {
+      console.log("animate panel");
+      
+      //if the panel is starting to be dragged in, move it all the way in
+      if(panelPos == 0) { panelPos = -300; }
+      else { panelPos = 0; }
       console.log('offset' + $(this).offset().top);
-    }
+    });
+      
+    },
+    revert: 'true', 
   });
   
   var position = $(panel).position()
