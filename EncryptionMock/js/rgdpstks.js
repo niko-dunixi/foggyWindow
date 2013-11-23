@@ -204,12 +204,11 @@ function slidePanel()
   
   var dragCount = 0;
   
+  //setup the draggable functionality
   $(panel).draggable({ 
     axis: "y",
-    /*
-    snap: "#panel-snap-top-rgdpstks",
-    snap: "#panel-snap-bottom-rgdpstks",
-    */
+    containment: "#panel-contain-rgdpstks",
+    scroll: false,
     drag: function( event, ui ) {
       console.log('pos ' + ui.position.top);
     },
@@ -253,11 +252,10 @@ function slidePanelMarkup()
   console.log("slide markup init");
   
   panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo('body');
-  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Clicker").appendTo(panelContent);
+  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Pull me..").appendTo(panelContent);
   panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
   
-  panelTop = $('<div />', {id: 'panel-snap-top-rgdpstks'}).text("top").appendTo('body');
-  panelBottom = $('<div />', {id: 'panel-snap-bottom-rgdpstks'}).text("bottom").appendTo('body');
+  panelContain = $('<div />', {id: 'panel-contain-rgdpstks'}).text("contain").appendTo('body');
   
   
   console.log("slide markup done");

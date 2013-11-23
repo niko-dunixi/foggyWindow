@@ -34,19 +34,10 @@ p#p-rgdpstks {
   text-align: center;
 }
 
-#panel-snap-top-rgdpstks
+#panel-contain-rgdpstks
 {
 	width: 20px;
-	height: 20px;
-  top: 20px;
-  
+	height: 607px;
   position: absolute;
-}
-
-#panel-snap-bottom-rgdpstks
-{
-	width: 20px;
-	height: 20px;
-  top: 230px;
-  position: absolute;
+  top: -300px;
 }
