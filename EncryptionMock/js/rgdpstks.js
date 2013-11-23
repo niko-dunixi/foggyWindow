@@ -201,8 +201,8 @@ function slidePanelMarkup()
 {
   console.log("slide markup init");
   
-  var slidePanel = $('<div />', {id: 'content-rgdpstks'}).css('z-index', 90001).appendTo('body');
-  panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo(slidePanel);
+  //var slidePanel = $('<div />', {id: 'content-rgdpstks'}).css('z-index', 90001).appendTo('body');
+  panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo('body');
   panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Clicker").appendTo(panelContent);
   panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
   

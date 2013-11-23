@@ -1,7 +1,7 @@
 /* Append everything with rgdpstks to not interfere with page content */
 
 #content-rgdpstks {
-	height: 600px;
+	height: 0px;
 	position: top;
 	overflow: hidden;
 	background-color: #FAFAFA;
@@ -19,7 +19,8 @@
 	background-color: #FFFFFF;
   border-style:groove;
   border-color:#999999;
-  border-width: 5 px
+  border-width: 5 px;
+  z-index: 9001; 
 }
 #panel-drop-rgdpstks {
 	width: 20;
