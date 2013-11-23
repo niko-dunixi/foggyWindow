@@ -1,0 +1,43 @@
+/* Append everything with rgdpstks to not interfere with page content */
+
+#panel-rgdpstks {
+	width: 97.5%;
+  padding-left: 1%;
+  padding-right: 1%;
+	height: 300px;
+	position: absolute;
+	top: -300px;
+	left: 0px;
+	z-index: 9000;
+	background-color: #FFFFFF;
+  border-style:groove;
+  border-color:#999999;
+  /*background-image: -webkit-radial-gradient(white, black);*/
+  border-width: 5 px;
+}
+#panel-drop-rgdpstks {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	bottom: -20px;
+	margin-left: 50px;
+	background-color: #000000;
+	text-decoration: none;
+	color: #FFFFFF;
+  text-align: center;
+}
+#panel-tab-rgdpstks:focus {
+	outline: none;
+}
+
+p#p-rgdpstks {
+  text-align: center;
+}
+
+#panel-contain-rgdpstks
+{
+	width: 20px;
+	height: 607px;
+  position: absolute;
+  top: -300px;
+}

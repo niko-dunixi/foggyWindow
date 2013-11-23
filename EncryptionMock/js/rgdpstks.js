@@ -44,8 +44,10 @@ var ecBinder;
 var dcBinder;
 
 function createPanel(){
-  panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('body'); //It is over nine thousand.
+  panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('#panel-rgdpstks'); //It is over nine thousand.
   console.log("Panel appended to document body.");
+  /*
+  //original css
   panel.css({
     position: 'fixed',
     width: '550',
@@ -53,7 +55,9 @@ function createPanel(){
     bottom: '0px',
     right: '0px'
   });
-
+  */
+  panel.css({
+  });
   //I moved all the tab items to the "genTabs", to add content go to that method.
 
   //this now does password validation
@@ -176,11 +180,102 @@ function sendEmail(body){
   setTimeout(function(){w.close()}, 150);
 }
 
+function slidePanel()
+{
+  console.log("panel listen");
+  //not sure if this is what we are looking for.. but it is something!
+  //tutorial found here:
+  //http://www.ultramegatech.com/2009/06/create-a-slide-in-panel-jquery/
+  var panelPos = 0;
+
+  console.log("init panel");
+  var panel = $("#panel-rgdpstks");
+  
+  /* 
+  $("#panel-drop-rgdpstks").click(function(e) {
+    console.log("panel clicked");
+    //e.preventDefault();
+    
+    
+    $(panel).animate({ top: panelPos }, 400, 'linear', function() {
+      console.log("animate panel");
+      if(panelPos == 0) { panelPos = -300; }
+      else { panelPos = 0; }
+      console.log('offset' + $(this).offset().top);
+    });
+  }); */
+  console.log("panel listen done");
+  
+  var dragCount = 0;
+  
+  //setup the draggable functionality
+  $(panel).draggable({ 
+    axis: "y",
+    containment: "#panel-contain-rgdpstks",
+    scroll: false,
+    drag: function( event, ui ) {
+      //console.log('pos ' + ui.position.top);
+    },
+    
+    //when the panel has stopped being dragged
+    stop: function( event, ui ) 
+    {
+      var panelPos = ui.position.top;
+      console.log('stopped dragging at ' + panelPos);
+      
+      //set where to transition the panel from open/close/open again
+      if (panelPos < -150) 
+      { 
+        panelPos = -300; 
+      }
+      else
+      {
+        panelPos = 0;
+      }
+      $(this).offset().top;
+      
+      $(panel).animate({ top: panelPos }, 200, 'linear', function() {
+      //console.log("animate panel");
+      
+      //if the panel is starting to be dragged in, move it all the way in
+      if(panelPos == 0) { panelPos = -300; }
+      else { panelPos = 0; }
+      //console.log('offset' + $(this).offset().top);
+    });
+      
+    },
+    revert: 'true', 
+  });
+  
+  var position = $(panel).position()
+  
+}
+
+function slidePanelMarkup()
+{
+  console.log("slide markup init");
+  
+  panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo('body');
+  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Pull").appendTo(panelContent);
+  //panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
+  
+  //this is a hidden panel that constrains the movement of the sliding panel
+  panelContain = $('<div />', {id: 'panel-contain-rgdpstks'}).appendTo('body');
+  
+  
+  console.log("slide markup done");
+
+}
+
 function sendGmail(body){
   var w = window.open("https://mail.google.com/mail/?view=cm&fs=1&body="+encodeURIComponent(body));
 }
 
 $(document).ready(function(){
+  slidePanelMarkup();
+  slidePanel();
+  
+  
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);/*
     console.log(request.name);
