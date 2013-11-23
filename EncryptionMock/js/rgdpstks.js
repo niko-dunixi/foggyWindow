@@ -44,8 +44,10 @@ var ecBinder;
 var dcBinder;
 
 function createPanel(){
-  panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('body'); //It is over nine thousand.
+  panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('#panel-rgdpstks'); //It is over nine thousand.
   console.log("Panel appended to document body.");
+  /*
+  //original css
   panel.css({
     position: 'fixed',
     width: '550',
@@ -53,7 +55,9 @@ function createPanel(){
     bottom: '0px',
     right: '0px'
   });
-
+  */
+  panel.css({
+  });
   //I moved all the tab items to the "genTabs", to add content go to that method.
 
   //this now does password validation
@@ -210,7 +214,7 @@ function slidePanel()
     containment: "#panel-contain-rgdpstks",
     scroll: false,
     drag: function( event, ui ) {
-      console.log('pos ' + ui.position.top);
+      //console.log('pos ' + ui.position.top);
     },
     
     //when the panel has stopped being dragged
@@ -231,12 +235,12 @@ function slidePanel()
       $(this).offset().top;
       
       $(panel).animate({ top: panelPos }, 200, 'linear', function() {
-      console.log("animate panel");
+      //console.log("animate panel");
       
       //if the panel is starting to be dragged in, move it all the way in
       if(panelPos == 0) { panelPos = -300; }
       else { panelPos = 0; }
-      console.log('offset' + $(this).offset().top);
+      //console.log('offset' + $(this).offset().top);
     });
       
     },
@@ -252,10 +256,11 @@ function slidePanelMarkup()
   console.log("slide markup init");
   
   panelContent = $('<div />', {id: 'panel-rgdpstks'}).appendTo('body');
-  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Pull me..").appendTo(panelContent);
-  panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
+  panelPulldown = $('<href />', {id: 'panel-drop-rgdpstks'}).text("Pull").appendTo(panelContent);
+  //panelText = $('<p />' , {id: 'p-rgdpstks'}).text('hi! You found me!').appendTo(panelContent);
   
-  panelContain = $('<div />', {id: 'panel-contain-rgdpstks'}).text("contain").appendTo('body');
+  //this is a hidden panel that constrains the movement of the sliding panel
+  panelContain = $('<div />', {id: 'panel-contain-rgdpstks'}).appendTo('body');
   
   
   console.log("slide markup done");

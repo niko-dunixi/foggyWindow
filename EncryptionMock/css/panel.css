@@ -8,12 +8,12 @@
 	position: absolute;
 	top: -300px;
 	left: 0px;
-	z-index: 20;
+	z-index: 9000;
 	background-color: #FFFFFF;
   border-style:groove;
   border-color:#999999;
+  /*background-image: -webkit-radial-gradient(white, black);*/
   border-width: 5 px;
-  z-index: 9001; 
 }
 #panel-drop-rgdpstks {
 	width: 40px;
