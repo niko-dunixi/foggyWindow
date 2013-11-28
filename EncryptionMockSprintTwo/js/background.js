@@ -1,28 +1,48 @@
-var initialized = localStorage['initialized']; //this checks to see if this is the first time this extension has ever been run.
+var initialized = localStorage['initialized'];
 if (typeof initialized == "undefined"){
-	window.open("settings.html", "NewWindow"+String(Math.floor(Math.random()*7000)));
 	localStorage['initialized'] = true;
+	localStorage['friends'] = new Array();
 }
 
+//Chrome listener API. The connection between the injected script and the local storage + vice versa.
 chrome.runtime.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(msg) {
 		switch (port.name){
+			//if the button is pressed, toggle is called and resent to the active tab.
 			case 'toggle':
 				console.log("Toggle Called.");
 				try{
-					if (localStorage["agreedToGood"] != "true"){ //force the user to accept user license, but more importantly generate inital key.
-						window.open("settings.html", "NewWindow"+String(Math.floor(Math.random()*7000)));
-					} else { //once they have generated the inital keys we proceed as normal.
-						chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-							chrome.tabs.sendMessage(tabs[0].id, {'name': 'toggle', 'publKeys': localStorage['publicKeys'], 'privKeys': localStorage['personalKeys']}, function(response) {
-								console.log(response.result);
-							});
+					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+						chrome.tabs.sendMessage(tabs[0].id, {'name': 'toggle'}, function(response) {
+							console.log(response.result);
 						});
-					}
+					});
 				} catch (err){
 					console.log(err.message);
 				}
 				break;
+			//if the page sends the background script "load_friends", then we send it back the list of keys that we have.
+			case 'load_friends':
+				console.log("Friend keys requested");
+				try{
+					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+						chrome.tabs.sendMessage(tabs[0].id, {'name': 'load_friends', 'keys': localStorage['friends']}, function(response) {
+							console.log(response.result);
+						});
+					});
+				} catch (err){
+					console.log(err.message);
+				}
+			//if we recieve the mesage "save_friends", then we also expect the JSON object to have a
+			//port.keys value with ALL the user keys that we want to save for next time
+			case 'save_friends':
+				console.log("Friend keys recieved");
+				try{
+					localStorage['friends'] = port.keys;
+				} catch (err){
+					console.log(err.message);
+				}
+			//If someone sends a typo or an unexpected message to the background page. Just do nothing.
 			default:
 				console.log("Unrecognized command.");
 				break;
