@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Encryption Mock",
+  "description": "This extension is a Encryption mockup",
+  "version": "0.1.5",
+  "background": {
+    "scripts": ["js/background.js"]
+    },
+  "options_page": "settings.html",
+  "permissions": ["activeTab", "storage"],
+  "content_scripts":[
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/rgdpstks.css", "css/panel.css"],
+      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js", "js/copyPasteData.js", "js/sjcl_full.js", "js/forge_full.js", "js/rgdpstks.js",
+            "cryptico/cryptico.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources" : ["js/jquery-2.0.3.min.map","html/panel.html"]
+}

@@ -1,0 +1,81 @@
+<html>
+	<head>
+		<title>Encryption Mock - Settings</title>
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
+		
+		<!-- Concatinated these into a single library !-->
+		<script type="text/javascript" src="js/sjcl_full.js"></script>
+
+		<!-- Yes these are, in fact, all necessary. We may need to link more actually (hopefully not though)-->
+		<script src="js/forge_full.js" type="text/javascript"></script>
+
+		<!--<link rel="stylesheet" type="test/css" href="css/settings.css">!-->
+	</head>
+	<body>
+		<div style="position: relative; width: 100%; height: 100%;">
+			<div id="agreement" style="margin: 3% 30%; display: none;">
+				<div>Agreement</div>
+				<div style="margin-top: 15px; margin-bottom: 15px;">You agree yada, yada, yada, no expressed or implied warantee, you won't use this extension for evil etc, etc, etc, this extension is only for acacemic purposes.</div>
+				<div style="text-align:center; clear: both; margin-top: 15px;">Please fill out the following information</div>
+				<div style="align:center; width: 60%; margin: auto;">
+					<div style="float: left;">Name, email, or alias:</div>
+					<div style="float: right;"><input type="text" id="user" placeholder="Any name you wish"></div>
+					<div style="clear: both;"> </div>
+					<div style="float: left;">Master Password:</div>
+					<div style="float: right;"><input type="password" id="pwdOne" placeholder="10 letters or more"></div>
+					<div style="clear: both;"></div>
+					<div style="float: left;">Re-enter:</div>
+					<div style="float: right;"><input type="password" id="pwdTwo"></div>
+					<div style="clear: both;"></div>
+					<div style="text-align: center;">
+						<p>You cannot change this password. It is permanent.</p><!--That's a lie. We can make it changeable later, but for now that is a TON of work.-->
+						<p>If you die in Canada, you die in real life.</p>
+					</div>
+					<div style="text-align: center;"><button type="button" style="margin: 15px auto;" id="agree">I Agree</button></div>
+				</div>
+			</div>
+			<div id="verify" style="margin: 3% 30%; display: none;">
+				<div>Verify Identity</div>
+				<div style="margin-top: 15px; margin-bottom: 15px;">Please confirm yourself.</div>
+				<div style="align:center; width: 60%; margin: auto;">
+					<div>
+						<input type="password" id="pwdNow"></input>
+					</div>
+					<div>
+						<button type="button" id="vfyNow">Verify</button>
+					</div>
+					<div>
+						<button type="button" class="scortch">Scortched Earth (Factory Reset)</button>
+					</div>
+				</div>
+			</div>
+			<div id="control" style="margin: 3% 20%; display: none;">
+				<div style="float: left; text-align: center;">
+					Control Panel
+				</div>
+				<div style="clear: both; height: 15px;"></div>
+				<div style="align:center; width: 60%; margin: auto; display: inline-block;">
+					<div style="float: left; width: 250px;">
+						<div>Personal Keys:</div>
+						<div><select id="priv" size='10' style='width: 100%;'></select></div>
+						<div><button id="genKey" style="width: 100%;">Gen New Key</button></div>
+						<div><button id="shareKey" style="width: 100%;">Share Selected Public Key</button></div>
+						<div><textarea id="pubKeyText" style="width: 100%;"></textarea></div>
+					</div>
+					<div style="float: right; width: 250px;">
+						<div>Friend's Keys:</div>
+						<div><select id="publ" size='10' style='width: 100%;'></select></div>
+						<div><textarea id="nameEntry" style="width: 100%;" placeholder="Friend's Name Here"></textarea></div>
+						<div><textarea id="keyEntry" style="width: 100%;" placeholder="Public Key Here"></textarea></div>
+						<div><button id="saveKey" style="width: 100%;">Save Friend's Key</button></div>
+					</div>
+					<div style="clear: both; height: 35px;"></div>
+					<div style="clear: both; width:100%;">
+						<button type="button" class="scortch" style="width: 100%;">Scortched Earth (Factory Reset)</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
