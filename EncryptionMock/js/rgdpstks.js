@@ -44,23 +44,17 @@ var ecBinder;
 var dcBinder;
 
 function createPanel(){
-  panel = $('<div />', {id: 'dpstx_pnl'}).css('z-index', 9001).hide().appendTo('body'); //It is over nine thousand.
-  console.log("Panel appended to document body.");
-  panel.css({
-    position: 'fixed',
-    width: '550',
-    height: '355',
-    bottom: '0px',
-    right: '0px'
+  $.ajax({
+    url:chrome.extension.getURL('html/panel.html'),
+    success:function(data){
+      $('body').append(data);
+    },
+    dataType:'html'
   });
-
-  //I moved all the tab items to the "genTabs", to add content go to that method.
-
-  //this now does password validation
-  var passarea = $('<div />').css('background-color', '#FFFFFF').css('position', 'relative').css('width', '100%').css('height', '100%').appendTo(panel);
-  $('<div />').css('height', '115px').appendTo(passarea);
-  var pass = $('<input type="password">').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
-  var butt = $('<button type="button">Verify</button>').appendTo($('<div />').css('text-align', 'center').appendTo(passarea));
+  panel = $('#dpstx_pnl')
+  console.log("Panel appended to document body.");
+  var butt = $('#password_verify');
+  butt.click(function(){console.log('hello')})
   butt.bind('click', function(){ //oh la la.
     try{
       var x = decryptObject(pass.val(), privKeys); //private keys

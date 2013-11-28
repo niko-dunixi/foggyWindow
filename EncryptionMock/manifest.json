@@ -21,5 +21,5 @@
     "default_icon": "icon.png",
     "default_popup": "popup/popup.html"
   },
-  "web_accessible_resources" : ["js/jquery-2.0.3.min.map"]
+  "web_accessible_resources" : ["js/jquery-2.0.3.min.map","html/panel.html"]
 }
