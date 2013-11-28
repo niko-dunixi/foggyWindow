@@ -1,3 +1,23 @@
+#dpstx_pnl
+{
+    position: fixed;
+    width: 550px;
+    top:0;
+    left:50%;
+}
+#dpstx_pnl #center
+{
+    position:relative;
+    left:-50%;
+    background-color:#efefef;
+    border:1px solid #dfdfdf;
+    padding:20px;
+}
+#dpstx_pnl #password_container
+{
+    margin:auto;
+    width:250px;
+}
 .rgdpstxTabs {
   position: relative;   
   min-height: 200px;
