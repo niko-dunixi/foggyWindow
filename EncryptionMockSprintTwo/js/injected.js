@@ -19,11 +19,14 @@ function togglePanel(){
 }
 
 function createPanel(){
-  
+  //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
+  //panel = ;
+  panelCreated = true;
 }
 
 function destroyPanel(){
-  panel.remove();
+  
+  //panel = undefined;
   panelCreated = false;
 }
 
@@ -32,17 +35,18 @@ function sendEmail(body){
   setTimeout(function(){w.close()}, 150);
 }
 
-/*function sendGmail(body){
-  var w = window.open("https://mail.google.com/mail/?view=cm&fs=1&body="+encodeURIComponent(body));
-}/**/
 
+// The injected script's message listener. I am unsure if this will have to be edited to
+// accomodate different messages being passed to/from the background page or if there can
+// multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);
     if (request.name == "toggle"){
       togglePanel();
-      publKeys = request.publKeys;
-    }
+    } /*else if (request.name == "load_friends"){
+
+    }*/
     sendResponse({result: "confirmed"});
   });
   console.log("Listener Initiated.");
