@@ -10,9 +10,9 @@
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
-      "css": ["css/rgdpstks.css"],
+      "css": ["css/injected.css"],
       "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js",
-              "js/cryptico.js", "js/injected.js"],
+              "js/cryptico/cryptico.js", "js/injected.js"],
       "run_at": "document_end"
     }
   ],
