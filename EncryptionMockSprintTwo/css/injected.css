@@ -1,0 +1,28 @@
+.bar
+{
+width:300px;
+}
+
+#left
+{
+float:left;
+background-color: orange;
+height:100% 
+}
+
+#right
+{
+float:right;
+background-color: blue;
+height:100% 
+}
+
+#center
+{
+margin-left:300px;
+margin-right:300px;
+background-color: green;
+height:100%;
+}
+
+
