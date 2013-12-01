@@ -23,6 +23,13 @@ function togglePanel(){
 function createPanel(){
   //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
   //panel = ;
+  
+  //These two lines add the html and launch the popup dialogs.
+  //They can be deleted at a later time.
+  //The javascript for these functions are located in js/dialog.js
+  addDialogHtml();
+  popDialog();
+  
   panelCreated = true;
 }
 

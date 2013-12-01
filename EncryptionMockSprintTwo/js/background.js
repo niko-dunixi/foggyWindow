@@ -6,8 +6,13 @@ if (typeof initialized == "undefined"){
 
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
 chrome.runtime.onConnect.addListener(function(port) {
+      //always inject css into the page
+      chrome.tabs.insertCSS(null, {
+        file: 'css/jquery-ui.css'
+      });
+      
 	port.onMessage.addListener(function(msg) {
-		switch (port.name){
+		switch (port.name){    
 			//if the button is pressed, toggle is called and resent to the active tab.
 			case 'toggle':
 				console.log("Toggle Called.");
