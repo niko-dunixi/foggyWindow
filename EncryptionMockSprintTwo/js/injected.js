@@ -27,8 +27,11 @@ function createPanel(){
   //These two lines add the html and launch the popup dialogs.
   //They can be deleted at a later time.
   //The javascript for these functions are located in js/dialog.js
-  addDialogHtml();
-  popDialog();
+  //addBasicDialogHtml();
+  //addBasicPopDialog();
+  addNewFriendHtml();
+  addNewFriendDialog();
+  
   
   panelCreated = true;
 }
