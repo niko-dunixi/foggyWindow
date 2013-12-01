@@ -10,16 +10,10 @@
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
-<<<<<<< HEAD
-      "css": ["css/injected.css"],
-      "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js",
-              "js/cryptico/cryptico.js", "js/injected.js"],
-=======
       "css": ["css/injected.css", "css/jquery-ui.css"],
       "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js",
               "js/cryptico/cryptico.js", "js/dialog.js",
               "js/injected.js"],
->>>>>>> 191001c818d09f24c13cab3310c29ef2b8d2ffc7
       "run_at": "document_end"
     }
   ],
