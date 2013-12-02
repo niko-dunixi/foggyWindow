@@ -10,6 +10,34 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object; //set and access this object for our own personal RSA keys
 var friend_rsa_object; //set and access this for our friends
 
+function encryptObject(pwd, obj){
+  console.log(obj);
+  return btoa(sjcl.encrypt(pwd, JSON.stringify(obj)));
+}
+function decryptObject(pwd, obj){
+  console.log(obj);
+  return JSON.parse(sjcl.decrypt(pwd, atob(obj)));
+}
+
+//these are passed to the page every time the toggle button is pressed, regardless of the current panel state. Hopefully this will help us keep from missing when a user adds or removes any given key.
+var privKeys = "";
+var publKeys = "";
+//these declairations have been moved out of the method. I want to do as much as possible by reference. The reason is because the more ID's and classes we have  posted to the page when we inject, the more likely someone will write a script to detect our presense.
+var ecSelect; 
+var dcSelect;
+//These are the actual cryptography objects. They are generated when there is a change to the selected key.
+var ecBinder;
+var dcBinder;
+
+
+$.ajax({
+  url:chrome.extension.getURL('injection.html'),
+  success:function(data){
+    panel = $(data);
+    $('body').append(panel);
+  },
+  dataType:'html'
+});
 function togglePanel(){
   console.log("Toggling Panel");
   if (panelCreated == true){
@@ -32,15 +60,8 @@ function createPanel(){
   //addNewFriendHtml();
   //addNewFriendDialog();
   console.log("inside create panel")
-  $.ajax({
-    url:chrome.extension.getURL('injection.html'),
-    success:function(data){
-      panel = $(data);
-      $('body').append(panel);
+  
       panel.slideDown();
-    },
-    dataType:'html'
-  });
   panelCreated = true;
 }
 
