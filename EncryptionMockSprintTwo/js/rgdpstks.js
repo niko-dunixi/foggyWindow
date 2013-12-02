@@ -19,7 +19,8 @@ function togglePanel(){
 }
 
 function createPanel(){
-
+  
+  
 }
 
 function destroyPanel(){
