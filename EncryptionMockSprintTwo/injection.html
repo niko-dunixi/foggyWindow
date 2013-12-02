@@ -1,16 +1,25 @@
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="css/injected.css">
-		<title></title>
-	</head>
-	<body>
-		<div id='thePanel'>
-			<!-- This is the segment for the key management area. !-->
-			<div id="left" class="bar"></div><!-- End KMA !-->
-			<!-- Message/interactivity area !-->
-			<div id="right" class="bar"></div><!-- End Message/interactivity area !-->
-			<!-- Encryption/Decryption Cell Area !-->
-			<div id="center"></div><!-- End Encryption/Decryption Cell Area !-->
-		</div>
-	</body>
-</html>
+<div id='thePanel'>
+	<!-- This is the segment for the key management area. !-->
+	<div id="left" class="bar">
+        <div class='inner'>
+            <button type='button' class='btn btn-default'>Set Secret Pass</button>
+            <button type='button' class='btn btn-default'>Select Friends Key</button>
+            <button type='button' class='btn btn-default'>Add/Remove Friends Key</button>
+        </div>
+	</div><!-- End KMA !-->
+	<!-- Message/interactivity area !-->
+	<div id="right" class="bar">
+        <div class='inner'>
+    	    <pre id='transformed'>
+    	        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    	    </pre>
+        </div>
+	    
+	</div><!-- End Message/interactivity area !-->
+	<!-- Encryption/Decryption Cell Area !-->
+	<div id="center">
+        <div class='inner'>
+            <textarea placeholder='Enter a message here' class='form-control' rows='8'></textarea>
+        </div>
+	</div><!-- End Encryption/Decryption Cell Area !-->
+</div>
