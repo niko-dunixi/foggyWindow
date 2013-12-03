@@ -10,6 +10,17 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object; //set and access this object for our own personal RSA keys
 var friend_rsa_object; //set and access this for our friends
 
+
+
+$.ajax({
+  url:chrome.extension.getURL('injection.html'),
+  success:function(data){
+    panel = $(data);
+    $('body').append(panel);
+    $('#textInput').keyup(encryptDecrypt);
+  },
+  dataType:'html'
+});
 function togglePanel(){
   console.log("Toggling Panel");
   if (panelCreated == true){
@@ -32,15 +43,8 @@ function createPanel(){
   //addNewFriendHtml();
   //addNewFriendDialog();
   console.log("inside create panel")
-  $.ajax({
-    url:chrome.extension.getURL('injection.html'),
-    success:function(data){
-      panel = $(data);
-      $('body').append(panel);
-      panel.slideDown();
-    },
-    dataType:'html'
-  });
+  
+  panel.slideDown();
   panelCreated = true;
 }
 
@@ -50,6 +54,19 @@ function destroyPanel(){
   //$(panel).hide();
   panel.slideUp();
   panelCreated = false;
+}
+
+function encryptDecrypt()
+{
+  var textInput = $('#textInput').val();
+  if(/!!/i.test(textInput))
+  {
+    $('#transformed').text("Decrypting somehow");
+  }
+  else
+  {
+    $('#transformed').text(textInput)
+  }
 }
 
 function sendEmail(body){

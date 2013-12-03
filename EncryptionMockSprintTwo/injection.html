@@ -2,24 +2,34 @@
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
-            <button type='button' class='btn btn-default'>Set Secret Pass</button>
-            <button type='button' class='btn btn-default'>Select Friends Key</button>
-            <button type='button' class='btn btn-default'>Add/Remove Friends Key</button>
+            <button type='button' class='btn btn-default btn-long' style='margin-top:10px;'>Set Secret Pass</button>
+            <button type='button' class='btn btn-default btn-long'>Select Friends Key</button>
+            <button type='button' class='btn btn-default btn-long'>Add/Remove Friends Key</button>
         </div>
 	</div><!-- End KMA !-->
 	<!-- Message/interactivity area !-->
-	<div id="right" class="bar">
+	<div id="right">
         <div class='inner'>
-    	    <pre id='transformed'>
-    	        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    	    </pre>
+    	    <div>
+    	        <button type='button' class='btn btn-default btn-short' style='margin-top:40px;'>Send</button>
+                <br>
+                <button type='button' class='btn btn-default btn-short' id='fillButton'>Fill</button>
+    	    </div>
         </div>
 	    
 	</div><!-- End Message/interactivity area !-->
 	<!-- Encryption/Decryption Cell Area !-->
 	<div id="center">
         <div class='inner'>
-            <textarea placeholder='Enter a message here' class='form-control' rows='8'></textarea>
+            <div class='input'>
+                <textarea id='textInput' placeholder='Enter a message here' class='form-control' rows='8' style='width:100%;'></textarea>
+            </div>
+            <div class='output'>
+                <pre style='width:100%;' id='transformed'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        	    </pre>
+            </div>
+            <div style='clear:both;'></div>
         </div>
 	</div><!-- End Encryption/Decryption Cell Area !-->
+
 </div>
