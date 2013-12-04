@@ -84,8 +84,16 @@ function fillInitializer(){
 function fillCheckUrl(){
   if (/^https:\/\/mail\.google\.com\/.*compose=new$/i.test(window.location)) {
     return "gmail";
-  } else if (){
-    
+  } else if (/^https:\/\/www\.facebook\.com\/messages\/.+(?!\/.*)/i.test(window.location)){
+    return "facebook";
+  } else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){
+    return "hotmail";
+  } else if (/^http:\/\/\w{2}-\w{3}\.mail\.yahoo\.com\/.*$/i.test(window.location)){
+    return "yahoo";
+  } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
+    return "guerrilla";
+  } else {
+    return false;
   }
 }
 
