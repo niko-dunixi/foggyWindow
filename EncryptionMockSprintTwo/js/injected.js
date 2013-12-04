@@ -21,6 +21,7 @@ $.ajax({
   },
   dataType:'html'
 });
+
 function togglePanel(){
   console.log("Toggling Panel");
   if (panelCreated == true){
@@ -74,6 +75,27 @@ function sendEmail(body){
   setTimeout(function(){w.close()}, 150);
 }
 
+function fillInitializer(){
+  if (fillCheckUrl()){
+    $('#fillButton')[0].disabled = false;
+  }
+}
+
+function fillCheckUrl(){
+  if (/^https:\/\/mail\.google\.com\/.*compose=new$/i.test(window.location)) {
+    return "gmail";
+  } else if (/^https:\/\/www\.facebook\.com\/messages\/.+(?!\/.*)/i.test(window.location)){
+    return "facebook";
+  } else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){
+    return "hotmail";
+  } else if (/^http:\/\/\w{2}-\w{3}\.mail\.yahoo\.com\/.*$/i.test(window.location)){
+    return "yahoo";
+  } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
+    return "guerrilla";
+  } else {
+    return false;
+  }
+}
 
 // The injected script's message listener. I am unsure if this will have to be edited to
 // accomodate different messages being passed to/from the background page or if there can
