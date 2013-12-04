@@ -92,6 +92,14 @@ function fillCheckUrl(){
     return "yahoo";
   } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
     return "guerrilla";
+  } else if (/^https:\/\/privnote\.com\/?$/i.test(window.location)){
+    return "privnote";
+  } else if (/^http:\/\/sms4tor3vcr2geip\.onion\/?/i.test(window.location)){
+    return "sms4tor";
+  } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
+    return "hushmail";
+  } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
+    return "tormail";*/
   } else {
     return false;
   }
