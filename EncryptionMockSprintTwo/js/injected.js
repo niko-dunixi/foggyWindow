@@ -21,6 +21,7 @@ $.ajax({
   },
   dataType:'html'
 });
+
 function togglePanel(){
   console.log("Toggling Panel");
   if (panelCreated == true){
@@ -74,6 +75,19 @@ function sendEmail(body){
   setTimeout(function(){w.close()}, 150);
 }
 
+function fillInitializer(){
+  if (fillCheckUrl()){
+    $('#fillButton')[0].disabled = false;
+  }
+}
+
+function fillCheckUrl(){
+  if (/^https:\/\/mail\.google\.com\/.*compose=new$/i.test(window.location)) {
+    return "gmail";
+  } else if (){
+    
+  }
+}
 
 // The injected script's message listener. I am unsure if this will have to be edited to
 // accomodate different messages being passed to/from the background page or if there can
