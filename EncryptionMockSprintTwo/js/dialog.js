@@ -9,6 +9,15 @@ function addBasicDialogHtml()
   $('body').append('<div id="dialog" title="Add Friend"><p>This is the mock dialog for adding a friend</p></div>');
 }
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
 function addNewFriendHtml()
 {
   var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'dialog-form').appendTo('body');
@@ -35,6 +44,18 @@ function addNewFriendHtml()
 function addBasicPopDialog()
 {
   $('#dialog').dialog();
+}
+
+function parseFriends(friendsJson)
+{
+  console.log('passed friends json ' + friendsJson);
+  var friendsParsed = JSON.parse(friendsJson);
+  console.log('parsed friends json ' + friendsParsed);
+  $.each(friendsParsed, function(key, value){
+				console.log(key);
+				console.log(value);
+			});
+  
 }
 
 //this came from http://jqueryui.com/dialog/#modal-form
@@ -94,6 +115,19 @@ function initAddFriendForm() {
     
   }
   
+  function loadFriends()
+  {
+  
+    var msgPort = chrome.runtime.connect({name: "load_friends"});
+    msgPort.postMessage({});
+    
+    msgPort.onMessage.addListener(function(msg) {
+      var friends = msg.keys;
+      console.log('response: ' + friends);
+      parseFriends(friends);
+    });   
+  }
+  
   $('#dialog-form').dialog({
     autoOpen: false,
     height: 450,
@@ -119,16 +153,20 @@ function initAddFriendForm() {
         //bValid = bValid && checkRegexp( publicKey, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" , true);
 
         if ( bValid ) {
-          /*
-          $( "#users tbody" ).append( "<tr>" +
-            "<td>" + name.val() + "</td>" +
-            "<td>" + email.val() + "</td>" +
-            "<td>" + password.val() + "</td>" +
-          "</tr>" );
-          */
-          
+        
           //This is where the logic will go to add a new user
           console.log("Adding a new friend '" + name.val() + "' with email of '" + email.val() + "' and public key of '" + publicKey.val() + "'");
+          
+          var newFriendStore = new Array();
+          newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': publicKey.val()});
+          var newFriendStoreString = JSON.stringify(newFriendStore);
+          console.log("json:" + newFriendStoreString);
+          
+          //send to storage
+          chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
+          
+          loadFriends();
+          
           $( this ).dialog( "close" );
         }
       },
@@ -144,6 +182,9 @@ function initAddFriendForm() {
 
 function addNewFriendDialog()
 {
+  addNewFriendHtml();
   initAddFriendForm();
-  $( "#dialog-form" ).dialog( "open" );
+  $( "#dialog-form" ).dialog( "open" ).zIndex(8983453543);
+  $( ".ui-dialog" ).zIndex(99999);
+  $( ".ui-widget-overlay" ).zIndex(99999);
 }

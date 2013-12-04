@@ -41,12 +41,18 @@ function createPanel(){
   //The javascript for these functions are located in js/dialog.js
   //addBasicDialogHtml();
   //addBasicPopDialog();
+  
+  //add the html in the addNewFriendDialog(); function
   //addNewFriendHtml();
   //addNewFriendDialog();
   console.log("inside create panel")
   
   panel.slideDown();
   panelCreated = true;
+  
+  //add button listeners
+  $('#rdsAddRemoveFriends').bind('click', addNewFriendDialog);
+  console.log('added friend listener');
 }
 
 function destroyPanel(){
@@ -106,8 +112,10 @@ $(document).ready(function(){
     if (request.name == "toggle"){
       togglePanel();
     } /*else if (request.name == "load_friends"){
-
+    
     }*/
+    
+    console.log("recieved response: " + request.name);
     sendResponse({result: "confirmed"});
   });
   console.log("Listener Initiated.");
