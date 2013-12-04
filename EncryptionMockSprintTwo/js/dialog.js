@@ -46,18 +46,6 @@ function addBasicPopDialog()
   $('#dialog').dialog();
 }
 
-function parseFriends(friendsJson)
-{
-  console.log('passed friends json ' + friendsJson);
-  var friendsParsed = JSON.parse(friendsJson);
-  console.log('parsed friends json ' + friendsParsed);
-  $.each(friendsParsed, function(key, value){
-				console.log(key);
-				console.log(value);
-			});
-  
-}
-
 //this came from http://jqueryui.com/dialog/#modal-form
 function initAddFriendForm() {
   var name = $( "#name" ),
@@ -113,19 +101,6 @@ function initAddFriendForm() {
     //and there is no input 
     return true;
     
-  }
-  
-  function loadFriends()
-  {
-  
-    var msgPort = chrome.runtime.connect({name: "load_friends"});
-    msgPort.postMessage({});
-    
-    msgPort.onMessage.addListener(function(msg) {
-      var friends = msg.keys;
-      console.log('response: ' + friends);
-      parseFriends(friends);
-    });   
   }
   
   $('#dialog-form').dialog({
@@ -189,15 +164,59 @@ function addNewFriendDialog()
   $( ".ui-widget-overlay" ).zIndex(99999);
 }
 
+function loadFriends()
+{
+
+  var msgPort = chrome.runtime.connect({name: "load_friends"});
+  msgPort.postMessage({});
+  
+  msgPort.onMessage.addListener(function(msg) {
+    var friends = msg.keys;
+    console.log('response: ' + friends);
+    parseFriends(friends);
+  });   
+}
+
+function loadFriendTable()
+{
+  var msgPort = chrome.runtime.connect({name: "load_friends"});
+    msgPort.postMessage({});
+  
+  msgPort.onMessage.addListener(function(msg) {
+    var friends = msg.keys;
+    console.log('response: ' + friends);
+    parseFriends(friends);
+  });
+ 
+}
+
+function parseFriends(friendsJson)
+{
+  console.log('passed friends json ' + friendsJson);
+  var friendsParsed = JSON.parse(friendsJson);
+  console.log('parsed friends json ' + friendsParsed);
+  $.each(friendsParsed, function(key, value){
+				console.log("key" + key);
+				console.log("value: " + value);
+        var tr = $('<tr />');
+        $('<td />').text(value.name).appendTo(tr);
+        $('<td />').text(value.email).appendTo(tr);
+        $('<td />').text(value.publicKey).appendTo(tr);
+        
+        tr.appendTo($('#select-friend-table'));
+			});
+  
+}
 
 function addSelectFriendHtml()
 {
   var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').appendTo('body');
   var validatTips = $('<p />').text('Select your friend').appendTo(div);
   
-  var table = $('<table />').attr('id', 'select-friend').appendTo(div);
+  var table = $('<table />').attr('id', 'select-friend-table').appendTo(div);
   var trFriend = $('<th />').text("friend").appendTo(table);
   var trEmail = $('<th />').text("email").appendTo(table);
+  var trEmail = $('<th />').text("publicKey").appendTo(table);
 }
 
 function initSelectFriendDialog()
@@ -217,6 +236,7 @@ function addSelectFriendDialog()
   $( "#select-friend" ).dialog( "open" );
   $( ".ui-dialog" ).zIndex(99999);
   $( ".ui-widget-overlay" ).zIndex(99999);
+  loadFriendTable();
 }
 
 
