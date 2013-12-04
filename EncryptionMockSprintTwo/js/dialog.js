@@ -188,3 +188,37 @@ function addNewFriendDialog()
   $( ".ui-dialog" ).zIndex(99999);
   $( ".ui-widget-overlay" ).zIndex(99999);
 }
+
+
+function addSelectFriendHtml()
+{
+  var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').appendTo('body');
+  var validatTips = $('<p />').text('Select your friend').appendTo(div);
+  
+  var table = $('<table />').attr('id', 'select-friend').appendTo(div);
+  var trFriend = $('<th />').text("friend").appendTo(table);
+  var trEmail = $('<th />').text("email").appendTo(table);
+}
+
+function initSelectFriendDialog()
+{
+$('#select-friend').dialog({
+    autoOpen: false,
+    height: 450,
+    width: 450,
+    modal: true,
+  });
+}
+
+function addSelectFriendDialog()
+{
+  addSelectFriendHtml();
+  initSelectFriendDialog();
+  $( "#select-friend" ).dialog( "open" );
+  $( ".ui-dialog" ).zIndex(99999);
+  $( ".ui-widget-overlay" ).zIndex(99999);
+}
+
+
+
+

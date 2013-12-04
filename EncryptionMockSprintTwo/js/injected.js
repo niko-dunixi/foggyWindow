@@ -52,6 +52,7 @@ function createPanel(){
   
   //add button listeners
   $('#rdsAddRemoveFriends').bind('click', addNewFriendDialog);
+  $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   console.log('added friend listener');
 }
 
