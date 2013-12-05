@@ -43,10 +43,11 @@ function createPanel(){
   //addBasicPopDialog();
 
   //add button listeners
-  $('#addFriend').bind('click', function(){ 
-      addNewFriendDialog();
-   });
+  $('#addFriend').bind('click', addNewFriendDialog);
   $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
+  $('#setPass').bind('click', addSetPasswordDialog);
+
+  
 
   console.log("inside create panel")
   
@@ -61,8 +62,6 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  // TODO-ITAN: I don't know if this is called correctly. Anyone know?
-  closeFriendDialog();
   panel.slideUp();
   panelCreated = false;
 }
