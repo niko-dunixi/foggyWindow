@@ -136,8 +136,8 @@ function initAddFriendForm() {
         //not sure what validation should occur for the private key
         //bValid = bValid && checkRegexp( publicKey, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" , true);
 
-        bValid = bValid && /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.test(publicKey.val());
-        //checkRegexp( publicKey, /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i, "This should start and end with '-----PUBLIC-RSA-KEY-----'.");
+        //bValid = bValid && /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.test(publicKey.val());
+        bValid = bValid && checkRegexp( publicKey, /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i, "This should start and end with '-----PUBLIC-RSA-KEY-----'.", true);
 
         if ( bValid ) {
         
@@ -149,7 +149,6 @@ function initAddFriendForm() {
           //var newFriendStore = new Array();
           //newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': pKey});
           storeNewFriend(name.val(), email.val(), pKey);
-
           
           //destroy the dialog box, including the html
           $( this ).dialog( "close" );
@@ -158,10 +157,12 @@ function initAddFriendForm() {
       },
       Cancel: function() {
         $( this ).dialog( "close" );
+        deleteFriends();
       }
     },
     close: function() {
       allFields.val( "" ).removeClass( "ui-state-error" );
+      console.log("removed friend html");
       $("#add-friend-dialog-form").remove();
     }
   });
@@ -170,6 +171,7 @@ function initAddFriendForm() {
 //stores new friends into the database
 function storeNewFriend(name, email, publicKey)
 {
+  console.log("Stored new friend..");
   var msgPort = chrome.runtime.connect({name: "load_friends"});
   msgPort.postMessage({});
   
@@ -187,8 +189,8 @@ function storeNewFriend(name, email, publicKey)
     
     //add existing friends to list
     $.each(friendsJson, function(key, value){
-      console.log("key" + key);
-      console.log("value: " + value);
+      //console.log("key" + key);
+      //console.log("value: " + value);
       newFriendStore.push({'name': value.name, 'email': value.email, 'publicKey': value.publicKey});
     });
     
@@ -200,6 +202,7 @@ function storeNewFriend(name, email, publicKey)
     
     //send the new friends list to be stored
     chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
+    console.log("Stored new friend successfully");
   });
   
 
@@ -250,7 +253,7 @@ function loadFriendTable()
       var tr = $('<tr />');
       $('<td />').text(value.name).appendTo(tr);
       $('<td />').text(value.email).appendTo(tr);
-      $('<td />').text(value.publicKey).appendTo(tr);
+      $('<td />').width('5px').text(value.publicKey).appendTo(tr);
       
       tr.appendTo($('#select-friend-table'));
       
@@ -294,7 +297,7 @@ function addSelectFriendHtml()
   var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
   var trFriend = $('<th />').width("33%").text("Friend").appendTo(table);
   var trEmail = $('<th />').width("33%").text("Email").appendTo(table);
-  var trEmail = $('<th />').width("33%").text("Public Key").appendTo(table);
+  var trEmail = $('<th />').width("30px").text("Public Key").appendTo(table);
   
   
   //this is already done - brent.

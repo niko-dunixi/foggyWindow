@@ -15,6 +15,22 @@
   cursor: pointer;
 }
 
+#select-friend-table  td{
+  overflow: hidden !important;
+  word-wrap: break-word !important; 
+  text-overflow: ellipsis !important;
+  width: 50px !important;
+} 
+
+#select-friend-table  th:first{
+  padding-left: 0px !important;
+  padding-right: 5px;
+} 
+
+#select-friend-table  th{
+  padding-right: 10px;
+} 
+
 .ui-dialog {
   z-index: 654321 !important;
 }
