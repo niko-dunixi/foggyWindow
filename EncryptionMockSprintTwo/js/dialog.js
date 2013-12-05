@@ -117,7 +117,7 @@ function initAddFriendForm() {
         //ex. Name has to be between 3 and 16 digits
         bValid = bValid && checkLength( name, "username", 3, 16, true );
         bValid = bValid && checkLength( email, "email", 6, 80, false );
-        bValid = bValid && checkLength( publicKey, "publicKey", 5, 16, true);
+        //bValid = bValid && checkLength( publicKey, "publicKey", 5, 16, true);
         
         //regex for field validations
         bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.", true);
@@ -127,14 +127,19 @@ function initAddFriendForm() {
         //not sure what validation should occur for the private key
         //bValid = bValid && checkRegexp( publicKey, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" , true);
 
+        bValid = bValid && /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.test(publicKey.val());
+        //checkRegexp( publicKey, /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i, "This should start and end with '-----PUBLIC-RSA-KEY-----'.");
+
         if ( bValid ) {
         
           //This is where the logic will go to add a new user
           console.log("Adding a new friend '" + name.val() + "' with email of '" + email.val() + "' and public key of '" + publicKey.val() + "'");
           
-          var newFriendStore = new Array();
-          newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': publicKey.val()});
-          storeNewFriend(name.val(), email.val(), publicKey.val());
+          pKey = /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.exec(publicKey.val())[1]; //strip off the extra text that is not needed.
+
+          //var newFriendStore = new Array();
+          //newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': pKey});
+          storeNewFriend(name.val(), email.val(), pKey);
           
           $( this ).dialog( "close" );
         }
@@ -152,7 +157,6 @@ function initAddFriendForm() {
 //stores new friends into the database
 function storeNewFriend(name, email, publicKey)
 {
-
   var msgPort = chrome.runtime.connect({name: "load_friends"});
   msgPort.postMessage({});
   
@@ -174,7 +178,7 @@ function storeNewFriend(name, email, publicKey)
     
     var newFriendStoreString = JSON.stringify(newFriendStore);
     console.log("json to send:" + newFriendStoreString);
-      
+    
     //send the new friends list to be stored
     chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
   });
@@ -224,15 +228,19 @@ function parseFriends(friendsJson)
   var friendsParsed = JSON.parse(friendsJson);
   console.log('parsed friends json ' + friendsParsed);
   $.each(friendsParsed, function(key, value){
-				console.log("key" + key);
-				console.log("value: " + value);
-        var tr = $('<tr />');
+        console.log("key" + key);
+        console.log("value: " + value);
+        /*var tr = $('<tr />');
         $('<td />').text(value.name).appendTo(tr);
         $('<td />').text(value.email).appendTo(tr);
-        $('<td />').text(value.publicKey).appendTo(tr);
+        $('<td />').text(value.publicKey).appendTo(tr);*/
+        var tr = $('<option />').text(value.name + " " + value.email + " (" + value.publicKey.slice(0, 3) + "...) ");
+        tr.data('name', value.name);
+        tr.data('email', value.email);
+        tr.data('publicKey', value.publicKey);
         
         tr.appendTo($('#select-friend-table'));
-			});
+      });
   
 }
 
@@ -241,10 +249,20 @@ function addSelectFriendHtml()
   var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').appendTo('body');
   var validatTips = $('<p />').text('Select your friend').appendTo(div);
   
-  var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
+  //Almost exactly what we need, but not quite. Sorry. I'm gunna put a hack-saw to your code. - Paul
+  //PS, if you did actually make this clickable later, but didn't commit it let me know and we'll set it back
+  //to what you wrote.
+  /*var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
   var trFriend = $('<th />').width("33%").text("friend").appendTo(table);
   var trEmail = $('<th />').width("33%").text("email").appendTo(table);
-  var trEmail = $('<th />').width("33%").text("publicKey").appendTo(table);
+  var trEmail = $('<th />').width("33%").text("publicKey").appendTo(table);*/
+  var table = $('<select />').width('100%').attr('id', 'select-friend-table').attr('size', '10').appendTo(div);
+  table.bind('change', function(){
+    var chosenFriend = table.find(':selected'); //The Chosen One.
+    friend_email = chosenFriend.data('email');
+    friend_rsa_object = chosenFriend.data('publicKey');
+    console.log(friend_rsa_object); //should be just a string.
+  });
 }
 
 function initSelectFriendDialog()
@@ -273,10 +291,10 @@ function addSelectFriendDialog()
 function addSetPasswordHtml()
 {
   var div = $('<div />').attr('title', 'Set Your Secret Passphrase').attr('id', 'set-passphrase').appendTo('body');
-  var validatTips = $('<p />').text('Create a passphrase ').appendTo(div);
+  var validatTips = $('<div />').text('Create a passphrase ').appendTo(div);
   var form = $('<form />').appendTo(div);
   var fieldSet = $('<fieldset />').appendTo(form);
-  var password = $('<input />', {type: 'password', name: 'password', id: 'password', 'class': 'text ui-widget-content ui-corner-all'}).appendTo(fieldSet);
+  var password = $('<input />', {type: 'password', name: 'password', id: 'dpstxpassword', 'class': 'text ui-widget-content ui-corner-all'}).width('100%').appendTo(fieldSet);
 
 }
 
@@ -288,13 +306,20 @@ $('#set-passphrase').dialog({
     width: 450,
     modal: true,
     buttons: {
-      "Set": function(){
-        //Add password setting functionality here
-      }, 
       "Cancel": function(){
         $( this ).dialog( "close" );
+      },
+      "Set": function(){
+        //Add password setting functionality here
+        personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+        $( this ).dialog( "close" );
+      },
+      "Set and Share": function(){
+        //Add password setting functionality here
+        personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+        sendEmail("", "My Public RSA Key", "-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
+        $( this ).dialog( "close" );
       }
-
     }, 
     "Close": function(){
       allFields.val( "" ).removeClass( "ui-state-error" );
