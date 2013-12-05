@@ -1,7 +1,7 @@
 var initialized = localStorage['initialized'];
 if (typeof initialized == "undefined"){
 	localStorage['initialized'] = true;
-	localStorage['friends'] = new Array();
+	localStorage['friends'] = JSON.stringify(new Array());
 }
 
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
@@ -31,7 +31,7 @@ chrome.runtime.onConnect.addListener(function(port) {
 			//if the page sends the background script "load_friends", then we send it back the list of keys that we have.
 			case 'load_friends':
 				console.log("Friend keys requested");
-        port.postMessage({keys: localStorage['friends']});
+        		port.postMessage({keys: localStorage['friends']});
         /*
 				try{
 					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

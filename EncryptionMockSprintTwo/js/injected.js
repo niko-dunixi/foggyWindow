@@ -7,8 +7,9 @@ if(top.document != document) { //Stop. We only want to work in the main document
 
 var panelCreated = false; //obvious boolean is obvious.
 var panel = false; //Initialize to empty JQuery object. This is where the panel will be housed
-var personal_rsa_object; //set and access this object for our own personal RSA keys
-var friend_rsa_object; //set and access this for our friends
+var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
+var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
+var friend_email = undefined;
 
 //Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
@@ -41,11 +42,7 @@ function createPanel(){
 
   console.log("inside create panel")
   
-  //panel.slideDown();
-  /*panel.slideDown(2, function(){
-    $('#panelDummy').height(panel.height()).slideDown();
-  });*/
-  $('#dummyEncryptionPanel').slideDown(4, function(){
+  $('#dummyEncryptionPanel').slideDown(0, function(){
     panel.slideDown();
   });
   panelCreated = true;
@@ -58,7 +55,6 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  //panel.slideUp();
   panel.slideUp(2, function(){
     $('#dummyEncryptionPanel').slideUp();
   });
@@ -68,19 +64,34 @@ function destroyPanel(){
 function encryptDecrypt()
 {
   var textInput = $('#textInput').val();
-  if(/!!/i.test(textInput))
+  console.log("keypress");
+  if(/^-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----$/i.test(textInput))
   {
-    $('#transformed').text("Decrypting somehow");
+    try{
+      textInput = /^-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----$/i.exec(textInput)[1];
+      console.log(cryptico.decrypt(textInput, personal_rsa_object));
+      $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
+    } catch (error){
+      $('#transformed').text("Please set a Secret Passphrase.");
+      console.log("invalid private key");
+    }
   }
   else
   {
-    $('#transformed').text(textInput)
+    try{
+      console.log(cryptico.encrypt(textInput, friend_rsa_object));
+      console.log(cryptico.encrypt(textInput, friend_rsa_object).cipher);
+      $('#transformed').text("-----RSA-CIPHERTEXT-----" + cryptico.encrypt(textInput, friend_rsa_object).cipher + "-----RSA-CIPHERTEXT-----");
+    } catch (error){
+      $('#transformed').text("Please select a friend's key.");
+      console.log("invalid public key");
+    }
   }
 }
 
-function sendEmail(body){
-  var w = window.open("mailto:?&body="+encodeURIComponent(body));
-  setTimeout(function(){w.close()}, 150);
+function sendEmail(to, subject, body){
+  var w = window.open("mailto:" + encodeURIComponent(to) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body));
+  //setTimeout(function(){w.close()}, 150);
 }
 
 function fillInitializer(){
@@ -89,13 +100,15 @@ function fillInitializer(){
     fillUpdate();
   }, false);
   $('#fillButton').bind('click', function(){
-    switch (fillCheckUrl)
+    console.log("Test Click");
+    var encryptedText = $('#transformed').text();
+    switch (fillCheckUrl())
     {
       case "gmail":
-        var msgBody = $('div[aria-label="Message Body"]');
-        msgBody.text($('#transformed').test());
+        $('div[aria-label="Message Body"]').text(encryptedText);
         break;
       case "facebook":
+        $('textarea[name="message_body"]').val(encryptedText);
         break;
       case "hotmail":
         break;
@@ -132,7 +145,7 @@ function fillCheckUrl(){
     return "gmail";
   } else if (/^https:\/\/www\.facebook\.com\/messages\/.+(?!\/.*)/i.test(window.location)){
     return "facebook";
-  } else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){
+  /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
     return "hotmail";
   } else if (/^http:\/\/\w{2}-\w{3}\.mail\.yahoo\.com\/.*$/i.test(window.location)){
     return "yahoo";
@@ -145,7 +158,7 @@ function fillCheckUrl(){
   } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
     return "hushmail";
   } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
-    return "tormail"; 
+    return "tormail"; */
   } else {
     return false;
   }
@@ -156,42 +169,24 @@ function fillCheckUrl(){
 // multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
 
-  //Moved ajax call to w/i DOM ready function. Was hopping that it would fix some of the screen issues I have seen but no progress so
   $.ajax({
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
-      panel = $(data);//relative
-      //$('body').append(panel);
-      panel.insertBefore($('body').children().first());
-      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').attr('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
-      $('#textInput').keyup(encryptDecrypt);
-      fillInitializer();
-    },
-    dataType:'html'
-  });
-  /*
-  $.ajax({
-    url:chrome.extension.getURL('injection.html'),
-    success:function(data){
-      $('<div />').attr('id', 'dipsticksBodyPlaceholder').appendTo($('html'));
-      
-      //$('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
-      var elements = $('body').attr('position', 'absolute').children().detach(); //.appendTo($('#dipsticksBodyPlaceholder'));
-      $('#dipsticksBodyPlaceholder').append(elements);
-
-      $('#dipsticksBodyPlaceholder').css('position', 'relative').css('width', '100%').appendTo($('body'));
-
-      $('<div>&nbsp;</div>').css('display', 'none').css('position', 'relative').attr('id', 'panelDummy').insertBefore($('#dipsticksBodyPlaceholder'));
       panel = $(data);
-      panel.insertBefore($('#dipsticksBodyPlaceholder'));
-      //$('body').append(panel);
-      $('#textInput').keyup(encryptDecrypt);
+      $('body').css('margin', '0px').css('padding', '0px').width('100%');
+      panel.insertBefore($('body').children().first());
+      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
+      //$('#textInput').keyup(encryptDecrypt);
+      $('#textInput').bind('input propertychange', function(){
+        encryptDecrypt();
+      });
+      $('#sendButton').bind('click', function(){
+        sendEmail(friend_email, "", $('#transformed').text());
+      });
       fillInitializer();
     },
     dataType:'html'
   });
-  */
-
   
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);
