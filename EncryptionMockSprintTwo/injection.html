@@ -3,16 +3,16 @@
 <!-- ^(\s+)?([^@|^\r|^\n]+)(\{|,)$ -->
 <!-- \1.rgdipsticks \2\3 -->
 
-<div id='thePanel' class="rgdipsticks">
+<div id='thePanel' style='position: relative;' class="rgdipsticks">
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
-            <button type='button' class='btn btn-default btn-long' style='margin-top:10px;'>Set Secret Pass</button>
+            <button id = 'setPass' type='button' class='btn btn-default btn-long' style='margin-top:10px;'>Set Secret Pass</button>
             <button type='button' class='btn btn-default btn-long' id='rdsSelectFriend' >Select Friends Key</button>
             <label id="rdsSelectedFriend" style="font:10px sans-serif; text-align:center; width:100%; height: 10px;">No friend currently selected</label>
             <button id="addFriend" type='button' class='btn btn-default btn-long'>Add/Remove Friends Key</button>
         </div>
-	</div><!-- End KMA !-->
+	</div><!-- End KMA !-->
 	<!-- Message/interactivity area !-->
 	<div id="right">
         <div class='inner'>
@@ -22,7 +22,6 @@
                 <button type='button' class='btn btn-default btn-short' id='fillButton' disabled>Fill</button>
     	    </div>
         </div>
-	    
 	</div><!-- End Message/interactivity area !-->
 	<!-- Encryption/Decryption Cell Area !-->
 	<div id="center">
@@ -37,5 +36,4 @@
             <div style='clear:both;'></div>
         </div>
 	</div><!-- End Encryption/Decryption Cell Area !-->
-
 </div>

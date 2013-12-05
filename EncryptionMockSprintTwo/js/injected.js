@@ -10,17 +10,7 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object; //set and access this object for our own personal RSA keys
 var friend_rsa_object; //set and access this for our friends
 
-
-
-$.ajax({
-  url:chrome.extension.getURL('injection.html'),
-  success:function(data){
-    panel = $(data);
-    $('body').append(panel);
-    $('#textInput').keyup(encryptDecrypt);
-  },
-  dataType:'html'
-});
+//Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
 function togglePanel(){
   console.log("Toggling Panel");
@@ -43,10 +33,11 @@ function createPanel(){
   //addBasicPopDialog();
 
   //add button listeners
-  $('#addFriend').bind('click', function(){ 
-      addNewFriendDialog();
-   });
+  $('#addFriend').bind('click', addNewFriendDialog);
   $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
+  $('#setPass').bind('click', addSetPasswordDialog);
+
+  
 
   console.log("inside create panel")
   
@@ -61,8 +52,6 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  // TODO-ITAN: I don't know if this is called correctly. Anyone know?
-  closeFriendDialog();
   panel.slideUp();
   panelCreated = false;
 }
@@ -86,9 +75,45 @@ function sendEmail(body){
 }
 
 function fillInitializer(){
-  if (fillCheckUrl()){
+  fillUpdate()
+  window.addEventListener("hashchange", function() {
+    fillUpdate();
+  }, false);
+  $('#fillButton').bind('click', function(){
+    switch (fillCheckUrl)
+    {
+      case "gmail":
+        break;
+      case "facebook":
+        break;
+      case "hotmail":
+        break;
+      case "yahoo":
+        break;
+      case "guerrilla":
+        break;
+      case "privnote":
+        break;
+      case "sms4tor":
+        break;
+      case "hushmail":
+        break;
+      case "tormail":
+        break;
+      default:
+        break;
+    }
+  });
+}
+
+function fillUpdate(){
+  var check = fillCheckUrl();
+  if (check){
     $('#fillButton')[0].disabled = false;
+  } else {
+    $('#fillButton')[0].disabled = true;
   }
+  return check;
 }
 
 function fillCheckUrl(){
@@ -102,6 +127,14 @@ function fillCheckUrl(){
     return "yahoo";
   } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
     return "guerrilla";
+  } else if (/^https:\/\/privnote\.com\/?$/i.test(window.location)){
+    return "privnote";
+  } else if (/^http:\/\/sms4tor3vcr2geip\.onion\/?/i.test(window.location)){
+    return "sms4tor";
+  } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
+    return "hushmail";
+  } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
+    return "tormail"; 
   } else {
     return false;
   }
@@ -111,6 +144,25 @@ function fillCheckUrl(){
 // accomodate different messages being passed to/from the background page or if there can
 // multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
+
+  //Moved ajax call to w/i DOM ready function. Was hopping that it would fix some of the screen issues I have seen but no progress so
+  $.ajax({
+    url:chrome.extension.getURL('injection.html'),
+    success:function(data){
+      $('<div />').attr('id', 'dipsticksBodyPlaceholder').appendTo($('html'));
+      $('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
+      $('#dipsticksBodyPlaceholder').css('position', 'relative').appendTo($('body'));
+
+      panel = $(data);
+      panel.insertBefore($('#dipsticksBodyPlaceholder'));
+      //$('body').append(panel);
+      $('#textInput').keyup(encryptDecrypt);
+      fillInitializer();
+    },
+    dataType:'html'
+  });
+
+  
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);
     if (request.name == "toggle"){
