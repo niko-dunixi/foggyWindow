@@ -157,7 +157,7 @@ function initAddFriendForm() {
       },
       Cancel: function() {
         $( this ).dialog( "close" );
-        deleteFriends();
+        //deleteFriends();
       }
     },
     close: function() {
