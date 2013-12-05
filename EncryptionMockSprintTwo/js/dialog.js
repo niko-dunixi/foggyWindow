@@ -3,6 +3,7 @@
 //http://stackoverflow.com/questions/13669762/chrome-extention-using-jquery-in-content-script-resolve-error-when-creating-dial
 
 var dialogEffectDurration = 500;
+var dialogZindex = 99949;
 
 //adds the html of the dialog to the page. This should be removed at a later time.
 function addBasicDialogHtml()
@@ -110,11 +111,11 @@ function initAddFriendForm() {
     modal: true,
     show: {
         effect: "blind",
-        duration: dialogEffectDurration
+        duration: dialogEffectDurration,
     },
     hide: {
         effect: "blind",
-        duration: dialogEffectDurration
+        duration: dialogEffectDurration,
     },
     buttons: {
       "Add new friend": function() {
@@ -210,9 +211,7 @@ function addNewFriendDialog()
 {
   addNewFriendHtml();
   initAddFriendForm();
-  $( "#add-friend-dialog-form" ).dialog( "open" ).zIndex(8983453543);
-  $( ".ui-dialog" ).zIndex(99999);
-  $( ".ui-widget-overlay" ).zIndex(99999);
+  $( "#add-friend-dialog-form" ).zIndex(dialogZindex).dialog( "open" );
 }
 
 
@@ -305,11 +304,11 @@ $('#select-friend').dialog({
     modal: true,
     show: {
         effect: "blind",
-        duration: dialogEffectDurration
+        duration: dialogEffectDurration,
     },
     hide: {
         effect: "blind",
-        duration: dialogEffectDurration
+        duration: dialogEffectDurration,
     },
     buttons: {
       "Ok": function() {
@@ -326,9 +325,7 @@ function addSelectFriendDialog()
 {
   addSelectFriendHtml();
   initSelectFriendDialog();
-  $( "#select-friend" ).dialog( "open" );
-  $( ".ui-dialog" ).zIndex(99999);
-  $( ".ui-widget-overlay" ).zIndex(99999);
+  $( "#select-friend" ).zIndex(dialogZindex).dialog( "open" );
   loadFriendTable();
 }
 
@@ -352,6 +349,14 @@ $('#set-passphrase').dialog({
     height: 200,
     width: 450,
     modal: true,
+    show: {
+        effect: "blind",
+        duration: dialogEffectDurration,
+    },
+    hide: {
+        effect: "blind",
+        duration: dialogEffectDurration,
+    },
     buttons: {
       "Set": function(){
         //Add password setting functionality here
@@ -361,8 +366,8 @@ $('#set-passphrase').dialog({
       }
 
     }, 
-    "Close": function(){
-      allFields.val( "" ).removeClass( "ui-state-error" );
+    close: function(){
+      $("#set-passphrase").remove();
     }
   });
 }
@@ -371,7 +376,5 @@ function addSetPasswordDialog()
 {
   addSetPasswordHtml();
   initSetPasswordDialog();
-  $( "#set-passphrase" ).dialog( "open" ).zIndex(8983453543);
-  $( ".ui-dialog" ).zIndex(99999);
-  $( ".ui-widget-overlay" ).zIndex(99999);
+  $( "#set-passphrase" ).zIndex(dialogZindex).dialog( "open" );
 }
