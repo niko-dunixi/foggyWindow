@@ -276,7 +276,7 @@ function addSetPasswordHtml()
   var validatTips = $('<p />').text('Create a passphrase ').appendTo(div);
   var form = $('<form />').appendTo(div);
   var fieldSet = $('<fieldset />').appendTo(form);
-  var password = $('<input />', {type: 'password', name: 'password', id: 'password', 'class': 'text ui-widget-content ui-corner-all'}).appendTo(fieldSet);
+  var password = $('<input />', {type: 'password', name: 'password', id: 'dpstxpassword', 'class': 'text ui-widget-content ui-corner-all'}).appendTo(fieldSet);
 
 }
 
@@ -290,6 +290,8 @@ $('#set-passphrase').dialog({
     buttons: {
       "Set": function(){
         //Add password setting functionality here
+        personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+        $( this ).dialog( "close" );
       }, 
       "Cancel": function(){
         $( this ).dialog( "close" );
