@@ -8,7 +8,8 @@ if(top.document != document) { //Stop. We only want to work in the main document
 var panelCreated = false; //obvious boolean is obvious.
 var panel = false; //Initialize to empty JQuery object. This is where the panel will be housed
 var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
-var friend_rsa_object = undefined; //set and access this for our friends
+var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
+var friend_email = undefined;
 
 //Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
@@ -63,10 +64,13 @@ function destroyPanel(){
 function encryptDecrypt()
 {
   var textInput = $('#textInput').val();
-  if(/!!/i.test(textInput))
+  console.log("keypress");
+  if(/^-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----$/i.test(textInput))
   {
     try{
-      $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object));
+      textInput = /^-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----$/i.exec(textInput)[1];
+      console.log(cryptico.decrypt(textInput, personal_rsa_object));
+      $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
     } catch (error){
       $('#transformed').text("Please set a Secret Passphrase.");
       console.log("invalid private key");
@@ -75,7 +79,9 @@ function encryptDecrypt()
   else
   {
     try{
-      $('#transformed').text(cryptico.encrypt(textInput, friend_rsa_object).cipher);
+      console.log(cryptico.encrypt(textInput, friend_rsa_object));
+      console.log(cryptico.encrypt(textInput, friend_rsa_object).cipher);
+      $('#transformed').text("-----RSA-CIPHERTEXT-----" + cryptico.encrypt(textInput, friend_rsa_object).cipher + "-----RSA-CIPHERTEXT-----");
     } catch (error){
       $('#transformed').text("Please select a friend's key.");
       console.log("invalid public key");
@@ -170,7 +176,13 @@ $(document).ready(function(){
       $('body').css('margin', '0px').css('padding', '0px').width('100%');
       panel.insertBefore($('body').children().first());
       $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
-      $('#textInput').keyup(encryptDecrypt);
+      //$('#textInput').keyup(encryptDecrypt);
+      $('#textInput').bind('input propertychange', function(){
+        encryptDecrypt();
+      });
+      $('#sendButton').bind('click', function(){
+        sendEmail(friend_email, "", $('#transformed').text());
+      });
       fillInitializer();
     },
     dataType:'html'

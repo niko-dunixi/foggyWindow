@@ -137,8 +137,8 @@ function initAddFriendForm() {
           
           pKey = /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.exec(publicKey.val())[1]; //strip off the extra text that is not needed.
 
-          var newFriendStore = new Array();
-          newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': pKey});
+          //var newFriendStore = new Array();
+          //newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': pKey});
           storeNewFriend(name.val(), email.val(), pKey);
           
           $( this ).dialog( "close" );
@@ -178,7 +178,7 @@ function storeNewFriend(name, email, publicKey)
     
     var newFriendStoreString = JSON.stringify(newFriendStore);
     console.log("json to send:" + newFriendStoreString);
-      
+    
     //send the new friends list to be stored
     chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
   });
@@ -230,10 +230,14 @@ function parseFriends(friendsJson)
   $.each(friendsParsed, function(key, value){
         console.log("key" + key);
         console.log("value: " + value);
-        var tr = $('<tr />');
+        /*var tr = $('<tr />');
         $('<td />').text(value.name).appendTo(tr);
         $('<td />').text(value.email).appendTo(tr);
-        $('<td />').text(value.publicKey).appendTo(tr);
+        $('<td />').text(value.publicKey).appendTo(tr);*/
+        var tr = $('<option />').text(value.name + " " + value.email + " (" + value.publicKey.slice(0, 3) + "...) ");
+        tr.data('name', value.name);
+        tr.data('email', value.email);
+        tr.data('publicKey', value.publicKey);
         
         tr.appendTo($('#select-friend-table'));
       });
@@ -245,10 +249,20 @@ function addSelectFriendHtml()
   var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').appendTo('body');
   var validatTips = $('<p />').text('Select your friend').appendTo(div);
   
-  var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
+  //Almost exactly what we need, but not quite. Sorry. I'm gunna put a hack-saw to your code. - Paul
+  //PS, if you did actually make this clickable later, but didn't commit it let me know and we'll set it back
+  //to what you wrote.
+  /*var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
   var trFriend = $('<th />').width("33%").text("friend").appendTo(table);
   var trEmail = $('<th />').width("33%").text("email").appendTo(table);
-  var trEmail = $('<th />').width("33%").text("publicKey").appendTo(table);
+  var trEmail = $('<th />').width("33%").text("publicKey").appendTo(table);*/
+  var table = $('<select />').width('100%').attr('id', 'select-friend-table').attr('size', '10').appendTo(div);
+  table.bind('change', function(){
+    var chosenFriend = table.find(':selected'); //The Chosen One.
+    friend_email = chosenFriend.data('email');
+    friend_rsa_object = chosenFriend.data('publicKey');
+    console.log(friend_rsa_object); //should be just a string.
+  });
 }
 
 function initSelectFriendDialog()
@@ -306,7 +320,6 @@ $('#set-passphrase').dialog({
         sendEmail("", "My Public RSA Key", "-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
         $( this ).dialog( "close" );
       }
-
     }, 
     "Close": function(){
       allFields.val( "" ).removeClass( "ui-state-error" );
