@@ -41,7 +41,13 @@ function createPanel(){
 
   console.log("inside create panel")
   
-  panel.slideDown();
+  //panel.slideDown();
+  /*panel.slideDown(2, function(){
+    $('#panelDummy').height(panel.height()).slideDown();
+  });*/
+  $('#dummyEncryptionPanel').slideDown(4, function(){
+    panel.slideDown();
+  });
   panelCreated = true;
   
   console.log('added friend listener');
@@ -52,7 +58,10 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  panel.slideUp();
+  //panel.slideUp();
+  panel.slideUp(2, function(){
+    $('#dummyEncryptionPanel').slideUp();
+  });
   panelCreated = false;
 }
 
@@ -83,6 +92,8 @@ function fillInitializer(){
     switch (fillCheckUrl)
     {
       case "gmail":
+        var msgBody = $('div[aria-label="Message Body"]');
+        msgBody.text($('#transformed').test());
         break;
       case "facebook":
         break;
@@ -149,10 +160,28 @@ $(document).ready(function(){
   $.ajax({
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
+      panel = $(data);//relative
+      //$('body').append(panel);
+      panel.insertBefore($('body').children().first());
+      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').attr('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
+      $('#textInput').keyup(encryptDecrypt);
+      fillInitializer();
+    },
+    dataType:'html'
+  });
+  /*
+  $.ajax({
+    url:chrome.extension.getURL('injection.html'),
+    success:function(data){
       $('<div />').attr('id', 'dipsticksBodyPlaceholder').appendTo($('html'));
-      $('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
-      $('#dipsticksBodyPlaceholder').css('position', 'relative').appendTo($('body'));
+      
+      //$('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
+      var elements = $('body').attr('position', 'absolute').children().detach(); //.appendTo($('#dipsticksBodyPlaceholder'));
+      $('#dipsticksBodyPlaceholder').append(elements);
 
+      $('#dipsticksBodyPlaceholder').css('position', 'relative').css('width', '100%').appendTo($('body'));
+
+      $('<div>&nbsp;</div>').css('display', 'none').css('position', 'relative').attr('id', 'panelDummy').insertBefore($('#dipsticksBodyPlaceholder'));
       panel = $(data);
       panel.insertBefore($('#dipsticksBodyPlaceholder'));
       //$('body').append(panel);
@@ -161,6 +190,7 @@ $(document).ready(function(){
     },
     dataType:'html'
   });
+  */
 
   
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
