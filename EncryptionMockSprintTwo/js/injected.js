@@ -60,9 +60,14 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
+  /*
   panel.slideUp(2, function(){
     $('#dummyEncryptionPanel').slideUp();
   });
+  */
+  panel.slideUp();
+  $('#dummyEncryptionPanel').slideUp();
+  
   panelCreated = false;
 }
 
