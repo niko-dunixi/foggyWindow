@@ -145,6 +145,7 @@ function fillCheckUrl(){
 // multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
 
+  //Moved ajax call to w/i DOM ready function. Was hopping that it would fix some of the screen issues I have seen but no progress so far.
   $.ajax({
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
