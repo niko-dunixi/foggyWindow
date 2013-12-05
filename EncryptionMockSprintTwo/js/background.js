@@ -4,21 +4,11 @@ if (typeof initialized == "undefined"){
 	localStorage['friends'] = new Array();
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
-  });
-
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
 chrome.runtime.onConnect.addListener(function(port) {
       //always inject css into the page
-      chrome.tabs.insertCSS(null, {
-        file: 'css/jquery-ui.css'
-      });
+      chrome.tabs.insertCSS(null, {file: 'css/jquery-ui.css'});
+      chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
   console.log('recieved message port ' + port.name);    
   
 	port.onMessage.addListener(function(msg) {

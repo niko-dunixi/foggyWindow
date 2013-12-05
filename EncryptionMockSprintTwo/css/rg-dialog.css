@@ -1,0 +1,19 @@
+#select-friend-table tr .ui-selecting {
+  background: #FECA40; 
+}
+
+#select-friend-table .ui-selected {
+  background: #F39814; 
+  color: white;
+}
+
+#select-friend-table { 
+  margin: 0; 
+  padding: 0; 
+  border: 0;
+  border-spacing: 0;
+}
+
+.rgdpstksDialog{
+  /*font:15px sans-serif;*/
+}
