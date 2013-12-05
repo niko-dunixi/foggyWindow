@@ -50,6 +50,11 @@ height:100%;
   top:0;
   z-index:9001;
 }
+#dummyEncryptionPanel
+{
+  height:220px;
+}
+
 #transformed
 {
   height:175px;
@@ -64,4 +69,8 @@ height:100%;
 {
   margin:20px 0;
   width:100px;
+}
+
+#addFriend {
+  margin-top: 5px;
 }

@@ -42,9 +42,14 @@ function createPanel(){
 
   console.log("inside create panel")
   
+  //don't link them, just let them do their thing together
+  /*
   $('#dummyEncryptionPanel').slideDown(0, function(){
     panel.slideDown();
   });
+  */
+  $('#dummyEncryptionPanel').slideDown()
+  panel.slideDown();
   panelCreated = true;
   
   console.log('added friend listener');
@@ -173,9 +178,14 @@ $(document).ready(function(){
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
       panel = $(data);
+      //console.log("panel " + $(data).height());
       $('body').css('margin', '0px').css('padding', '0px').width('100%');
       panel.insertBefore($('body').children().first());
-      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
+      
+      //let the injected css and the slideDown/slideUp functions take care of the height
+      //$('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').height().insertBefore($('body').children().first());
+      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').insertBefore($('body').children().first());
+      
       //$('#textInput').keyup(encryptDecrypt);
       $('#textInput').bind('input propertychange', function(){
         encryptDecrypt();

@@ -1,10 +1,16 @@
-<div id='thePanel' style='position: fixed;'>
+<!-- I used notepad++ find/replace -->
+<!-- regex to change bootstrap_rgdpstks.css to add rgdipstiks to all needed files -->
+<!-- ^(\s+)?([^@|^\r|^\n]+)(\{|,)$ -->
+<!-- \1.rgdipsticks \2\3 -->
+
+<div id='thePanel' style='position: fixed;' class="rgdipsticks">
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
             <button id = 'setPass' type='button' class='btn btn-default btn-long' style='margin-top:10px;'>Set Secret Pass</button>
-            <button id='rdsSelectFriend' type='button' class='btn btn-default btn-long' >Select Friends Key</button>
-            <button id='addFriend' type='button' class='btn btn-default btn-long'>Add/Remove Friends Key</button>
+            <button type='button' class='btn btn-default btn-long' id='rdsSelectFriend' >Select Friends Key</button>
+            <label id="rdsSelectedFriend" style="font:10px sans-serif; text-align:center; width:100%; height: 10px;">No friend currently selected</label>
+            <button id="addFriend" type='button' class='btn btn-default btn-long'>Add/Remove Friends Key</button>
         </div>
 	</div><!-- End KMA !-->
 	<!-- Message/interactivity area !-->
