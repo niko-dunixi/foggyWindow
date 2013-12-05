@@ -18,6 +18,7 @@ $.ajax({
     panel = $(data);
     $('body').append(panel);
     $('#textInput').keyup(encryptDecrypt);
+    fillInitializer();
   },
   dataType:'html'
 });
@@ -86,9 +87,45 @@ function sendEmail(body){
 }
 
 function fillInitializer(){
-  if (fillCheckUrl()){
+  fillUpdate()
+  window.addEventListener("hashchange", function() {
+    fillUpdate();
+  }, false);
+  $('#fillButton').bind('click', function(){
+    switch (fillCheckUrl)
+    {
+      case "gmail":
+        break;
+      case "facebook":
+        break;
+      case "hotmail":
+        break;
+      case "yahoo":
+        break;
+      case "guerrilla":
+        break;
+      case "privnote":
+        break;
+      case "sms4tor":
+        break;
+      case "hushmail":
+        break;
+      case "tormail":
+        break;
+      default:
+        break;
+    }
+  });
+}
+
+function fillUpdate(){
+  var check = fillCheckUrl();
+  if (check){
     $('#fillButton')[0].disabled = false;
+  } else {
+    $('#fillButton')[0].disabled = true;
   }
+  return check;
 }
 
 function fillCheckUrl(){
@@ -102,6 +139,14 @@ function fillCheckUrl(){
     return "yahoo";
   } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
     return "guerrilla";
+  } else if (/^https:\/\/privnote\.com\/?$/i.test(window.location)){
+    return "privnote";
+  } else if (/^http:\/\/sms4tor3vcr2geip\.onion\/?/i.test(window.location)){
+    return "sms4tor";
+  } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
+    return "hushmail";
+  } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
+    return "tormail"; 
   } else {
     return false;
   }
