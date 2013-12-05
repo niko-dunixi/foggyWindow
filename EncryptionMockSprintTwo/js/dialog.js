@@ -9,6 +9,15 @@ function addBasicDialogHtml()
   $('body').append('<div id="dialog" title="Add Friend"><p>This is the mock dialog for adding a friend</p></div>');
 }
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
 function addNewFriendHtml()
 {
   var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'dialog-form').css('zIndex', 9009 ).appendTo('body');
@@ -119,16 +128,14 @@ function initAddFriendForm() {
         //bValid = bValid && checkRegexp( publicKey, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" , true);
 
         if ( bValid ) {
-          /*
-          $( "#users tbody" ).append( "<tr>" +
-            "<td>" + name.val() + "</td>" +
-            "<td>" + email.val() + "</td>" +
-            "<td>" + password.val() + "</td>" +
-          "</tr>" );
-          */
-          
+        
           //This is where the logic will go to add a new user
           console.log("Adding a new friend '" + name.val() + "' with email of '" + email.val() + "' and public key of '" + publicKey.val() + "'");
+          
+          var newFriendStore = new Array();
+          newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': publicKey.val()});
+          storeNewFriend(name.val(), email.val(), publicKey.val());
+          
           $( this ).dialog( "close" );
         }
       },
@@ -142,13 +149,125 @@ function initAddFriendForm() {
   });
 }
 
+//stores new friends into the database
+function storeNewFriend(name, email, publicKey)
+{
+
+  var msgPort = chrome.runtime.connect({name: "load_friends"});
+  msgPort.postMessage({});
+  
+  msgPort.onMessage.addListener(function(msg) {
+    var friends = msg.keys;
+    var newFriendStore = new Array();
+    var friendsJson = JSON.parse(friends);
+    console.log('response: ' + friendsJson);
+    
+    //add existing friends to list
+    $.each(friendsJson, function(key, value){
+      console.log("key" + key);
+      console.log("value: " + value);
+      newFriendStore.push({'name': value.name, 'email': value.email, 'publicKey': value.publicKey});
+    });
+    
+    //add new friend to the list
+    newFriendStore.push({'name': name, 'email': email, 'publicKey': publicKey});
+    
+    var newFriendStoreString = JSON.stringify(newFriendStore);
+    console.log("json to send:" + newFriendStoreString);
+      
+    //send the new friends list to be stored
+    chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
+  });
+  
+
+}
+
 function addNewFriendDialog()
 {
   addNewFriendHtml();
   initAddFriendForm();
-  $( "#dialog-form" ).css( 'zIndex', 9009 ).dialog( "open" );
+  $( "#dialog-form" ).dialog( "open" ).zIndex(8983453543);
+  $( ".ui-dialog" ).zIndex(99999);
+  $( ".ui-widget-overlay" ).zIndex(99999);
 }
 
+
+function loadFriends()
+{
+
+  var msgPort = chrome.runtime.connect({name: "load_friends"});
+  msgPort.postMessage({});
+  
+  msgPort.onMessage.addListener(function(msg) {
+    var friends = msg.keys;
+    console.log('response: ' + friends);
+    parseFriends(friends);
+  });   
+}
+
+function loadFriendTable()
+{
+  var msgPort = chrome.runtime.connect({name: "load_friends"});
+    msgPort.postMessage({});
+  
+  msgPort.onMessage.addListener(function(msg) {
+    var friends = msg.keys;
+    console.log('response: ' + friends);
+    parseFriends(friends);
+  });
+ 
+}
+
+function parseFriends(friendsJson)
+{
+  console.log('passed friends json ' + friendsJson);
+  var friendsParsed = JSON.parse(friendsJson);
+  console.log('parsed friends json ' + friendsParsed);
+  $.each(friendsParsed, function(key, value){
+				console.log("key" + key);
+				console.log("value: " + value);
+        var tr = $('<tr />');
+        $('<td />').text(value.name).appendTo(tr);
+        $('<td />').text(value.email).appendTo(tr);
+        $('<td />').text(value.publicKey).appendTo(tr);
+        
+        tr.appendTo($('#select-friend-table'));
+			});
+  
+}
+
+function addSelectFriendHtml()
+{
+  var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').appendTo('body');
+  var validatTips = $('<p />').text('Select your friend').appendTo(div);
+  
+  var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
+  var trFriend = $('<th />').width("33%").text("friend").appendTo(table);
+  var trEmail = $('<th />').width("33%").text("email").appendTo(table);
+  var trEmail = $('<th />').width("33%").text("publicKey").appendTo(table);
+}
+
+function initSelectFriendDialog()
+{
+$('#select-friend').dialog({
+    autoOpen: false,
+    height: 450,
+    width: 450,
+    modal: true,
+  });
+}
+
+function addSelectFriendDialog()
+{
+  addSelectFriendHtml();
+  initSelectFriendDialog();
+  $( "#select-friend" ).dialog( "open" );
+  $( ".ui-dialog" ).zIndex(99999);
+  $( ".ui-widget-overlay" ).zIndex(99999);
+  loadFriendTable();
+}
+
+//this shouldn't be needed, the dialog should take care of closing its self - bbarker
 function closeFriendDialog()
 {
   $( '#dialog-form' ).dialog( "close" );
