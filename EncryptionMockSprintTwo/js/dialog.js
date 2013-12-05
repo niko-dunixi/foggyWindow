@@ -37,7 +37,7 @@ function addNewFriendHtml()
   
   //publicKey
   var publicKey = $('<label />').text('Public key of Friend').css('display', 'block').appendTo(form);
-  var publicKeyTextarea = $('<textarea />', {type: 'text', name: 'publicKey', id: 'publicKey', 'class': 'text ui-widget-content ui-corner-all'}).text('private key').css('display', 'block').appendTo(form);
+  var publicKeyTextarea = $('<textarea />', {type: 'text', name: 'publicKey', id: 'publicKey', 'class': 'text ui-widget-content ui-corner-all'}).attr('placeholder', 'Public Key').css('display', 'block').appendTo(form);
   
   //allFields = $( [] ).add( nameInput ).add( emailInput ).add( publicKeyTextarea ),
 }
