@@ -41,7 +41,9 @@ function createPanel(){
 
   console.log("inside create panel")
   
-  panel.slideDown();
+  panel.slideDown(2, function(){
+    $('#panelDummy').height(panel.height()).slideDown();
+  });
   panelCreated = true;
   
   console.log('added friend listener');
@@ -52,7 +54,9 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  panel.slideUp();
+  panel.slideUp(2, function(){
+    $('#panelDummy').height(panel.height()).slideUp();
+  });
   panelCreated = false;
 }
 
@@ -153,6 +157,7 @@ $(document).ready(function(){
       $('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
       $('#dipsticksBodyPlaceholder').css('position', 'relative').appendTo($('body'));
 
+      $('<div>&nbsp;</div>').css('display', 'none').css('position', 'relative').attr('id', 'panelDummy').insertBefore($('#dipsticksBodyPlaceholder'));
       panel = $(data);
       panel.insertBefore($('#dipsticksBodyPlaceholder'));
       //$('body').append(panel);
