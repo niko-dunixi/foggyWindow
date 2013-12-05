@@ -41,7 +41,7 @@ chrome.runtime.onConnect.addListener(function(port) {
 			//if the page sends the background script "load_friends", then we send it back the list of keys that we have.
 			case 'load_friends':
 				console.log("Friend keys requested");
-        port.postMessage({keys: localStorage['friends']});
+        		port.postMessage({keys: localStorage['friends']});
         /*
 				try{
 					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

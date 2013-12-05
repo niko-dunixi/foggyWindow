@@ -75,7 +75,7 @@ function encryptDecrypt()
   else
   {
     try{
-      $('#transformed').text(cryptico.encrypt(textInput, friend_rsa_object));
+      $('#transformed').text(cryptico.encrypt(textInput, friend_rsa_object).cipher);
     } catch (error){
       $('#transformed').text("Please select a friend's key.");
       console.log("invalid public key");
@@ -83,9 +83,9 @@ function encryptDecrypt()
   }
 }
 
-function sendEmail(body){
-  var w = window.open("mailto:?&body="+encodeURIComponent(body));
-  setTimeout(function(){w.close()}, 150);
+function sendEmail(to, subject, body){
+  var w = window.open("mailto:" + encodeURIComponent(to) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body));
+  //setTimeout(function(){w.close()}, 150);
 }
 
 function fillInitializer(){
