@@ -10,18 +10,7 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object; //set and access this object for our own personal RSA keys
 var friend_rsa_object; //set and access this for our friends
 
-
-
-$.ajax({
-  url:chrome.extension.getURL('injection.html'),
-  success:function(data){
-    panel = $(data);
-    $('body').append(panel);
-    $('#textInput').keyup(encryptDecrypt);
-    fillInitializer();
-  },
-  dataType:'html'
-});
+//Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
 function togglePanel(){
   console.log("Toggling Panel");
@@ -156,6 +145,19 @@ function fillCheckUrl(){
 // accomodate different messages being passed to/from the background page or if there can
 // multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
+
+  $.ajax({
+    url:chrome.extension.getURL('injection.html'),
+    success:function(data){
+      panel = $(data);
+      $('body').append(panel);
+      $('#textInput').keyup(encryptDecrypt);
+      fillInitializer();
+    },
+    dataType:'html'
+  });
+
+  
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(request);
     if (request.name == "toggle"){
