@@ -18,6 +18,7 @@ $.ajax({
     panel = $(data);
     $('body').append(panel);
     $('#textInput').keyup(encryptDecrypt);
+    fillInitializer();
   },
   dataType:'html'
 });
@@ -86,13 +87,45 @@ function sendEmail(body){
 }
 
 function fillInitializer(){
-  window.onhashchange = function () {
+  fillUpdate()
+  window.addEventListener("hashchange", function() {
     fillUpdate();
-  }
+  }, false);
+  $('#fillButton').bind('click', function(){
+    switch (fillCheckUrl)
+    {
+      case "gmail":
+        break;
+      case "facebook":
+        break;
+      case "hotmail":
+        break;
+      case "yahoo":
+        break;
+      case "guerrilla":
+        break;
+      case "privnote":
+        break;
+      case "sms4tor":
+        break;
+      case "hushmail":
+        break;
+      case "tormail":
+        break;
+      default:
+        break;
+    }
+  });
 }
 
 function fillUpdate(){
-
+  var check = fillCheckUrl();
+  if (check){
+    $('#fillButton')[0].disabled = false;
+  } else {
+    $('#fillButton')[0].disabled = true;
+  }
+  return check;
 }
 
 function fillCheckUrl(){
@@ -113,7 +146,7 @@ function fillCheckUrl(){
   } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
     return "hushmail";
   } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
-    return "tormail";*/
+    return "tormail"; 
   } else {
     return false;
   }
