@@ -145,12 +145,17 @@ function fillCheckUrl(){
 // multiple instances thereof. EG see commended else-if case below.
 $(document).ready(function(){
 
-  //Moved ajax call to w/i DOM ready function. Was hopping that it would fix some of the screen issues I have seen but no progress so far.
+  //Moved ajax call to w/i DOM ready function. Was hopping that it would fix some of the screen issues I have seen but no progress so
   $.ajax({
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
+      $('<div />').attr('id', 'dipsticksBodyPlaceholder').appendTo($('html'));
+      $('body').attr('position', 'absolute').children().appendTo($('#dipsticksBodyPlaceholder'));
+      $('#dipsticksBodyPlaceholder').css('position', 'relative').appendTo($('body'));
+
       panel = $(data);
-      $('body').append(panel);
+      panel.insertBefore($('#dipsticksBodyPlaceholder'));
+      //$('body').append(panel);
       $('#textInput').keyup(encryptDecrypt);
       fillInitializer();
     },
