@@ -48,7 +48,7 @@ function createPanel(){
     panel.slideDown();
   });
   */
-  $('#dummyEncryptionPanel').slideDown()
+  $('#dummyEncryptionPanel').slideDown();
   panel.slideDown();
   panelCreated = true;
   
@@ -79,7 +79,6 @@ function encryptDecrypt()
   {
     try{
       textInput = /^-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----$/i.exec(textInput)[1];
-      console.log(cryptico.decrypt(textInput, personal_rsa_object));
       $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
     } catch (error){
       $('#transformed').text("Please set a Secret Passphrase.");
@@ -89,8 +88,9 @@ function encryptDecrypt()
   else
   {
     try{
-      console.log(cryptico.encrypt(textInput, friend_rsa_object));
-      console.log(cryptico.encrypt(textInput, friend_rsa_object).cipher);
+      if (typeof friend_rsa_object == undefined || friend_rsa_object.length == 0){
+        throw "No key set.";
+      }
       $('#transformed').text("-----RSA-CIPHERTEXT-----" + cryptico.encrypt(textInput, friend_rsa_object).cipher + "-----RSA-CIPHERTEXT-----");
     } catch (error){
       $('#transformed').text("Please select a friend's key.");
@@ -114,7 +114,7 @@ function fillInitializer(){
     var encryptedText = $('#transformed').text();
     switch (fillCheckUrl())
     {
-      case "gmail":
+      case "gmailOne":
         $('div[aria-label="Message Body"]').text(encryptedText);
         break;
       case "facebook":
@@ -152,7 +152,7 @@ function fillUpdate(){
 
 function fillCheckUrl(){
   if (/^https:\/\/mail\.google\.com\/.*compose=new$/i.test(window.location)) {
-    return "gmail";
+    return "gmailOne";
   } else if (/^https:\/\/www\.facebook\.com\/messages\/.+(?!\/.*)/i.test(window.location)){
     return "facebook";
   /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
