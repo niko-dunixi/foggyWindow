@@ -76,9 +76,13 @@ function sendEmail(body){
 }
 
 function fillInitializer(){
-  if (fillCheckUrl()){
-    $('#fillButton')[0].disabled = false;
+  window.onhashchange = function () {
+    fillUpdate();
   }
+}
+
+function fillUpdate(){
+
 }
 
 function fillCheckUrl(){
