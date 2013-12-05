@@ -62,12 +62,12 @@ height:100%;
 }
 .btn-long
 {
-  margin:25px 0;
+  margin:10px 0 !important;
   width:200px;
 }
 .btn-short
 {
-  margin:20px 0;
+  margin:10px 0 !important;
   width:100px;
 }
 
