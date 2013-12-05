@@ -267,8 +267,46 @@ function addSelectFriendDialog()
   loadFriendTable();
 }
 
-//this shouldn't be needed, the dialog should take care of closing its self - bbarker
-function closeFriendDialog()
+
+
+
+function addSetPasswordHtml()
 {
-  $( '#dialog-form' ).dialog( "close" );
+  var div = $('<div />').attr('title', 'Set Your Secret Passphrase').attr('id', 'set-passphrase').appendTo('body');
+  var validatTips = $('<p />').text('Create a passphrase ').appendTo(div);
+  var form = $('<form />').appendTo(div);
+  var fieldSet = $('<fieldset />').appendTo(form);
+  var password = $('<input />', {type: 'password', name: 'password', id: 'password', 'class': 'text ui-widget-content ui-corner-all'}).appendTo(fieldSet);
+
+}
+
+function initSetPasswordDialog()
+{
+$('#set-passphrase').dialog({
+    autoOpen: false,
+    height: 200,
+    width: 450,
+    modal: true,
+    buttons: {
+      "Set": function(){
+        //Add password setting functionality here
+      }, 
+      "Cancel": function(){
+        $( this ).dialog( "close" );
+      }
+
+    }, 
+    "Close": function(){
+      allFields.val( "" ).removeClass( "ui-state-error" );
+    }
+  });
+}
+
+function addSetPasswordDialog()
+{
+  addSetPasswordHtml();
+  initSetPasswordDialog();
+  $( "#set-passphrase" ).dialog( "open" ).zIndex(8983453543);
+  $( ".ui-dialog" ).zIndex(99999);
+  $( ".ui-widget-overlay" ).zIndex(99999);
 }
