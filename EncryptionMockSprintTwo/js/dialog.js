@@ -20,7 +20,7 @@ function sleep(milliseconds) {
 
 function addNewFriendHtml()
 {
-  var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'dialog-form').appendTo('body');
+  var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'dialog-form').css('zIndex', 9009 ).appendTo('body');
   var validatTips = $('<p />').text('Please fill out the entire user form. Note: Email is optional!').addClass("validateTips").appendTo(div);
   
   var form = $('<form />').appendTo(div);
@@ -267,6 +267,8 @@ function addSelectFriendDialog()
   loadFriendTable();
 }
 
-
-
-
+//this shouldn't be needed, the dialog should take care of closing its self - bbarker
+function closeFriendDialog()
+{
+  $( '#dialog-form' ).dialog( "close" );
+}

@@ -41,18 +41,18 @@ function createPanel(){
   //The javascript for these functions are located in js/dialog.js
   //addBasicDialogHtml();
   //addBasicPopDialog();
-  
-  //add the html in the addNewFriendDialog(); function
-  //addNewFriendHtml();
-  //addNewFriendDialog();
+
+  //add button listeners
+  $('#addFriend').bind('click', function(){ 
+      addNewFriendDialog();
+   });
+  $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
+
   console.log("inside create panel")
   
   panel.slideDown();
   panelCreated = true;
   
-  //add button listeners
-  $('#rdsAddRemoveFriends').bind('click', addNewFriendDialog);
-  $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   console.log('added friend listener');
 }
 
@@ -60,6 +60,9 @@ function destroyPanel(){
   
   //panel = undefined;
   //$(panel).hide();
+
+  // TODO-ITAN: I don't know if this is called correctly. Anyone know?
+  closeFriendDialog();
   panel.slideUp();
   panelCreated = false;
 }
