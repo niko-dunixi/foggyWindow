@@ -41,10 +41,13 @@ function createPanel(){
 
   console.log("inside create panel")
   
-  panel.slideDown();
+  //panel.slideDown();
   /*panel.slideDown(2, function(){
     $('#panelDummy').height(panel.height()).slideDown();
   });*/
+  $('#dummyEncryptionPanel').slideDown(4, function(){
+    panel.slideDown();
+  });
   panelCreated = true;
   
   console.log('added friend listener');
@@ -55,10 +58,10 @@ function destroyPanel(){
   //panel = undefined;
   //$(panel).hide();
 
-  panel.slideUp();
-  /*panel.slideUp(2, function(){
-    $('#panelDummy').height(panel.height()).slideUp();
-  });*/
+  //panel.slideUp();
+  panel.slideUp(2, function(){
+    $('#dummyEncryptionPanel').slideUp();
+  });
   panelCreated = false;
 }
 
@@ -157,8 +160,10 @@ $(document).ready(function(){
   $.ajax({
     url:chrome.extension.getURL('injection.html'),
     success:function(data){
-      panel = $(data);
-      $('body').append(panel);
+      panel = $(data);//relative
+      //$('body').append(panel);
+      panel.insertBefore($('body').children().first());
+      $('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').attr('position', 'relative').css('display', 'none').height(panel.height()).insertBefore($('body').children().first());
       $('#textInput').keyup(encryptDecrypt);
       fillInitializer();
     },
