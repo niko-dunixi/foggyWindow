@@ -9,7 +9,7 @@ var panelCreated = false; //obvious boolean is obvious.
 var panel = false; //Initialize to empty JQuery object. This is where the panel will be housed
 var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
 var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
-var friend_email = undefined;
+var friend_email = ""; //changed this from intializing undefined to an empty string. This is to avoid sending "undefined" as the recipient.
 
 //Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
@@ -117,6 +117,9 @@ function fillInitializer(){
       case "gmailOne":
         $('div[aria-label="Message Body"]').text(encryptedText);
         break;
+      case "gmailTwo":
+        $('div[aria-label="Message Body"]').text(encryptedText);
+        break;
       case "facebook":
         $('textarea[name="message_body"]').val(encryptedText);
         break;
@@ -153,6 +156,8 @@ function fillUpdate(){
 function fillCheckUrl(){
   if (/^https:\/\/mail\.google\.com\/.*compose=new$/i.test(window.location)) {
     return "gmailOne";
+  } else if (/^https:\/\/mail.google.com\/mail\/.*(?:\?|&)view=cm.*$/i.test(window.location)){
+    return "gmailTwo";
   } else if (/^https:\/\/www\.facebook\.com\/messages\/.+(?!\/.*)/i.test(window.location)){
     return "facebook";
   /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
@@ -196,6 +201,7 @@ $(document).ready(function(){
         encryptDecrypt();
       });
       $('#sendButton').bind('click', function(){
+        console.log("send button still works? (If you're seeing this, then yes.)");
         sendEmail(friend_email, "", $('#transformed').text());
       });
       fillInitializer();

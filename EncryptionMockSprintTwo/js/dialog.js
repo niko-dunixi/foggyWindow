@@ -273,6 +273,8 @@ function loadFriendTable()
             
             $('#rdsSelectedFriend').text(selectedFriendName);
             friend_rsa_object = publicKey;
+            console.log($( "tr.ui-selected td", this ).first().next());
+            friend_email = $( "tr.ui-selected td", this ).first().next().text(); //grabs the email string.
             
           }
         });
