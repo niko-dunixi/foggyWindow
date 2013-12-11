@@ -34,9 +34,9 @@ function createPanel(){
   //addBasicPopDialog();
 
   //add button listeners
-  $('#addFriend').bind('click', addNewFriendDialog);
-  $('#rdsSelectFriend').bind('click', addSelectFriendDialog);
-  $('#setPass').bind('click', addSetPasswordDialog);
+  //$('#addFriend').bind('click', addNewFriendDialog);
+  //$('#rdsSelectFriend').bind('click', addSelectFriendDialog);
+  //$('#setPass').bind('click', addSetPasswordDialog);
 
   
 

@@ -3,16 +3,64 @@
 <!-- ^(\s+)?([^@|^\r|^\n]+)(\{|,)$ -->
 <!-- \1.rgdipsticks \2\3 -->
 
+
 <div id='thePanel' style='position: fixed;' class="rgdipsticks">
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
-            <button id = 'setPass' type='button' class='btn btn-default btn-long' style='margin-top:10px;'>Set Secret Pass</button>
-            <button type='button' class='btn btn-default btn-long' id='rdsSelectFriend' >Select Friends Key</button>
-            <label id="rdsSelectedFriend" style="font:10px sans-serif; text-align:center; width:100%; height: 10px;">No friend currently selected</label>
-            <button id="addFriend" type='button' class='btn btn-default btn-long'>Add/Remove Friends Key</button>
+            <button id = 'setPass' type='button' class='btn btn-default btn-xs' >Authenticate</button>
+            <button type='button' class='btn btn-default btn-xs' id='share' >Share</button>
+            
+            <select size="6" style="width:195px; margin:7px 0px;" class="form-control">
+                <option>Friend One</option>
+                <option>Friend Two</option>
+                <option>Friend Three</option>
+                <option>Friend One</option>
+                <option>Friend Two</option>
+                <option>Friend Three</option>
+                <option>Friend One</option>
+                <option>Friend Two</option>
+                <option>Friend Three</option>
+            </select>
+            
+            
+            <button id="addFriend" type='button' class='btn btn-default btn-xs' data-toggle="modal" data-target="#addFriendModal">Add Friend</button>
+            <button id="removeFriend" type='button' class='btn btn-default btn-xs'>Remove Friend</button>
         </div>
 	</div><!-- End KMA !-->
+    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="addFriendModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Add New Friend</h4>
+                </div>
+                <div class="modal-body">
+                    <div class='form-group'>
+                        <label for="name">Name</label>
+                        <input id="name" type="text" class="form-control">
+                    </div>
+                    <div class='form-group'>
+                        <label class="text-muted" for="email">Email</label>
+                        <input id="email" type="text" class="form-control" placeholder="optional">
+                    </div>
+                    <div class='form-group'>
+                        <label class="text-muted" for="key">Key</label>
+                        <textarea id="key" class="form-control" placeholder="I'm not sure if this is still needed"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
+    
 	<!-- Message/interactivity area !-->
 	<div id="right">
         <div class='inner'>
