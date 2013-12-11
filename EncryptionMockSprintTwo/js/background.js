@@ -31,7 +31,7 @@ chrome.runtime.onConnect.addListener(function(port) {
         {        
           console.log("css injected");
           //always inject css into the page
-          chrome.tabs.insertCSS(null, {file: 'css/jquery-ui.css'});
+          chrome.tabs.insertCSS(null, {file: 'css/jquery-ui_rgdpstks.css'});
           chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
           previousToggle = true;
         }

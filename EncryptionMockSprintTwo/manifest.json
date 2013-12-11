@@ -10,7 +10,7 @@
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
-      "css": ["css/injected.css", "css/jquery-ui.css", "css/bootstrap_rgdpstks.css", "css/bootstrap-theme.min.css", "css/rg-dialog.css"],
+      "css": ["css/injected.css", "css/bootstrap_rgdpstks.css", "css/bootstrap-theme.min.css", "css/jquery-ui_rgdpstks.css", "css/rg-dialog.css"],
       "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js",
               "js/cryptico/cryptico.js", "js/dialog.js",
               "js/injected.js","js/bootstrap.min.js"],

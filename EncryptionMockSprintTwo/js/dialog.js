@@ -22,7 +22,7 @@ function sleep(milliseconds) {
 
 function addNewFriendHtml()
 {
-  var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'add-friend-dialog-form').css('zIndex', 9009 ).addClass('rgdpstksDialog').appendTo('body');
+  var div = $('<div />').attr('title', 'Add a new friend').attr('id', 'add-friend-dialog-form').css('zIndex', 9009 ).addClass('rgdipsticks').appendTo('body');
   var validatTips = $('<p />').text('Please fill out the entire user form. Note: Email is optional!').addClass("validateTips").appendTo(div);
   
   var form = $('<form />').appendTo(div);
@@ -109,6 +109,13 @@ function initAddFriendForm() {
     height: 450,
     width: 450,
     modal: true,
+    open: function(){
+            var closeBtn = $('.ui-dialog-titlebar-close');
+            closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span>');
+    },
+    create: function(event, ui){
+        $('.ui-dialog').wrap('<div class="rgdipsticks" style="z-index: 25000;"/>');
+    },
     show: {
         effect: "blind",
         duration: dialogEffectDurration,
@@ -291,7 +298,7 @@ function parseFriends(friendsJson)
 
 function addSelectFriendHtml()
 {
-  var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').addClass('rgdpstksDialog').appendTo('body');
+  var div = $('<div />').attr('title', 'Select a friend').attr('id', 'select-friend').addClass('rgdipsticks').addClass('table').appendTo('body');
   var validatTips = $('<p />').attr('id', 'select-result').text('Select your friend').appendTo(div);
   
   var table = $('<table />').width("100%").attr('id', 'select-friend-table').appendTo(div);
@@ -330,6 +337,13 @@ $('#select-friend').dialog({
     height: 450,
     width: 450,
     modal: true,
+    open: function(){
+            var closeBtn = $('.ui-dialog-titlebar-close');
+            closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span>');
+    },
+    create: function(event, ui){
+        $('.ui-dialog').wrap('<div class="rgdipsticks" style="z-index: 25000;"/>');
+    },
     show: {
         effect: "blind",
         duration: dialogEffectDurration,
@@ -362,7 +376,7 @@ function addSelectFriendDialog()
 
 function addSetPasswordHtml()
 {
-  var div = $('<div />').attr('title', 'Set Your Secret Passphrase').attr('id', 'set-passphrase').appendTo('body');
+  var div = $('<div />').attr('title', 'Set Your Secret Passphrase').attr('id', 'set-passphrase').addClass('rgdipsticks').appendTo('body');
   var validatTips = $('<div />').text('Create a passphrase ').appendTo(div);
   var form = $('<form />').appendTo(div);
   var fieldSet = $('<fieldset />').appendTo(form);
@@ -377,6 +391,13 @@ $('#set-passphrase').dialog({
     height: 200,
     width: 450,
     modal: true,
+    open: function(){
+            var closeBtn = $('.ui-dialog-titlebar-close');
+            closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span>');
+    },
+    create: function(event, ui){
+        $('.ui-dialog').wrap('<div class="rgdipsticks" style="z-index: 25000;"/>');
+    },
     show: {
         effect: "blind",
         duration: dialogEffectDurration,
