@@ -40,21 +40,21 @@
                 </div>
                 <div class="modal-body">
                     <div class='form-group'>
-                        <label for="name">Name</label>
-                        <input id="name" type="text" class="form-control">
+                        <label for="friendName">Name <small class='text-muted' style='font-weight:normal'>3-16 alphanumeric characters long</small></label>
+                        <input id="friendName" type="text" class="form-control">
                     </div>
                     <div class='form-group'>
-                        <label class="text-muted" for="email">Email</label>
-                        <input id="email" type="text" class="form-control" placeholder="optional">
+                        <label class="text-muted" for="friendEmail">Email</label>
+                        <input id="friendEmail" type="text" class="form-control" placeholder="optional">
                     </div>
                     <div class='form-group'>
-                        <label class="text-muted" for="key">Key</label>
-                        <textarea id="key" class="form-control" placeholder="I'm not sure if this is still needed"></textarea>
+                        <label class="text-muted" for="friendKey">Key</label>
+                        <textarea id="key" class="form-control" placeholder="Paste friend's key here"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button id="createNewFriend" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

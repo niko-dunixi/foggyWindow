@@ -37,6 +37,7 @@ function createPanel(){
   //$('#addFriend').bind('click', addNewFriendDialog);
   //$('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   //$('#setPass').bind('click', addSetPasswordDialog);
+  $('#createNewFriend').click(createNewFriend);
 
   
 
