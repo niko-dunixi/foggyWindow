@@ -256,29 +256,27 @@ function loadFriendTable()
       $('<td />').width('5px').text(value.publicKey).appendTo(tr);
       
       tr.appendTo($('#select-friend-table'));
-      
-      //make table rows selectable
-      $(function() {
-        $( "#select-friend-table tbody" ).selectable({
-          stop: function() {
-            $( "tr.ui-selected td", this ).each(function() {
-              console.log("Selected " + $(this).last().text());
-            });
-            
-            var publicKey = $( "tr.ui-selected td", this ).last().text();
-            var selectedFriendName = $( "tr.ui-selected td", this ).first().text();
-            $( "#select-result" ).text("Selected friend " + selectedFriendName);
-            console.log('publicKey ' + publicKey);
-            console.log('friendName ' + selectedFriendName);
-            
-            $('#rdsSelectedFriend').text(selectedFriendName);
-            friend_rsa_object = publicKey;
-            console.log($( "tr.ui-selected td", this ).first().next());
-            friend_email = $( "tr.ui-selected td", this ).first().next().text(); //grabs the email string.
-            
-          }
+    });
+    
+    //make table rows selectable
+    $( "#select-friend-table tbody" ).selectable({
+      stop: function() {
+        $( "tr.ui-selected td", this ).each(function() {
+          console.log("Selected " + $(this).last().text());
         });
-      });
+        
+        var publicKey = $( "tr.ui-selected td", this ).last().text();
+        var selectedFriendName = $( "tr.ui-selected td", this ).first().text();
+        $( "#select-result" ).text("Selected friend " + selectedFriendName);
+        //console.log('publicKey ' + publicKey);
+        //console.log('friendName ' + selectedFriendName);
+        
+        $('#rdsSelectedFriend').text(selectedFriendName);
+        friend_rsa_object = publicKey;
+        console.log($( "tr.ui-selected td", this ).first().next());
+        friend_email = $( "tr.ui-selected td", this ).first().next().text(); //grabs the email string.
+        
+      }
     });
   });
  
