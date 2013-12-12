@@ -244,9 +244,11 @@ function deleteFriends()
 
 function addNewFriendDialog()
 {
-  addNewFriendHtml();
-  initAddFriendForm();
-  $( "#add-friend-dialog-form" ).zIndex(dialogZindex).dialog( "open" );
+  //addNewFriendHtml();
+  //initAddFriendForm();
+  //$( "#add-friend-dialog-form" ).zIndex(dialogZindex).dialog( "open" );
+  $('#myModal').modal({
+  backdrop: 'true'});
 }
 
 
