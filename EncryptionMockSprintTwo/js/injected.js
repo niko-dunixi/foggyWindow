@@ -10,6 +10,7 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
 var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
 var friend_email = ""; //changed this from intializing undefined to an empty string. This is to avoid sending "undefined" as the recipient.
+var friend_name = "";
 
 //Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
@@ -43,6 +44,11 @@ function createPanel(){
   //$('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   //$('#setPass').bind('click', addSetPasswordDialog);
   $('#createNewFriend').click(createNewFriend);
+  $('#removeFriend').click(function()
+  {
+    console.log('remove friend');
+    storeNewFriend(friend_name, friend_email, '', 'delete')
+  });
   $('#authenticate_button').click(authenticate_user);
 
   
@@ -242,6 +248,19 @@ $(document).ready(function(){
   
   //populate firends list. Can't call directly there because the elements can't be selected right off the bat
   //for some reason - bbarker
-  var commPort = chrome.runtime.connect({name: "populate_friends"});
-    commPort.postMessage({});
+  chrome.runtime.connect({name: "populate_friends"}).postMessage({});
+  chrome.runtime.connect({name: "inject_css"}).postMessage({});
+  
+  var getKey = chrome.runtime.connect({name: "get_rsa_key"})
+  getKey.postMessage({});
+  getKey.onMessage.addListener(function(msg) {
+    console.log('rsa key: '  + msg.key);
+  });
+  
+  //set rsa key
+  var setKey = chrome.runtime.connect({name: "set_rsa_key"})
+  setKey.postMessage({setKey: "hi"});  
+  setKey.onMessage.addListener(function(msg) {
+    console.log('set key response: '  + msg.key);
+  });
 });
