@@ -145,8 +145,10 @@ function fillInitializer(){
       case "tormail":
         break;
       default:
-        $('#transformed').select();
-        chrome.extension.getBackgroundPage().execCommand('copy');
+        //chrome.extension.getBackgroundPage().execCommand('copy');
+        //document.execCommand('copy');
+        console.log("Copy has been clicked.");
+        chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#transformed').text()});
         break;
     }
   });

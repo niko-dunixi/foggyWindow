@@ -6,7 +6,7 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "clipboardRead", "clipboardWrite"],
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
