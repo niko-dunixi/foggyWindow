@@ -217,7 +217,9 @@ function createNewFriend()
   
   if(valid)
   {
-    storeNewFriend(friendName, friendEmail, friendsPublicKey);
+    //strip off stuff we don't need
+    pKey = /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.exec(friendsPublicKey)[1];
+    storeNewFriend(friendName, friendEmail, pKey);
     $('#addFriendModal').modal('toggle');
   }
 }
@@ -260,8 +262,6 @@ function storeNewFriend(name, email, publicKey)
     //populate the friends table
     populateFriendsTable()
   });
-  
-
 }
 
 function deleteFriends()

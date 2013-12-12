@@ -38,14 +38,27 @@ function populateFriendsTable()
       console.log("key" + key);
       console.log("value: " + value);
       
-      //add table html
-      var tr = $('<tr />');
-      $('<option />').text(value.name).appendTo($('#rdFriendTable'));
-      $('<td />').text(value.email).appendTo(tr);
-      $('<td />').width('5px').text(value.publicKey).appendTo(tr);
-      
-      tr.appendTo($('#select-friend-table'));
+      //populate friend table
+      var friendTable = $('#rdFriendTable');
+      var option = $('<option />').text(value.name)
+        /*
+        .attr({'data-placement' : 'right'})
+        .attr({'data-original-title' : 'testing'})
+        .addClass('tooltip').text(value.email)
+        */
+        .attr({'data-toggle' : 'tooltip'})        
+        .attr({'title':value.email})
+        .attr({'rsapublickey':value.publicKey})
+        // /*
+        //I can see the css changing, but tooltip dosen't display
+        .tooltip({
+          placement: 'right',
+        })
+        //*/
+        .appendTo(friendTable);
     });
+        
+      //$('<td />').width('5px').text(value.publicKey).appendTo(friendTable);
     
     //make table rows selectable
     $( "#select-friend-table tbody" ).selectable({
