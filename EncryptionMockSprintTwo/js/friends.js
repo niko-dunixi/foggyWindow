@@ -30,25 +30,52 @@ function populateFriendsTable()
   
   msgPort.onMessage.addListener(function(msg) {
     var friendsJson = msg.keys;
-    console.log('response: ' + friendsJson);
+    console.log('loading friends..');
     
     var friendsParsed = JSON.parse(friendsJson);
-    console.log('parsed friends json ' + friendsParsed);
+    //console.log('parsed friends json ' + friendsParsed);
     $.each(friendsParsed, function(key, value){
-      console.log("key" + key);
-      console.log("value: " + value);
+      //console.log("key" + key);
+      //console.log("value: " + value);
       
-      //add table html
-      var tr = $('<tr />');
-      $('<option />').text(value.name).appendTo($('#rdFriendTable'));
-      $('<td />').text(value.email).appendTo(tr);
-      $('<td />').width('5px').text(value.publicKey).appendTo(tr);
-      
-      tr.appendTo($('#select-friend-table'));
+      //populate friend table
+      var friendTable = $('#rdFriendTable');
+      var option = $('<option />').text(value.name)
+        /*
+        .attr({'data-placement' : 'right'})
+        .attr({'data-original-title' : 'testing'})
+        .addClass('tooltip').text(value.email)
+        */
+        .attr({'data-toggle' : 'tooltip'})        
+        .attr({'title':value.email})
+        .attr({'rsapublickey':value.publicKey})
+        // /*
+        //I can see the css changing, but tooltip dosen't display
+        .tooltip({
+          placement: 'right',
+        })
+        //*/
+        .appendTo(friendTable);
     });
+    console.log('Friends loaded');
+        
+      //$('<td />').width('5px').text(value.publicKey).appendTo(friendTable);
     
     //make table rows selectable
-    $( "#select-friend-table tbody" ).selectable({
+    $( "#rdFriendTable" ).change(function(){
+        
+        var selected = $(this).find('option:selected'); 
+        var name = selected.val();
+        var email = selected.attr('data-original-title');
+        var publicKey = selected.attr('rsapublickey');
+        
+        console.log("name: " + name);
+        console.log("email: " + email);
+        console.log("key: " + publicKey);
+        friend_rsa_object = publicKey;
+        friend_email = email;
+        
+      /*
       stop: function() {
         $( "tr.ui-selected td", this ).each(function() {
           console.log("Selected " + $(this).last().text());
@@ -66,6 +93,7 @@ function populateFriendsTable()
         friend_email = $( "tr.ui-selected td", this ).first().next().text(); //grabs the email string.
         
       }
+      */
     });
   });
  
