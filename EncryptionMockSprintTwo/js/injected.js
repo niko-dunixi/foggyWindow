@@ -212,6 +212,7 @@ $(document).ready(function(){
         sendEmail(friend_email, "", $('#transformed').text());
       });
       fillInitializer();
+      $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
     },
     dataType:'html'
   });
