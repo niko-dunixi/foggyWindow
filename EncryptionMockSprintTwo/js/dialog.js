@@ -155,7 +155,7 @@ function initAddFriendForm() {
 
           //var newFriendStore = new Array();
           //newFriendStore.push({'name': name.val(), 'email': email.val(), 'publicKey': pKey});
-          storeNewFriend(name.val(), email.val(), pKey);
+          storeNewFriend(name.val(), email.val(), pKey, 'store');
           
           //destroy the dialog box, including the html
           $( this ).dialog( "close" );
@@ -219,49 +219,73 @@ function createNewFriend()
   {
     //strip off stuff we don't need
     pKey = /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.exec(friendsPublicKey)[1];
-    storeNewFriend(friendName, friendEmail, pKey);
+    storeNewFriend(friendName, friendEmail, pKey, 'store');
     $('#addFriendModal').modal('toggle');
   }
 }
 //stores new friends into the database
-function storeNewFriend(name, email, publicKey)
+//storeOrDelete must be either 'store' or 'delete'
+function storeNewFriend(name, email, publicKey, storeOrDelete)
 {
-  console.log("Stored new friend..");
-  var msgPort = chrome.runtime.connect({name: "load_friends"});
-  msgPort.postMessage({});
-  
-  msgPort.onMessage.addListener(function(msg) {
-    var friends = msg.keys;
-    var newFriendStore = new Array();
-    var friendsJson;
-    try {
-      friendsJson = JSON.parse(friends);
-    } catch(e) {
-      console.log("error while parsing: " + e);
-      friendsJson = "";
-    }
-    console.log('response: ' + friendsJson);
+  if(storeOrDelete == 'store' || storeOrDelete == 'delete')
+  {
+    console.log(storeOrDelete + "Store new friend..");
+    var msgPort = chrome.runtime.connect({name: "load_friends"});
+    msgPort.postMessage({});
     
-    //add existing friends to list
-    $.each(friendsJson, function(key, value){
-      //console.log("key" + key);
-      //console.log("value: " + value);
-      newFriendStore.push({'name': value.name, 'email': value.email, 'publicKey': value.publicKey});
+    msgPort.onMessage.addListener(function(msg) {
+      var friends = msg.keys;
+      var newFriendStore = new Array();
+      var friendsJson;
+      try {
+        friendsJson = JSON.parse(friends);
+      } catch(e) {
+        console.log("error while parsing: " + e);
+        friendsJson = "";
+      }
+      //console.log('response: ' + friendsJson);
+      
+      //add existing friends to list
+      $.each(friendsJson, function(key, value){
+        //console.log("key" + key);
+        //console.log("value: " + value);
+        if
+        (
+          storeOrDelete == 'delete' &&
+          name == value.name &&
+          email == value.email
+        )
+        {
+          //do nothing
+        }
+        else
+        {
+          newFriendStore.push({'name': value.name, 'email': value.email, 'publicKey': value.publicKey});
+        }
+      });
+      
+      //add new friend to the list
+      
+      if(storeOrDelete == 'store')
+      {
+        newFriendStore.push({'name': name, 'email': email, 'publicKey': publicKey});
+      }
+      
+      var newFriendStoreString = JSON.stringify(newFriendStore);
+      console.log("json to send:" + newFriendStoreString);
+      
+      //send the new friends list to be stored
+      chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
+      console.log("Stored new friend successfully");
+      
+      //populate the friends table
+      populateFriendsTable()
     });
-    
-    //add new friend to the list
-    newFriendStore.push({'name': name, 'email': email, 'publicKey': publicKey});
-    
-    var newFriendStoreString = JSON.stringify(newFriendStore);
-    console.log("json to send:" + newFriendStoreString);
-    
-    //send the new friends list to be stored
-    chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
-    console.log("Stored new friend successfully");
-    
-    //populate the friends table
-    populateFriendsTable()
-  });
+  }
+  else
+  {
+    console.log('can not perform that operation on friends! operation: ' + storeOrDelete);
+  }
 }
 
 function deleteFriends()

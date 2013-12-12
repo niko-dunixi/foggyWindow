@@ -10,6 +10,7 @@ var panel = false; //Initialize to empty JQuery object. This is where the panel 
 var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
 var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
 var friend_email = ""; //changed this from intializing undefined to an empty string. This is to avoid sending "undefined" as the recipient.
+var friend_name = "";
 
 //Moving the ajax request lines to the part of the file that waits for the DOM to be ready.
 
@@ -38,6 +39,11 @@ function createPanel(){
   //$('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   //$('#setPass').bind('click', addSetPasswordDialog);
   $('#createNewFriend').click(createNewFriend);
+  $('#removeFriend').click(function()
+  {
+    console.log('remove friend');
+    storeNewFriend(friend_name, friend_email, '', 'delete')
+  });
 
   
 

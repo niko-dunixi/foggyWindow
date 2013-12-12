@@ -72,6 +72,7 @@ function populateFriendsTable()
         console.log("name: " + name);
         console.log("email: " + email);
         console.log("key: " + publicKey);
+        friend_name = name;
         friend_rsa_object = publicKey;
         friend_email = email;
         
