@@ -33,6 +33,14 @@ chrome.runtime.onConnect.addListener(function(port) {
           //always inject css into the page
           chrome.tabs.insertCSS(null, {file: 'css/jquery-ui_rgdpstks.css'});
           chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
+          
+          //init friends table
+          //I can't bind the buttons inside of the document load function for some reason..
+          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {friends: "populate"}, function(response) {
+              console.log(response.farewell);
+            });
+          });
           previousToggle = true;
         }
         
