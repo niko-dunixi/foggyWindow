@@ -8,9 +8,11 @@
     
     <div id='authenticatePanel'>
         <div style='width:700px;margin:100px auto;'>
-            <input id='dpstxpassword' type='password' class='form-control' style='width:470px;display:inline-block'/>
-            <button class='btn btn-default' id='authenticate_button'>Authenticate</button>
-            <button class='btn btn-default' id='set_new_key_button'>Set New Key</button>
+            <div class="form-group">
+                <input id='dpstxpassword' type='password' class='form-control' style='width:470px;display:inline-block'/>
+            </div>
+            <!-- <button class='btn btn-default' id='authenticate_button'>Authenticate</button> !-->
+            <button class='btn btn-default' id='set_new_key_button'><img id='setkeyimage' /></button>
         </div>
     </div>
     
@@ -18,7 +20,7 @@
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
-            <button type='button' class='btn btn-default btn-xs' id='shareKey' >Share Your Key</button>
+            <button type='button' class='btn btn-default btn-xs' id='shareKey' style='left: 50%;' >Share Your Key</button>
             
             <select size="6" style="width:195px; margin:7px 0px;" class="form-control" id="rdFriendTable"></select>
             
@@ -71,7 +73,7 @@
                     <div id='private_key_text' style='word-wrap:break-word;'></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="sharekeycopy" class="btn btn-default btn-xs" data-dismiss="modal">Copy</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
