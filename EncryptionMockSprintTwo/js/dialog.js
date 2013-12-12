@@ -221,6 +221,11 @@ function createNewFriend()
     pKey = /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.exec(friendsPublicKey)[1];
     storeNewFriend(friendName, friendEmail, pKey, 'store');
     $('#addFriendModal').modal('toggle');
+    
+    //clear out dialog values
+    $('#friendName').val('');
+    $('#friendEmail').val('');
+    $('#rgdipsticksPublicKey').val('');
   }
 }
 //stores new friends into the database
