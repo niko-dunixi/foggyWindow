@@ -219,7 +219,7 @@ function fillCheckUrl(){
     return "gmailOne";
   } else if (/^https:\/\/mail.google.com\/mail\/.*(?:\?|&)view=cm.*$/i.test(window.location)){
     return "gmailTwo";
-  } else if (/^https:\/\/www\.facebook\.com\/messages\/.*$/i.test(window.location)){
+  } else if (/^https:\/\/www\.facebook\.com\/messages.*$/i.test(window.location)){
     return "facebook";
   /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
     return "hotmail";
