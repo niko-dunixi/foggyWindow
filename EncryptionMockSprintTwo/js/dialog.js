@@ -180,9 +180,12 @@ function createNewFriend()
   
   var friendName = $('#friendName').val();
   var friendEmail = $('#friendEmail').val();
+  var friendsPublicKey = $('#rgdipsticksPublicKey').val();
   
   console.log(friendName.length > 3 && friendName.length < 16 && /^[a-zA-Z]([0-9a-zA-Z_\s])+$/i.test(friendName))
+  var valid = true;
   
+  //test friends name
   if(
     friendName.length > 3 && 
     friendName.length < 16 && 
@@ -190,11 +193,32 @@ function createNewFriend()
   )
   {
     $('#friendName').closest("div").removeClass('has-error');
-    
+    valid = valid && true
   }
   else
   {
     $('#friendName').closest("div").addClass('has-error');
+    valid = false;
+  }
+  
+  //test regex
+  if(
+    /^-----PUBLIC-RSA-KEY-----(.+)-----PUBLIC-RSA-KEY-----$/i.test(friendsPublicKey)
+  )
+  {
+    $('#rgdipsticksPublicKey').closest("div").removeClass('has-error');
+    valid = valid && true
+  }
+  else
+  {
+    $('#rgdipsticksPublicKey').closest("div").addClass('has-error');
+    valid = false;
+  }
+  
+  if(valid)
+  {
+    storeNewFriend(friendName, friendEmail, friendsPublicKey);
+    $('#addFriendModal').modal('toggle');
   }
 }
 //stores new friends into the database
@@ -232,6 +256,9 @@ function storeNewFriend(name, email, publicKey)
     //send the new friends list to be stored
     chrome.runtime.connect({name : 'save_friends'}).postMessage({keys: newFriendStoreString});
     console.log("Stored new friend successfully");
+    
+    //populate the friends table
+    populateFriendsTable()
   });
   
 

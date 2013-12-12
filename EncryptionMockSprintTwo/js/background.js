@@ -4,8 +4,7 @@ if (typeof initialized == "undefined"){
 	localStorage['initialized'] = true;
 	localStorage['friends'] = JSON.stringify(new Array());
 }
-
-
+  
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
 chrome.runtime.onConnect.addListener(function(port) {
   console.log('recieved message port ' + port.name);    
@@ -33,14 +32,6 @@ chrome.runtime.onConnect.addListener(function(port) {
           //always inject css into the page
           chrome.tabs.insertCSS(null, {file: 'css/jquery-ui_rgdpstks.css'});
           chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
-          
-          //init friends table
-          //I can't bind the buttons inside of the document load function for some reason..
-          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {friends: "populate"}, function(response) {
-              console.log(response.farewell);
-            });
-          });
           previousToggle = true;
         }
         
@@ -71,6 +62,17 @@ chrome.runtime.onConnect.addListener(function(port) {
 					console.log(err.message);
 				}
       break;
+      
+      case 'populate_friends':
+        //init friends table
+        //I can't bind the buttons inside of the document load function for some reason..
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {friends: "populate"}, function(response) {
+            console.log(response.farewell);
+          });
+        });
+      break;
+      
 			//If someone sends a typo or an unexpected message to the background page. Just do nothing.
 			default:
 				console.log("Unrecognized command.");

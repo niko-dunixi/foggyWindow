@@ -8,6 +8,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.friends == "populate")
     {
       populateFriendsTable();
+      sendResponse({friends: "Recieved and populated"});
     }
 });
 
