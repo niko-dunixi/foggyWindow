@@ -26,7 +26,14 @@ function togglePanel(){
 function authenticate_user()
 {
   var authenticate_panel = $('#authenticatePanel');
+  //personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+  
   authenticate_panel.css('top','-300px');
+}
+
+function new_user()
+{
+  //personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
 }
 function createPanel(){
   //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
