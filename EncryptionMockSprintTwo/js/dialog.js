@@ -299,13 +299,13 @@ function loadFriendTable()
   
   msgPort.onMessage.addListener(function(msg) {
     var friendsJson = msg.keys;
-    console.log('response: ' + friendsJson);
+    //console.log('response: ' + friendsJson);
     
     var friendsParsed = JSON.parse(friendsJson);
-    console.log('parsed friends json ' + friendsParsed);
+    //console.log('parsed friends json ' + friendsParsed);
     $.each(friendsParsed, function(key, value){
-      console.log("key" + key);
-      console.log("value: " + value);
+      //console.log("key" + key);
+      //console.log("value: " + value);
       
       //add table html
       var tr = $('<tr />');
@@ -314,6 +314,7 @@ function loadFriendTable()
       $('<td />').width('5px').text(value.publicKey).appendTo(tr);
       
       tr.appendTo($('#select-friend-table'));
+      console.log("friends loaded");
     });
     
     //make table rows selectable
