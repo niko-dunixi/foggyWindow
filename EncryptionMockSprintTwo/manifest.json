@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Encryption Mock",
-  "description": "This extension is a Encryption mockup",
+  "name": "Foggy Window by RDS",
+  "description": "This extension is a Encryption Chat in Beta Testing",
   "version": "0.2.0",
   "background": {
     "page": "background.html"
