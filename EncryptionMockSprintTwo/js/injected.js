@@ -145,6 +145,10 @@ function fillInitializer(){
       case "tormail":
         break;
       default:
+        //chrome.extension.getBackgroundPage().execCommand('copy');
+        //document.execCommand('copy');
+        console.log("Copy has been clicked.");
+        chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#transformed').text()});
         break;
     }
   });
@@ -153,9 +157,9 @@ function fillInitializer(){
 function fillUpdate(){
   var check = fillCheckUrl();
   if (check){
-    $('#fillButton')[0].disabled = false;
+    $('#fillButton').text("Fill");
   } else {
-    $('#fillButton')[0].disabled = true;
+    $('#fillButton').text("Copy");
   }
   return check;
 }
