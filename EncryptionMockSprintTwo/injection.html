@@ -5,23 +5,22 @@
 
 
 <div id='thePanel' style='position: fixed;' class="rgdipsticks">
+    
+    <div id='authenticatePanel'>
+        <div style='width:700px;margin:100px auto;'>
+            <input type='text' class='form-control' style='width:500px;display:inline-block'/>
+            <button class='btn btn-default' id='authenticate_button'>Authenticate</button>
+        </div>
+    </div>
+    
+    
 	<!-- This is the segment for the key management area. !-->
 	<div id="left" class="bar">
         <div class='inner'>
             <button id = 'setPass' type='button' class='btn btn-default btn-xs' >Authenticate</button>
             <button type='button' class='btn btn-default btn-xs' id='share' >Share</button>
             
-            <select size="6" style="width:195px; margin:7px 0px;" class="form-control" id="rdFriendTable">
-                <option>Friend One</option>
-                <option>Friend Two</option>
-                <option>Friend Three</option>
-                <option>Friend One</option>
-                <option>Friend Two</option>
-                <option>Friend Three</option>
-                <option>Friend One</option>
-                <option>Friend Two</option>
-                <option>Friend Three</option>
-            </select>
+            <select size="6" style="width:195px; margin:7px 0px;" class="form-control" id="rdFriendTable"></select>
             
             
             <button id="addFriend" type='button' class='btn btn-default btn-xs' data-toggle="modal" data-target="#addFriendModal">Add Friend</button>
@@ -78,7 +77,7 @@
                 <textarea id='textInput' placeholder='Enter a message here' class='form-control' rows='8' style='width:100%;'></textarea>
             </div>
             <div class='output'>
-                <textarea style='width:100%;' id='transformed' disabled>“Knowledge, like air, is vital to life.&#13;&#10;Like air, no one should be denied it.”&#13;&#10; ― Alan Moore</textarea>
+                <pre style='width:100%;' id='transformed' disabled>“Knowledge, like air, is vital to life.&#13;&#10;Like air, no one should be denied it.”&#13;&#10; ― Alan Moore</pre>
             </div>
             <div style='clear:both;'></div>
         </div>

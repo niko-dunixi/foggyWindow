@@ -24,6 +24,11 @@ function togglePanel(){
   console.log("Status: " + panelCreated);
 }
 
+function authenticate_user()
+{
+  var authenticate_panel = $('#authenticatePanel');
+  authenticate_panel.css('top','-300px');
+}
 function createPanel(){
   //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
   //panel = ;
@@ -44,6 +49,7 @@ function createPanel(){
     console.log('remove friend');
     storeNewFriend(friend_name, friend_email, '', 'delete')
   });
+  $('#authenticate_button').click(authenticate_user);
 
   
 
