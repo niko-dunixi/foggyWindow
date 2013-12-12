@@ -34,8 +34,14 @@ function authenticate_user()
 
 function new_user()
 {
-  personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
-  authenticate_user();
+  if ($('#dpstxpassword').val().length > 9){
+    $('#dpstxpassword').closest("div").removeClass('has-error');
+    personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+    authenticate_user();  
+  } else {
+    $('#dpstxpassword').closest("div").addClass('has-error');
+    $('#dpstxpassword').focus();
+  }
 }
 
 function shareKey()
@@ -69,9 +75,11 @@ function createPanel(){
   //$('#authenticate_button').click(authenticate_user);
   $('#set_new_key_button').click(new_user);
   $('#shareKey').click(shareKey);
-  
-
-  
+  $('#dpstxpassword').keyup(function (e) {
+    if (e.keyCode == 13) {
+      new_user();
+    }
+  });
 
   console.log("inside create panel")
   
