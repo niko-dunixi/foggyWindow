@@ -175,6 +175,28 @@ function initAddFriendForm() {
   });
 }
 
+function createNewFriend()
+{
+  
+  var friendName = $('#friendName').val();
+  var friendEmail = $('#friendEmail').val();
+  
+  console.log(friendName.length > 3 && friendName.length < 16 && /^[a-zA-Z]([0-9a-zA-Z_\s])+$/i.test(friendName))
+  
+  if(
+    friendName.length > 3 && 
+    friendName.length < 16 && 
+    /^[a-zA-Z]([0-9a-zA-Z_\s])+$/i.test(friendName)
+  )
+  {
+    $('#friendName').closest("div").removeClass('has-error');
+    
+  }
+  else
+  {
+    $('#friendName').closest("div").addClass('has-error');
+  }
+}
 //stores new friends into the database
 function storeNewFriend(name, email, publicKey)
 {
