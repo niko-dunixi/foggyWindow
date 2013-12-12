@@ -4,9 +4,9 @@
   "description": "This extension is a Encryption mockup",
   "version": "0.2.0",
   "background": {
-    "scripts": ["js/background.js"]
+    "page": "background.html"
   },
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "clipboardRead", "clipboardWrite"],
   "content_scripts":[
     {
       "matches": ["<all_urls>"],
@@ -41,5 +41,3 @@
     "images/send.png"
     ]
 }
-
-
