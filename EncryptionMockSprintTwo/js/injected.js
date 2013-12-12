@@ -35,6 +35,7 @@ function authenticate_user()
 function new_user()
 {
   personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+  authenticate_user();
 }
 
 function shareKey()
@@ -65,7 +66,7 @@ function createPanel(){
     console.log('remove friend');
     storeNewFriend(friend_name, friend_email, '', 'delete')
   });
-  $('#authenticate_button').click(authenticate_user);
+  //$('#authenticate_button').click(authenticate_user);
   $('#set_new_key_button').click(new_user);
   $('#shareKey').click(shareKey);
   
@@ -252,6 +253,7 @@ $(document).ready(function(){
       });
       fillInitializer();
       $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
+      $('#setkeyimage')[0].src = chrome.extension.getURL("images/key.png");
     },
     dataType:'html'
   });
