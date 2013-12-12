@@ -36,8 +36,12 @@ function new_user()
 {
   if ($('#dpstxpassword').val().length > 9){
     $('#dpstxpassword').closest("div").removeClass('has-error');
-    personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
-    authenticate_user();  
+    $('#auth_form').css('display', 'none');
+    $('#auth_load').css('display', 'block');
+    setTimeout(function(){
+      personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+      authenticate_user();
+    }, 350);
   } else {
     $('#dpstxpassword').closest("div").addClass('has-error');
     $('#dpstxpassword').focus();
