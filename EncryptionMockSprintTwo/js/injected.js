@@ -75,6 +75,9 @@ function createPanel(){
   //$('#authenticate_button').click(authenticate_user);
   $('#set_new_key_button').click(new_user);
   $('#shareKey').click(shareKey);
+  $('#sharekeycopy').bind('click', function(){
+    chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
+  });
   $('#dpstxpassword').keyup(function (e) {
     if (e.keyCode == 13) {
       new_user();
