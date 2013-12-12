@@ -231,4 +231,9 @@ $(document).ready(function(){
     sendResponse({result: "confirmed"});
   });
   console.log("Listener Initiated.");
+  
+  //populate firends list. Can't call directly there because the elements can't be selected right off the bat
+  //for some reason - bbarker
+  var commPort = chrome.runtime.connect({name: "populate_friends"});
+    commPort.postMessage({});
 });
