@@ -1,8 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Encryption Mock",
-  "description": "This extension is a Encryption mockup",
+  "name": "Foggy Window by RDS",
+  "description": "This extension is a Encryption Chat in Beta Testing",
   "version": "0.2.0",
+  "icons": {
+    "128": "128icon.png" 
+  },
   "background": {
     "page": "background.html"
   },
@@ -18,7 +21,7 @@
     }
   ],
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "128icon.png",
     "default_popup": "popup/popup.html"
   },
   "web_accessible_resources" : [
@@ -38,6 +41,7 @@
     "images/ui-icons_454545_256x240.png",
     "images/ui-icons_888888_256x240.png",
     "images/ui-icons_cd0a0a_256x240.png",
-    "images/send.png"
+    "images/send.png",
+    "images/key.png"
     ]
 }

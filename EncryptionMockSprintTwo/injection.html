@@ -6,19 +6,24 @@
 
 <div id='thePanel' style='position: fixed;' class="rgdipsticks">
     
-    <div id='authenticatePanel'>
-        <div style='width:700px;margin:100px auto;'>
-            <input type='text' class='form-control' style='width:500px;display:inline-block'/>
-            <button class='btn btn-default' id='authenticate_button'>Authenticate</button>
+    <div id='authenticatePanel' style='text-align: center;'>
+        <div style='width:700px;margin:100px auto;' id='auth_form'>
+            <div class="form-group">
+                <input id='dpstxpassword' type='password' class='form-control' style='width:470px;display:inline-block;text-align: center;' placeholder='Passphrase: nine characters minimum'/>
+                <button class='btn btn-default' id='set_new_key_button'><img id='setkeyimage' /></button>
+            </div>
+            <!-- <button class='btn btn-default' id='authenticate_button'>Authenticate</button> !-->
+        </div>
+        <div style='width:700px;margin:100px auto;font-weight: bold; text-align: center; display: none;' id='auth_load'>
+            Loading, this will take a quick moment!
         </div>
     </div>
     
     
 	<!-- This is the segment for the key management area. !-->
-	<div id="left" class="bar">
+	<div id="left" class="bar" style='text-align: center;'>
         <div class='inner'>
-            <button id = 'setPass' type='button' class='btn btn-default btn-xs' >Authenticate</button>
-            <button type='button' class='btn btn-default btn-xs' id='share' >Share</button>
+            <button type='button' class='btn btn-default btn-xs' id='shareKey' style='left: 50%;'>Share Your Key</button>
             
             <select size="6" style="width:195px; margin:7px 0px;" class="form-control" id="rdFriendTable"></select>
             
@@ -54,6 +59,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button id="createNewFriend" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
+    <!-- Share Key Modal -->
+    <div class="modal fade" id="shareKeyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Your Private Key</h4>
+                </div>
+                <div class="modal-body">
+                    <div id='private_key_text' style='word-wrap:break-word;'></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="sharekeycopy" class="btn btn-default btn-xs" data-dismiss="modal">Copy</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

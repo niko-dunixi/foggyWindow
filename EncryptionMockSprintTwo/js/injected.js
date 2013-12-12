@@ -27,7 +27,34 @@ function togglePanel(){
 function authenticate_user()
 {
   var authenticate_panel = $('#authenticatePanel');
+  //personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+  
   authenticate_panel.css('top','-300px');
+}
+
+function new_user()
+{
+  if ($('#dpstxpassword').val().length > 9){
+    $('#dpstxpassword').closest("div").removeClass('has-error');
+    $('#auth_form').css('display', 'none');
+    $('#auth_load').css('display', 'block');
+    setTimeout(function(){
+      personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+      authenticate_user();
+    }, 350);
+  } else {
+    $('#dpstxpassword').closest("div").addClass('has-error');
+    $('#dpstxpassword').focus();
+  }
+}
+
+function shareKey()
+{
+  
+  $('#shareKeyModal').modal('show');
+  console.log(cryptico.publicKeyString(personal_rsa_object));
+  $('#private_key_text').text("-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
+  //sendEmail("", "My Public RSA Key", "-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
 }
 function createPanel(){
   //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
@@ -49,9 +76,17 @@ function createPanel(){
     console.log('remove friend');
     storeNewFriend(friend_name, friend_email, '', 'delete')
   });
-  $('#authenticate_button').click(authenticate_user);
-
-  
+  //$('#authenticate_button').click(authenticate_user);
+  $('#set_new_key_button').click(new_user);
+  $('#shareKey').click(shareKey);
+  $('#sharekeycopy').bind('click', function(){
+    chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
+  });
+  $('#dpstxpassword').keyup(function (e) {
+    if (e.keyCode == 13) {
+      new_user();
+    }
+  });
 
   console.log("inside create panel")
   
@@ -147,12 +182,15 @@ function fillInitializer(){
       case "yahoo":
         break;
       case "guerrilla":
+        $('textarea[name="body"]').text(encryptedText);
         break;
       case "privnote":
+        $('#id_body').text(encryptedText);
         break;
       case "sms4tor":
         break;
       case "hushmail":
+        $('#compose-text_body').val(encryptedText);
         break;
       case "tormail":
         break;
@@ -181,22 +219,23 @@ function fillCheckUrl(){
     return "gmailOne";
   } else if (/^https:\/\/mail.google.com\/mail\/.*(?:\?|&)view=cm.*$/i.test(window.location)){
     return "gmailTwo";
-  } else if (/^https:\/\/www\.facebook\.com\/messages\/.+/i.test(window.location)){
+  } else if (/^https:\/\/www\.facebook\.com\/messages.*$/i.test(window.location)){
     return "facebook";
   /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
     return "hotmail";
   } else if (/^http:\/\/\w{2}-\w{3}\.mail\.yahoo\.com\/.*$/i.test(window.location)){
     return "yahoo";
-  } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/$/i.test(window.location)){
+  */
+  } else if (/^https:\/\/www\.guerrillamail\.com\/compose\/?$/i.test(window.location)){
     return "guerrilla";
   } else if (/^https:\/\/privnote\.com\/?$/i.test(window.location)){
     return "privnote";
-  } else if (/^http:\/\/sms4tor3vcr2geip\.onion\/?/i.test(window.location)){
-    return "sms4tor";
+  //} else if (/^http:\/\/sms4tor3vcr2geip\.onion\/?/i.test(window.location)){
+  //  return "sms4tor";
   } else if (/^https:\/\/www\.hushmail\.com\/.*#compose$/i.test(window.location)){
     return "hushmail";
   } else if (/^http:\/\/jhiwjjlqpyawmpjx\.onion\/$/i.test(window.location)) { //This is only here for memorial purposes.
-    return "tormail"; */
+    return "tormail"; /* */
   } else {
     return false;
   }
@@ -229,6 +268,7 @@ $(document).ready(function(){
       });
       fillInitializer();
       $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
+      $('#setkeyimage')[0].src = chrome.extension.getURL("images/key.png");
     },
     dataType:'html'
   });
