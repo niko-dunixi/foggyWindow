@@ -27,7 +27,23 @@ function togglePanel(){
 function authenticate_user()
 {
   var authenticate_panel = $('#authenticatePanel');
+  //personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+  
   authenticate_panel.css('top','-300px');
+}
+
+function new_user()
+{
+  personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+}
+
+function shareKey()
+{
+  
+  $('#shareKeyModal').modal('show');
+  console.log(cryptico.publicKeyString(personal_rsa_object));
+  $('#private_key_text').text("-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
+  //sendEmail("", "My Public RSA Key", "-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
 }
 function createPanel(){
   //assign the resulting panel to the semi-global variable "panel" so it is accesible to the rest of the extension if need be (EG destruction)
@@ -50,6 +66,9 @@ function createPanel(){
     storeNewFriend(friend_name, friend_email, '', 'delete')
   });
   $('#authenticate_button').click(authenticate_user);
+  $('#set_new_key_button').click(new_user);
+  $('#shareKey').click(shareKey);
+  
 
   
 
