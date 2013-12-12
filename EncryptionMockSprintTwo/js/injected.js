@@ -236,6 +236,19 @@ $(document).ready(function(){
   
   //populate firends list. Can't call directly there because the elements can't be selected right off the bat
   //for some reason - bbarker
-  var commPort = chrome.runtime.connect({name: "populate_friends"});
-    commPort.postMessage({});
+  chrome.runtime.connect({name: "populate_friends"}).postMessage({});
+  chrome.runtime.connect({name: "inject_css"}).postMessage({});
+  
+  var getKey = chrome.runtime.connect({name: "get_rsa_key"})
+  getKey.postMessage({});
+  getKey.onMessage.addListener(function(msg) {
+    console.log('rsa key: '  + msg.key);
+  });
+  
+  //set rsa key
+  var setKey = chrome.runtime.connect({name: "set_rsa_key"})
+  setKey.postMessage({setKey: "hi"});  
+  setKey.onMessage.addListener(function(msg) {
+    console.log('set key response: '  + msg.key);
+  });
 });

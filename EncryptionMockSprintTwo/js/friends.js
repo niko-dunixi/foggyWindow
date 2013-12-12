@@ -26,7 +26,7 @@ function populateFriendsTable()
   
   
   var msgPort = chrome.runtime.connect({name: "load_friends"});
-    msgPort.postMessage({});
+  msgPort.postMessage({});
   
   msgPort.onMessage.addListener(function(msg) {
     var friendsJson = msg.keys;
