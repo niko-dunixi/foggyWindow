@@ -39,6 +39,17 @@ height:100%;
   float:left;
   width:49%;
 }
+#authenticatePanel
+{
+    position:absolute;
+    height:220px;
+    width:100%;
+    background:white;
+    top:0;
+    z-index:9002;
+
+    -webkit-transition:all .3s ease-in-out;
+}
 #thePanel
 {
   border-bottom:1px solid #dfdfdf;
