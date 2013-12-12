@@ -6,21 +6,24 @@
 
 <div id='thePanel' style='position: fixed;' class="rgdipsticks">
     
-    <div id='authenticatePanel'>
-        <div style='width:700px;margin:100px auto;'>
+    <div id='authenticatePanel' style='text-align: center;'>
+        <div style='width:700px;margin:100px auto;' id='auth_form'>
             <div class="form-group">
-                <input id='dpstxpassword' type='password' class='form-control' style='width:470px;display:inline-block'/>
+                <input id='dpstxpassword' type='password' class='form-control' style='width:470px;display:inline-block;text-align: center;' placeholder='Passphrase: nine characters minimum'/>
+                <button class='btn btn-default' id='set_new_key_button'><img id='setkeyimage' /></button>
             </div>
             <!-- <button class='btn btn-default' id='authenticate_button'>Authenticate</button> !-->
-            <button class='btn btn-default' id='set_new_key_button'><img id='setkeyimage' /></button>
+        </div>
+        <div style='width:700px;margin:100px auto;font-weight: bold; text-align: center; display: none;' id='auth_load'>
+            Loading, this will take a quick moment!
         </div>
     </div>
     
     
 	<!-- This is the segment for the key management area. !-->
-	<div id="left" class="bar">
+	<div id="left" class="bar" style='text-align: center;'>
         <div class='inner'>
-            <button type='button' class='btn btn-default btn-xs' id='shareKey' style='left: 50%;' >Share Your Key</button>
+            <button type='button' class='btn btn-default btn-xs' id='shareKey' style='left: 50%;'>Share Your Key</button>
             
             <select size="6" style="width:195px; margin:7px 0px;" class="form-control" id="rdFriendTable"></select>
             

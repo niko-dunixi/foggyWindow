@@ -36,8 +36,12 @@ function new_user()
 {
   if ($('#dpstxpassword').val().length > 9){
     $('#dpstxpassword').closest("div").removeClass('has-error');
-    personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
-    authenticate_user();  
+    $('#auth_form').css('display', 'none');
+    $('#auth_load').css('display', 'block');
+    setTimeout(function(){
+      personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
+      authenticate_user();
+    }, 350);
   } else {
     $('#dpstxpassword').closest("div").addClass('has-error');
     $('#dpstxpassword').focus();
@@ -215,7 +219,7 @@ function fillCheckUrl(){
     return "gmailOne";
   } else if (/^https:\/\/mail.google.com\/mail\/.*(?:\?|&)view=cm.*$/i.test(window.location)){
     return "gmailTwo";
-  } else if (/^https:\/\/www\.facebook\.com\/messages\/.+/i.test(window.location)){
+  } else if (/^https:\/\/www\.facebook\.com\/messages\/.*$/i.test(window.location)){
     return "facebook";
   /*} else if (/^https:\/\/blu\d+.mail.live.com\/.+n=\d+&view=1$/i.test(window.location)){ //working on other parts of project. There is no time to attempt these.
     return "hotmail";
