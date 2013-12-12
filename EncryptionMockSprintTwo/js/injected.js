@@ -66,9 +66,15 @@ function destroyPanel(){
   });
   */
   panel.slideUp();
+  
   $('#dummyEncryptionPanel').slideUp();
   
   panelCreated = false;
+  
+  //destroy button listeners
+  $('#addFriend').unbind('click', addNewFriendDialog);
+  $('#rdsSelectFriend').unbind('click', addSelectFriendDialog);
+  $('#setPass').unbind('click', addSetPasswordDialog);
 }
 
 function encryptDecrypt()

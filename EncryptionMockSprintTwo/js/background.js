@@ -1,14 +1,13 @@
 var initialized = localStorage['initialized'];
+var previousToggle = false;
 if (typeof initialized == "undefined"){
 	localStorage['initialized'] = true;
 	localStorage['friends'] = JSON.stringify(new Array());
 }
 
+
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
 chrome.runtime.onConnect.addListener(function(port) {
-      //always inject css into the page
-      chrome.tabs.insertCSS(null, {file: 'css/jquery-ui.css'});
-      chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
   console.log('recieved message port ' + port.name);    
   
 	port.onMessage.addListener(function(msg) {
@@ -27,6 +26,16 @@ chrome.runtime.onConnect.addListener(function(port) {
 				} catch (err){
 					console.log(err.message);
 				}
+        
+        if(previousToggle == false)
+        {        
+          console.log("css injected");
+          //always inject css into the page
+          chrome.tabs.insertCSS(null, {file: 'css/jquery-ui_rgdpstks.css'});
+          chrome.tabs.insertCSS(null, {file: 'css/rg-dialog.css'});
+          previousToggle = true;
+        }
+        
 				break;
 			//if the page sends the background script "load_friends", then we send it back the list of keys that we have.
 			case 'load_friends':
