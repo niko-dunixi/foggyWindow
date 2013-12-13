@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Foggy Window by RDS",
   "description": "This extension is a RSA Encryption Extension in Beta Testing",
-  "version": "0.2.0.1",
+  "version": "0.2.0.2",
   "icons": {
     "128": "128icon.png" 
   },
