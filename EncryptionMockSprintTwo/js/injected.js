@@ -264,7 +264,7 @@ $(document).ready(function(){
       });
       $('#sendButton').bind('click', function(){
         console.log("send button still works? (If you're seeing this, then yes.)");
-        sendEmail(friend_email, "", $('#transformed').text());
+        sendEmail(friend_email, " ", $('#transformed').text());
       });
       fillInitializer();
       $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
