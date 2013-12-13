@@ -252,7 +252,7 @@ $(document).ready(function(){
       panel = $(data);
       //console.log("panel " + $(data).height());
       $('body').css('margin', '0px').css('padding', '0px').width('100%');
-      panel.insertBefore($('body').children().first());
+      panel.css('z-index', 2147483647).insertBefore($('body').children().first()); //max z-index possible.
       
       //let the injected css and the slideDown/slideUp functions take care of the height
       //$('<div>&nbsp;</div>').attr('id', 'dummyEncryptionPanel').css('position', 'relative').css('display', 'none').height().insertBefore($('body').children().first());
