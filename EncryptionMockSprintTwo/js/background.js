@@ -5,6 +5,8 @@ if (typeof initialized == "undefined"){
 	localStorage['friends'] = JSON.stringify(new Array());
 }
 
+var personal_rsa_object = undefined;
+
 var rsaKey = "not_set";
 
 //Chrome listener API. The connection between the injected script and the local storage + vice versa.
@@ -85,15 +87,46 @@ chrome.runtime.onConnect.addListener(function(port) {
       break;
       
       case 'get_rsa_key':
-        port.postMessage({key: rsaKey});
+      try
+      {
+        console.log("key: " + cryptico.publicKeyString(personal_rsa_object));
+        port.postMessage({key: cryptico.publicKeyString(personal_rsa_object)});
+      }
+      catch (error)
+      {
+        console.log("key: " + "null");
+        port.postMessage({key: "null"});
+      }
+      
       break;
       
       case 'set_rsa_key':
-        console.log("set key to : " + msg.setKey);
-        rsaKey = msg.setKey;
-        port.postMessage({key: "set key"});
+        //console.log("set key to : " + msg.setKey);
+        
+        console.log("encrypting");
+        personal_rsa_object = cryptico.generateRSAKey(msg.setKey, 2048);
+        console.log("encrypt done");
+        
+        port.postMessage({key: cryptico.publicKeyString(personal_rsa_object)});
       break;
       
+      case 'decrypt_message':
+        console.log("decrypting key: " + msg.key);
+        
+        console.log("decrypting");
+        var message;
+        try{
+          message = cryptico.decrypt(msg.key, personal_rsa_object).plaintext;
+          console.log("decrypt done: " + message);
+        } catch (error)
+        {
+          console.log(error);
+          console.log("invalid private key");
+          message = "invalid private key";
+        }
+        
+        port.postMessage({decrypt: message});
+      break;
 			//If someone sends a typo or an unexpected message to the background page. Just do nothing.
 			default:
 				console.log("Unrecognized command: " + port.name);

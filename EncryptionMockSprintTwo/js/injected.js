@@ -7,7 +7,8 @@ if(top.document != document) { //Stop. We only want to work in the main document
 
 var panelCreated = false; //obvious boolean is obvious.
 var panel = false; //Initialize to empty JQuery object. This is where the panel will be housed
-var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
+//var personal_rsa_object = undefined; //set and access this object for our own personal RSA keys
+var personal_public_key = "";
 var friend_rsa_object = undefined; //UPDATE!!!! This is just a string. We don't generate an RSA object with public key strings, we just use the string.
 var friend_email = ""; //changed this from intializing undefined to an empty string. This is to avoid sending "undefined" as the recipient.
 var friend_name = "";
@@ -34,14 +35,27 @@ function authenticate_user()
 
 function new_user()
 {
-  if ($('#dpstxpassword').val().length > 9){
+  if ($('#dpstxpassword').val().length >= 9){
     $('#dpstxpassword').closest("div").removeClass('has-error');
     $('#auth_form').css('display', 'none');
     $('#auth_load').css('display', 'block');
+    
+    /*
     setTimeout(function(){
       personal_rsa_object = cryptico.generateRSAKey($('#dpstxpassword').val(), 2048);
       authenticate_user();
     }, 350);
+    */
+    //set rsa key though background
+    var setKey = chrome.runtime.connect({name: "set_rsa_key"})
+    console.log('set new rsa key');
+    setKey.postMessage({setKey: $('#dpstxpassword').val()});  
+
+    setKey.onMessage.addListener(function(msg) {
+      console.log('new public key: '  + msg.key);
+      personal_public_key = msg.key;
+      authenticate_user();
+    });
   } else {
     $('#dpstxpassword').closest("div").addClass('has-error');
     $('#dpstxpassword').focus();
@@ -52,8 +66,9 @@ function shareKey()
 {
   
   $('#shareKeyModal').modal('show');
-  console.log(cryptico.publicKeyString(personal_rsa_object));
-  $('#private_key_text').text("-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
+  //console.log(cryptico.publicKeyString(personal_rsa_object));
+  //$('#private_key_text').text("-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
+  $('#private_key_text').text("-----PUBLIC-RSA-KEY-----" + personal_public_key + "-----PUBLIC-RSA-KEY-----");
   //sendEmail("", "My Public RSA Key", "-----PUBLIC-RSA-KEY-----" + cryptico.publicKeyString(personal_rsa_object) + "-----PUBLIC-RSA-KEY-----");
 }
 function createPanel(){
@@ -82,25 +97,36 @@ function createPanel(){
   $('#sharekeycopy').bind('click', function(){
     chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
   });
-  $('#dpstxpassword').keyup(function (e) {
-    if (e.keyCode == 13) {
-      new_user();
+  
+  
+  var getKey = chrome.runtime.connect({name: "get_rsa_key"})
+  getKey.postMessage({});
+  
+  getKey.onMessage.addListener(function(msg) {
+    console.log('rsa key: '  + msg.key);
+    if(msg.key == 'null')
+    {    
+      $('#dpstxpassword').keyup(function (e) {
+        if (e.keyCode == 13) {
+          new_user();
+        }
+      });
+    }
+    else
+    {
+      personal_public_key = msg.key;
+      authenticate_user()
     }
   });
+  
 
   console.log("inside create panel")
   
-  //don't link them, just let them do their thing together
-  /*
-  $('#dummyEncryptionPanel').slideDown(0, function(){
-    panel.slideDown();
-  });
-  */
+
   $('#dummyEncryptionPanel').slideDown();
   panel.slideDown();
   panelCreated = true;
   
-  console.log('added friend listener');
 }
 
 function destroyPanel(){
@@ -131,13 +157,25 @@ function encryptDecrypt()
   console.log("keypress");
   if(/^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.test(textInput))
   {
+    /*
     try{
       textInput = /^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.exec(textInput)[1];
+      
       $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
     } catch (error){
       $('#transformed').text("Please set a Secret Passphrase.");
       console.log("invalid private key");
     }
+    $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
+  */
+    var getKey = chrome.runtime.connect({name: "decrypt_message"})
+    textInput = /^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.exec(textInput)[1];
+    getKey.postMessage({key : textInput});
+    getKey.onMessage.addListener(function(msg) {
+      console.log('decrypt message: '  + msg.decrypt);
+      $('#transformed').text("" + msg.decrypt);
+    });
+    
   }
   else
   {
@@ -290,7 +328,7 @@ $(document).ready(function(){
   //for some reason - bbarker
   chrome.runtime.connect({name: "populate_friends"}).postMessage({});
   chrome.runtime.connect({name: "inject_css"}).postMessage({});
-  
+  /*
   var getKey = chrome.runtime.connect({name: "get_rsa_key"})
   getKey.postMessage({});
   getKey.onMessage.addListener(function(msg) {
@@ -303,4 +341,5 @@ $(document).ready(function(){
   setKey.onMessage.addListener(function(msg) {
     console.log('set key response: '  + msg.key);
   });
+  */
 });
