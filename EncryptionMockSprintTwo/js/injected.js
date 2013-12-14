@@ -157,13 +157,25 @@ function encryptDecrypt()
   console.log("keypress");
   if(/^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.test(textInput))
   {
+    /*
     try{
       textInput = /^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.exec(textInput)[1];
+      
       $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
     } catch (error){
       $('#transformed').text("Please set a Secret Passphrase.");
       console.log("invalid private key");
     }
+    $('#transformed').text(cryptico.decrypt(textInput, personal_rsa_object).plaintext);
+  */
+    var getKey = chrome.runtime.connect({name: "decrypt_message"})
+    textInput = /^.*-----RSA-CIPHERTEXT-----(.+)-----RSA-CIPHERTEXT-----.*$/i.exec(textInput)[1];
+    getKey.postMessage({key : textInput});
+    getKey.onMessage.addListener(function(msg) {
+      console.log('decrypt message: '  + msg.decrypt);
+      $('#transformed').text("" + msg.decrypt);
+    });
+    
   }
   else
   {

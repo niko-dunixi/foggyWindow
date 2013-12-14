@@ -101,7 +101,7 @@ chrome.runtime.onConnect.addListener(function(port) {
       break;
       
       case 'set_rsa_key':
-        console.log("set key to : " + msg.setKey);
+        //console.log("set key to : " + msg.setKey);
         
         console.log("encrypting");
         personal_rsa_object = cryptico.generateRSAKey(msg.setKey, 2048);
@@ -110,6 +110,23 @@ chrome.runtime.onConnect.addListener(function(port) {
         port.postMessage({key: cryptico.publicKeyString(personal_rsa_object)});
       break;
       
+      case 'decrypt_message':
+        console.log("decrypting key: " + msg.key);
+        
+        console.log("decrypting");
+        var message;
+        try{
+          message = cryptico.decrypt(msg.key, personal_rsa_object).plaintext;
+          console.log("decrypt done: " + message);
+        } catch (error)
+        {
+          console.log(error);
+          console.log("invalid private key");
+          message = "invalid private key";
+        }
+        
+        port.postMessage({decrypt: message});
+      break;
 			//If someone sends a typo or an unexpected message to the background page. Just do nothing.
 			default:
 				console.log("Unrecognized command: " + port.name);
