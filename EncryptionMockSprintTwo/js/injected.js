@@ -98,27 +98,6 @@ function createPanel(){
     chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
   });
   
-  
-  var getKey = chrome.runtime.connect({name: "get_rsa_key"})
-  getKey.postMessage({});
-  
-  getKey.onMessage.addListener(function(msg) {
-    console.log('rsa key: '  + msg.key);
-    if(msg.key == 'null')
-    {    
-      $('#dpstxpassword').keyup(function (e) {
-        if (e.keyCode == 13) {
-          new_user();
-        }
-      });
-    }
-    else
-    {
-      personal_public_key = msg.key;
-      authenticate_user()
-    }
-  });
-  
 
   console.log("inside create panel")
   
@@ -126,7 +105,7 @@ function createPanel(){
   $('#dummyEncryptionPanel').slideDown();
   panel.slideDown();
   panelCreated = true;
-  
+  loadingLock();
 }
 
 function destroyPanel(){
@@ -279,6 +258,85 @@ function fillCheckUrl(){
   }
 }
 
+function loadingLock()
+{
+  
+  //http://padolsey.github.io/sonic-creator/#
+  //https://github.com/padolsey/sonic.js
+  
+  var lock = new Sonic({
+        
+    width: 100,
+    height: 120,
+
+    stepsPerFrame: 8,    // best between 1 and 5
+    trailLength: 1,    // between 0 and 1
+    pointDistance: 0.015, // best between 0.01 and 0.05
+    fps: 16,
+
+    fps: 16,
+    
+    fillColor: '#0099FF',
+    
+      path: [
+        //bottom
+        ['line', 80, 90, 20, 90],
+
+        //left side
+        ['line', 20, 90, 20, 40],
+
+        //top
+        ['line', 20, 40, 80, 40],
+
+        //mid 1
+        ['line', 20, 50, 80, 50],
+
+        //mid 2
+        ['line', 20, 60, 80, 60],
+
+        //mid 3
+        ['line', 20, 70, 80, 70],
+
+        //mid 4
+        ['line', 20, 80, 80, 80],
+
+        //round lock part
+        ['arc', 50, 40, 30, -180, 0],
+
+        //right side
+        ['line', 80, 40, 80, 90],
+    ],
+
+    step: function(point, index, frame) {
+
+      // Here you can do custom stuff.
+      // `this._` is a HTML 2d Canvas Context
+
+      var sizeMultiplier = 4; // try changing this :)
+      
+      // Add frame number in lower-left corner
+      //this._.fillText(0|frame*this.fps, 1, 99);
+      
+      this._.beginPath();
+      this._.moveTo(point.x, point.y);
+      this._.arc(
+        point.x, point.y,
+        index * sizeMultiplier, 0,
+        Math.PI*2, false
+      );
+      //this._.closePath();
+      this._.fill();
+
+    }
+
+  });
+  
+  lock.play();
+  
+  $('#loadingLock').append(lock.canvas);
+
+}
+
 // The injected script's message listener. I am unsure if this will have to be edited to
 // accomodate different messages being passed to/from the background page or if there can
 // multiple instances thereof. EG see commended else-if case below.
@@ -328,18 +386,25 @@ $(document).ready(function(){
   //for some reason - bbarker
   chrome.runtime.connect({name: "populate_friends"}).postMessage({});
   chrome.runtime.connect({name: "inject_css"}).postMessage({});
-  /*
-  var getKey = chrome.runtime.connect({name: "get_rsa_key"})
+  
+    var getKey = chrome.runtime.connect({name: "get_rsa_key"})
   getKey.postMessage({});
+  
   getKey.onMessage.addListener(function(msg) {
     console.log('rsa key: '  + msg.key);
+    if(msg.key == 'null')
+    {    
+      $('#dpstxpassword').keyup(function (e) {
+        if (e.keyCode == 13) {
+          new_user();
+        }
+      });
+    }
+    else
+    {
+      personal_public_key = msg.key;
+      authenticate_user()
+    }
   });
-  
-  //set rsa key
-  var setKey = chrome.runtime.connect({name: "set_rsa_key"})
-  setKey.postMessage({setKey: "hi"});  
-  setKey.onMessage.addListener(function(msg) {
-    console.log('set key response: '  + msg.key);
-  });
-  */
+  $("progBar").progressbar( "option", "value", false );
 });
