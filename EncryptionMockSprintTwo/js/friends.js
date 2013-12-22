@@ -76,6 +76,7 @@ function populateFriendsTable()
         friend_rsa_object = publicKey;
         friend_email = email;
         
+        $('#textInput').trigger('input');
       /*
       stop: function() {
         $( "tr.ui-selected td", this ).each(function() {
