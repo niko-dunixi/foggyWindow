@@ -387,6 +387,7 @@ $(document).ready(function(){
       fillInitializer();
       $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
       $('#setkeyimage')[0].src = chrome.extension.getURL("images/key.png");
+      //add button listeners once, to all of our buttons
       addButtonListeners();
     },
     dataType:'html'
@@ -429,6 +430,4 @@ $(document).ready(function(){
       authenticate_user()
     }
   });
-  
-  //add button listeners once, to all of our buttons
 });
