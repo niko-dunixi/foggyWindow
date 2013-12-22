@@ -14,13 +14,17 @@
             </div>
             <!-- <button class='btn btn-default' id='authenticate_button'>Authenticate</button> !-->
         </div>
-        <div style='width:700px;margin:100px auto;font-weight: bold; text-align: center; display: none;' id='auth_load'>
+        <div style='width:700px;margin:50px auto;font-weight: bold; text-align: center; display: none;' id='auth_load'>
             Loading, this will take a quick moment!
-            <div class="progress progress-striped active">
-              <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+            <div id="loadingLock"></div>
+            <!--
+            This dosn't work, it never animates..
+            <div class="progress progress-striped" id="progBar">
+              <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
                 <span class="sr-only">45% Complete</span>
               </div>
             </div>
+            -->
         </div>
     </div>
     

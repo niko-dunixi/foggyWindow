@@ -16,7 +16,7 @@
       "css": ["css/injected.css", "css/bootstrap_rgdpstks.css", "css/jquery-ui_rgdpstks.css", "css/rg-dialog.css"],
       "js": ["js/jquery-2.0.3.min.js", "js/jquery-ui.js",
               "js/cryptico/cryptico.js", "js/dialog.js", "js/friends.js",
-              "js/injected.js","js/bootstrap.min.js"],
+              "js/sonic.js", "js/injected.js","js/bootstrap.min.js"],
       "run_at": "document_end"
     }
   ],
