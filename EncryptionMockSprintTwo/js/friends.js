@@ -58,44 +58,6 @@ function populateFriendsTable()
         .appendTo(friendTable);
     });
     console.log('Friends loaded');
-        
-      //$('<td />').width('5px').text(value.publicKey).appendTo(friendTable);
-    
-    //make table rows selectable
-    $( "#rdFriendTable" ).change(function(){
-        
-        var selected = $(this).find('option:selected'); 
-        var name = selected.val();
-        var email = selected.attr('data-original-title');
-        var publicKey = selected.attr('rsapublickey');
-        
-        console.log("name: " + name);
-        console.log("email: " + email);
-        console.log("key: " + publicKey);
-        friend_name = name;
-        friend_rsa_object = publicKey;
-        friend_email = email;
-        
-      /*
-      stop: function() {
-        $( "tr.ui-selected td", this ).each(function() {
-          console.log("Selected " + $(this).last().text());
-        });
-        
-        var publicKey = $( "tr.ui-selected td", this ).last().text();
-        var selectedFriendName = $( "tr.ui-selected td", this ).first().text();
-        $( "#select-result" ).text("Selected friend " + selectedFriendName);
-        //console.log('publicKey ' + publicKey);
-        //console.log('friendName ' + selectedFriendName);
-        
-        $('#rdsSelectedFriend').text(selectedFriendName);
-        friend_rsa_object = publicKey;
-        console.log($( "tr.ui-selected td", this ).first().next());
-        friend_email = $( "tr.ui-selected td", this ).first().next().text(); //grabs the email string.
-        
-      }
-      */
-    });
   });
  
 }

@@ -85,18 +85,7 @@ function createPanel(){
   //$('#addFriend').bind('click', addNewFriendDialog);
   //$('#rdsSelectFriend').bind('click', addSelectFriendDialog);
   //$('#setPass').bind('click', addSetPasswordDialog);
-  $('#createNewFriend').click(createNewFriend);
-  $('#removeFriend').click(function()
-  {
-    console.log('remove friend');
-    storeNewFriend(friend_name, friend_email, '', 'delete')
-  });
-  //$('#authenticate_button').click(authenticate_user);
-  $('#set_new_key_button').click(new_user);
-  $('#shareKey').click(shareKey);
-  $('#sharekeycopy').bind('click', function(){
-    chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
-  });
+
   
 
   console.log("inside create panel")
@@ -123,11 +112,6 @@ function destroyPanel(){
   $('#dummyEncryptionPanel').slideUp();
   
   panelCreated = false;
-  
-  //destroy button listeners
-  $('#addFriend').unbind('click', addNewFriendDialog);
-  $('#rdsSelectFriend').unbind('click', addSelectFriendDialog);
-  $('#setPass').unbind('click', addSetPasswordDialog);
 }
 
 function encryptDecrypt()
@@ -337,6 +321,44 @@ function loadingLock()
 
 }
 
+//function to add button listeners to all of the buttons we need once when the panel is done loading.
+function addButtonListeners()
+{
+  console.log("adding button listeners");
+  $('#createNewFriend').click(createNewFriend);
+  $('#removeFriend').click(function()
+  {
+    console.log('remove friend');
+    storeNewFriend(friend_name, friend_email, '', 'delete')
+  });
+  //$('#authenticate_button').click(authenticate_user);
+  $('#set_new_key_button').click(new_user);
+  $('#shareKey').click(shareKey);
+  $('#sharekeycopy').bind('click', function(){
+    chrome.runtime.connect({name : 'copy'}).postMessage({clipboard: $('#private_key_text').text()});
+  });
+  
+  
+  //make table rows selectable
+  $( "#rdFriendTable" ).change(function(){
+      
+      var selected = $(this).find('option:selected'); 
+      var name = selected.val();
+      var email = selected.attr('data-original-title');
+      var publicKey = selected.attr('rsapublickey');
+      
+      console.log("name: " + name);
+      console.log("email: " + email);
+      console.log("key: " + publicKey);
+      friend_name = name;
+      friend_rsa_object = publicKey;
+      friend_email = email;
+
+      $('#textInput').trigger('input');
+
+  });
+}
+
 // The injected script's message listener. I am unsure if this will have to be edited to
 // accomodate different messages being passed to/from the background page or if there can
 // multiple instances thereof. EG see commended else-if case below.
@@ -365,6 +387,8 @@ $(document).ready(function(){
       fillInitializer();
       $('#rdSendButton')[0].src = chrome.extension.getURL("images/send.png");
       $('#setkeyimage')[0].src = chrome.extension.getURL("images/key.png");
+      //add button listeners once, to all of our buttons
+      addButtonListeners();
     },
     dataType:'html'
   });
@@ -406,5 +430,4 @@ $(document).ready(function(){
       authenticate_user()
     }
   });
-  $("progBar").progressbar( "option", "value", false );
 });
